@@ -1,0 +1,42 @@
+#! /usr/bin/gnuplot -persist
+
+# Будем этим скриптом строить графики
+#Тут неизменяемые настройки
+set grid
+set datafile separator '\t'
+#set terminal png size 1024, 768
+#set output "LabPlot.png"
+
+#Тут изменяемые настройки
+set title "Lab1" font "Helvetica Bold, 14"
+set xlabel "N - size of array"
+set ylabel "Time - average executing time, seconds"
+
+#set yrange [-1.1:1.1]
+#set xrange[-pi:pi]
+
+
+#plot sin(x) title "sinux"  lc rgb "red", cos(x)  title "cosinus" lc rgb "green"
+#plot "HeapSortOut.txt" w lp lc 3 pt 7 ps 30 smooth bezier
+#plot "HeapSortOut.txt" w lp lc 2 pt 1 ps 2 smooth acsplines
+
+plot 	"HeapSortOut.txt" using 1:2 notitle with points linestyle 1, \
+     	"" using 1:2 notitle smooth csplines with lines linestyle 1, \
+     	1 / 0 title "HeapSort" with linespoints linestyle 1, \
+	\
+	"QuickSortHoareOut.txt" using 1:2 notitle with points linestyle 2, \
+     	"" using 1:2 notitle smooth csplines with lines linestyle 2, \
+ 	1 / 0 title "QuickSortHoare" with linespoints linestyle 2, \
+	\
+	"ShellSortOut.txt" using 1:2 notitle with points linestyle 3, \
+     	"" using 1:2 notitle smooth csplines with lines linestyle 3, \
+ 	1 / 0 title "ShellSort" with linespoints linestyle 3
+
+
+
+#Справка
+# \ позволяет записать одну строку как несколько
+# -persist позволяет держать окно открытым после завершения скрипта
+#
+#
+#
