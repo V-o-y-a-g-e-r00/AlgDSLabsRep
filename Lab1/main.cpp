@@ -8,13 +8,25 @@
 int main(int, char**) {
 
     srand(time(0));
-    std::cout<<"HeapSort:"<<std::endl;
+//Аргументы подставлены для пошагового выполнения    
+/*    std::cout<<"HeapSort:"<<std::endl;
     statistics<int> s1(HeapSort<int>, 5, 5, 10000, false, true, 100, 1,(char*)"HeapSortOut.txt");
     std::cout<<"QuickSortHoare:"<<std::endl;
     statistics<int> s2(QuickSortHoare, 5, 5, 10000, false, true, 100, 1,(char*)"QuickSortHoareOut.txt");
     std::cout<<"ShellSort:"<<std::endl;
     statistics<int> s3(ShellSort, 5, 5, 10000, false, true, 100, 1,(char*)"ShellSortOut.txt");
-   // system("./PlotScript.gpi");
+*/
+//Агрументы для массивов больших размеров
+    std::cout<<"HeapSort:"<<std::endl;
+    statistics<int> s1(HeapSort<int>, 100, 1000, 100, false, false, -1, 1000,(char*)"HeapSortOut.txt");
+    std::cout<<"QuickSortHoare:"<<std::endl;
+    statistics<int> s2(QuickSortHoare, 100, 1000, 100, false, false, -1, 1000,(char*)"QuickSortHoareOut.txt");
+    std::cout<<"ShellSort:"<<std::endl;
+    statistics<int> s3(ShellSort, 100, 1000, 100, false, false, -1, 1000,(char*)"ShellSortOut.txt");
+    system("./PlotScript.gpi");
+
+
+
 /*
     int Arr[10];
     Arr[0]=132;
