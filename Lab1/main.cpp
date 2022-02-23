@@ -8,23 +8,24 @@
 int main(int, char**) {
 
     srand(time(0));
+    int seed=rand();
 //Аргументы подставлены для пошагового выполнения    
-/*    std::cout<<"HeapSort:"<<std::endl;
-    statistics<int> s1(HeapSort<int>, 5, 5, 10000, false, true, 100, 1,(char*)"HeapSortOut.txt");
-    std::cout<<"QuickSortHoare:"<<std::endl;
-    statistics<int> s2(QuickSortHoare, 5, 5, 10000, false, true, 100, 1,(char*)"QuickSortHoareOut.txt");
-    std::cout<<"ShellSort:"<<std::endl;
-    statistics<int> s3(ShellSort, 5, 5, 10000, false, true, 100, 1,(char*)"ShellSortOut.txt");
-*/
-//Агрументы для массивов больших размеров
     std::cout<<"HeapSort:"<<std::endl;
-    statistics<int> s1(HeapSort<int>, 100, 1000, 100, false, false, -1, 1000,(char*)"HeapSortOut.txt");
+    statistics<int> s1(HeapSort<int>, 5, 5, 10000, false, true, 100, 1,(char*)"HeapSortOut.txt", seed);
     std::cout<<"QuickSortHoare:"<<std::endl;
-    statistics<int> s2(QuickSortHoare, 100, 1000, 100, false, false, -1, 1000,(char*)"QuickSortHoareOut.txt");
+    statistics<int> s2(QuickSortHoare, 5, 5, 10000, false, true, 100, 1,(char*)"QuickSortHoareOut.txt", seed);
     std::cout<<"ShellSort:"<<std::endl;
-    statistics<int> s3(ShellSort, 100, 1000, 100, false, false, -1, 1000,(char*)"ShellSortOut.txt");
-    system("./PlotScript.gpi");
+    statistics<int> s3(ShellSort, 5, 5, 10000, false, true, 100, 1,(char*)"ShellSortOut.txt", seed);
 
+//Агрументы для массивов больших размеров
+ /*   std::cout<<"HeapSort:"<<std::endl;
+    statistics<int> s1(HeapSort<int>, 10, 200, 10, false, false, 100, 1,(char*)"HeapSortOut.txt", seed);
+    std::cout<<"QuickSortHoare:"<<std::endl;
+    statistics<int> s2(QuickSortHoare, 10, 200, 10, false, false, 100, 1,(char*)"QuickSortHoareOut.txt", seed);
+    std::cout<<"ShellSort:"<<std::endl;
+    statistics<int> s3(ShellSort, 10, 200, 10, false, false, 100, 1,(char*)"ShellSortOut.txt", seed);
+    system("./PlotScript.gpi");
+*/
 
 
 /*

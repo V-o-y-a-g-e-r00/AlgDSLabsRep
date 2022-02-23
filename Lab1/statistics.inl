@@ -16,8 +16,9 @@ private:
     int RandMax=-1; //-1  случ значения в массиве будут генерироваться на всем допустимом диапазоне для данного типа.
     int NumberOfRuns=1; //число прогонов для каждого размера массива
 public:
-    statistics(void (*callback)(T*, int, bool, bool, int), int NNStart, int NNEnd, int NNStep, bool SortOrder, bool IsStepbystep, int NRandMax, int NNumberOfRuns, char* filename): NStart(NNStart), NEnd(NNEnd), NStep(NNStep), RandMax(NRandMax), NumberOfRuns(NNumberOfRuns) //Начальное, конечное значение числа элементов; IsStepbystep выводить пошагово; RandMax макс случайное число (-1 будут значения от 0 до максимального в данном типе). filename - файл для вывода
+    statistics(void (*callback)(T*, int, bool, bool, int), int NNStart, int NNEnd, int NNStep, bool SortOrder, bool IsStepbystep, int NRandMax, int NNumberOfRuns, char* filename, int seed): NStart(NNStart), NEnd(NNEnd), NStep(NNStep), RandMax(NRandMax), NumberOfRuns(NNumberOfRuns) //Начальное, конечное значение числа элементов; IsStepbystep выводить пошагово; RandMax макс случайное число (-1 будут значения от 0 до максимального в данном типе). filename - файл для вывода seed для генерации одинаковых массивов
     {
+        if(seed!=-1) srand(seed);
         printLabel(filename);
 
         for(CurrentSize=NStart; CurrentSize<=NEnd; CurrentSize+=NStep)
