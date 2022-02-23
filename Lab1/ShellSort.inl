@@ -13,6 +13,10 @@ void ShellSort(int *array, int size, bool SortOrder, bool IsStepbystep, int recl
                 array[j + s] = temp;
             }
         }
+        if (IsStepbystep)
+        {   
+            printArr<int>(array, size, std::string("After Step s=").append(std::to_string(s)).c_str(),0);
+        }
     }
 }
 

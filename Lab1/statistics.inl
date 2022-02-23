@@ -31,12 +31,12 @@ public:
                     if(RandMax==-1) Arr[j]=rand() % ((unsigned long long)std::numeric_limits<T>::max()+1); //по максимальное значение в этом типе
                     else Arr[j]=rand() % RandMax;
                 }
-            //  printArr((char*)"before sort"); //выводим массив со случайными значениями
+            if(IsStepbystep)  printArr((char*)"before sort"); //выводим массив со случайными значениями
                 clock_t timeStart=clock(); //число тиков с начала выполнения программы
                 callback(Arr, CurrentSize, SortOrder, IsStepbystep, 0);
                 clock_t timeEnd=clock();
                 timeSeconds+=double(timeEnd-timeStart)/CLOCKS_PER_SEC; //время работы алгоритма в секундах
-            //   printArr((char*)"after sort"); //выводим массив после сортировки
+            if(IsStepbystep)   printArr((char*)"after sort"); //выводим массив после сортировки
                 std::cout<<"CurrentSize="<< CurrentSize <<"; Iteration "<<k<<" is complete"<<std::endl;
             }
             timeSeconds/=NumberOfRuns;

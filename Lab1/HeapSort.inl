@@ -2,7 +2,7 @@
 #define HEAPSORT_INL_INCLUDED
 
 template<typename T>
-void printArr(T *Arr, int Length, char* label, int reclvl) //
+void printArr(T *Arr, int Length, const char* label, int reclvl) //
 {
     for(int j=0; j<reclvl;j++) std::cout<<"\t-";
     std::cout<<"===Arr ("<< label<<"):==="<<std::endl;

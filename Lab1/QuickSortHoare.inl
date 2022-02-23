@@ -36,7 +36,7 @@ void QuickSortHoare(int *Arr, int size, bool SortOrder, bool IsStepbystep, int r
 
         if(IsStepbystep)
         {
-            std::cout<<"Current i: Arr[i] !< p"<< i <<"Current j: Arr[j] !> p"<< j << std::endl;
+            std::cout<<"Current i:(Arr[i] !< p) ="<< i <<"; Current j:(Arr[j] !> p) ="<< j << std::endl;
             getchar();
         }
 

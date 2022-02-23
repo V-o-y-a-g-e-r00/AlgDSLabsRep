@@ -9,12 +9,12 @@ int main(int, char**) {
 
     srand(time(0));
     std::cout<<"HeapSort:"<<std::endl;
-    statistics<int> s1(HeapSort<int>, 10000, 100000, 10000, false, false, -1, 10,(char*)"HeapSortOut.txt");
+    statistics<int> s1(HeapSort<int>, 5, 5, 10000, false, true, 100, 1,(char*)"HeapSortOut.txt");
     std::cout<<"QuickSortHoare:"<<std::endl;
-    statistics<int> s2(QuickSortHoare, 10000, 100000, 10000, false, false, -1, 10,(char*)"QuickSortHoareOut.txt");
+    statistics<int> s2(QuickSortHoare, 5, 5, 10000, false, true, 100, 1,(char*)"QuickSortHoareOut.txt");
     std::cout<<"ShellSort:"<<std::endl;
-    statistics<int> s3(ShellSort, 10000, 100000, 10000, false, false, -1, 10,(char*)"ShellSortOut.txt");
-    system("./PlotScript.gpi");
+    statistics<int> s3(ShellSort, 5, 5, 10000, false, true, 100, 1,(char*)"ShellSortOut.txt");
+   // system("./PlotScript.gpi");
 /*
     int Arr[10];
     Arr[0]=132;
