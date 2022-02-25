@@ -8,15 +8,21 @@ set grid
 set datafile separator '\t'
 #set terminal png size 1024, 768
 #set output "LabPlot.png"
+#set terminal svg enhanced size 3,2
+#set output 'file.svg'
+
+#Этот способ рабочий. Потом нужно преобразовать к .PNG с помощью команды. and then use imagemagick to convert the vector format to a .png: convert myPlot.pdf -density 150 myPlot.png
+set terminal pdfcairo size 6, 5 #этот неплохо работает. Размер в дюймах
+set output 'file.pdf'
 
 #для графиков данных
-set linestyle 1 lc rgb "#0000FF" lw 2
-set linestyle 2 lc rgb "#00FF00" lw 2
-set linestyle 3 lc rgb "#FF0000" lw 2
+set linestyle 1 lc rgb "#0000FF" lw 2.5
+set linestyle 2 lc rgb "#00FF00" lw 2.5
+set linestyle 3 lc rgb "#FF0000" lw 2.5
 #для линий треда
-set linestyle 11 lc rgb "#000080" lw 1 dashtype 2
-set linestyle 12 lc rgb "#008000" lw 1 dashtype 2
-set linestyle 13 lc rgb "#800000" lw 1 dashtype 2
+set linestyle 11 lc rgb "#000080" lw 1.25 dashtype 2
+set linestyle 12 lc rgb "#008000" lw 1.25 dashtype 2
+set linestyle 13 lc rgb "#800000" lw 1.25 dashtype 2
 
 
 #Тут изменяемые настройки
