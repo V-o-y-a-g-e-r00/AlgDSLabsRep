@@ -2,16 +2,28 @@
 
 # Будем этим скриптом строить графики
 #Тут неизменяемые настройки
+title_f(a,b)= sprintf('%.12f*x*log(x)+%.12f', a, b)
+
 set grid
 set datafile separator '\t'
 #set terminal png size 1024, 768
 #set output "LabPlot.png"
 
+#для графиков данных
 set linestyle 1 lc rgb "#0000FF" lw 2
 set linestyle 2 lc rgb "#00FF00" lw 2
 set linestyle 3 lc rgb "#FF0000" lw 2
+#для линий треда
+set linestyle 11 lc rgb "#000080" lw 1 dashtype 2
+set linestyle 12 lc rgb "#008000" lw 1 dashtype 2
+set linestyle 13 lc rgb "#800000" lw 1 dashtype 2
+
 
 #Тут изменяемые настройки
+#Положение легенды
+#set key left
+set key below
+
 set title "Lab1" font "Helvetica Bold, 14"
 set xlabel "N - size of array"
 set ylabel "Time - average executing time, seconds"
@@ -24,14 +36,32 @@ set ylabel "Time - average executing time, seconds"
 #plot "HeapSortOut.txt" w lp lc 3 pt 7 ps 30 smooth bezier
 #plot "HeapSortOut.txt" w lp lc 2 pt 1 ps 2 smooth acsplines
 
+# The equation
+f1(x) = a1*x*log(x)+b1
+# The fit 
+fit f1(x) "HeapSortOut.txt" u 1:2 via a1,b1
+
+f2(x) = a2*x*log(x)+b2
+fit f2(x) "QuickSortHoareOut.txt" u 1:2 via a2,b2
+
+f3(x) = a3*x*log(x)+b3
+fit f3(x) "ShellSortOut.txt" u 1:2 via a3,b3
+
+
+
 plot 	"HeapSortOut.txt" using 1:2 notitle smooth csplines with lines linestyle 1, \
-     	1 / 0 title "HeapSort" with lines linestyle 1, \
+    1 / 0 title "HeapSort" with lines linestyle 1, \
+	f1(x) title title_f(a1,b1) with lines linestyle 11,\
 	\
 	"QuickSortHoareOut.txt" using 1:2 notitle smooth csplines with lines linestyle 2, \
  	1 / 0 title "QuickSortHoare" with lines linestyle 2, \
+	f2(x) title title_f(a2,b2) with lines linestyle 12, \
 	\
 	"ShellSortOut.txt" using 1:2 notitle smooth csplines with lines linestyle 3, \
- 	1 / 0 title "ShellSort" with lines linestyle 3
+ 	1 / 0 title "ShellSort" with lines linestyle 3, \
+	 f3(x) title title_f(a3,b3) with lines linestyle 13
+
+
 
 
 
