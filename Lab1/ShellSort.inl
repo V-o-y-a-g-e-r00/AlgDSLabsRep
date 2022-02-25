@@ -20,6 +20,22 @@ void ShellSort(int *array, int size, bool SortOrder, bool IsStepbystep, int recl
     }
 }
 
+void shellsort1(int* l, int* r) {
+	int sz = r - l;
+	int step = sz / 2;
+	while (step >= 1) {
+		for (int *i = l + step; i < r; i++) {
+			int *j = i;
+			int *diff = j - step;
+			while (diff >= l && *diff > *j) {
+				std::swap(*diff, *j);
+				j = diff;
+				diff = j - step;
+			}
+		}
+		step /= 2;
+	}
+}
 
 
 #endif //SHELLSORT_INL_INCLUDED
