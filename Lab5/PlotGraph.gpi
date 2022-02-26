@@ -1,0 +1,52 @@
+#! /usr/bin/gnuplot -persist
+
+#Отображаемая область xrange
+set xr [0:100]   
+set yr [0:100]
+
+#Устанавливаем одинаковый масштаб по осям
+set size square   
+
+#Имена файлов с индексами и координатами точек и с информацией о ребрах
+flePnts = 'pnts.dat'
+fleEdges = 'edges.dat'
+
+#некая строка, в которую пишется информация, по которой строится график
+test = sprintf('< mousepad --version');
+
+
+#вот тут сложно. sprintf здесь это команда gnuplot. '' здесь кодируют одниночную кавычку.  '< gawk '' FNR==NR{x[$1]=$2;y[$1]=$3;next;}   {printf "%%f\t%%f\n%%f\t%%f\n\n", x[$1], y[$1], x[$2], y[$2];} '' %s %s'
+#-здесь это форматная строка sprintf, которая как и положено заключена в одинарные кавычки. %s %s это, собственно, спецификаторы формата в этой строке (больше спецификаторов формата эта строка не имеет)
+#flePnt fleEdges - это аргументы, подставляемые вместо спецификаторов формата.
+#остальные команды относится сугубо к утилите gawk. (при построении графика вся вот эта длинная строчка вызывается в теримнале). 
+#FNR==NR сравнение числа обработанных строк из текущего файла с числом строк, обработанных за все время работы. Вместе с командой next позволяет выполнять действие x[$1]=$2;y[$1]=$3; только для первого файла в списке файлов
+#Т.е. x[$1]=$2;y[$1]=$3; заполняет массивы x и y значениями 2 и 3 столбцов файла pnts.dat Запись x[$1] означает, что индексы берутся из 1 столбца файла.После чего выполняется действие {printf "%%f\t%%f\n%%f\t%%f\n\n", x[$1], y[$1], x[$2], y[$2];} уже для второго файла
+#
+loadEdges = sprintf('< gawk '' FNR==NR{x[$1]=$2;y[$1]=$3;next;}   {printf "%%f\t%%f\n%%f\t%%f\n\n", x[$1], y[$1], x[$2], y[$2];} '' %s %s', flePnts, fleEdges); 
+
+# gawk ' FNR==NR{x[$1]=$2;y[$1]=$3;next;}   {printf "%%f\t%%f\n%%f\t%%f\n\n", x[$1], y[$1], x[$2], y[$2];} ' pnts.dat edges.dat
+
+loadWeights = sprintf('< gawk '' FNR==NR{x[$1]=$2;y[$1]=$3;next;} {printf "%%f\t%%f\t%%s\n", (x[$1]+x[$2])/2 + $4, (y[$1]+y[$2])/2 + $5, $3} '' %s %s', flePnts, fleEdges);
+
+
+
+plot \
+    loadEdges using 1:2 with lines lc rgb "black" lw 2 notitle, \
+    flePnts using 2:3:(0.6) with circles fill solid lc rgb "black" notitle, \
+    flePnts using 2:3:1 with labels tc rgb "green" font "Arial Bold" notitle, \
+    loadWeights using 1:2:3 with labels tc rgb "red" center font "Arial Bold" title loadWeights
+
+
+#plot \
+#    loadEdges using 1:2 with lines lc rgb "black" lw 2 notitle, \ #рисуем
+#    flePnts using 2:3:(0.6) with circles fill solid lc rgb "black" notitle, \ #рисуем кружки(узлы) (0.6) размер кружков
+#    flePnts using 2:3:1 with labels tc rgb "white" font "Arial Bold" notitle, \ #рисуем текст в кружочках(узлах)
+#    loadWeights using 1:2:3 with labels tc rgb "red" center font "Arial Bold" notitle
+
+
+#Справка
+# \ позволяет записать одну строку как несколько
+# -persist позволяет держать окно открытым после завершения скрипта
+#
+#
+#
