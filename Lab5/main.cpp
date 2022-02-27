@@ -80,7 +80,7 @@ void SetEdgesForPlot(std::vector<std::vector<int>>& AdjacencyMatrix, std::vector
                 tempedgeForPlot.VertIndex2=j;
                 tempedgeForPlot.Weight=WeightMatrix.at(i).at(j);
                 tempedgeForPlot.OffsetX=0; //тут пока оставим так (0 значение).
-                tempedgeForPlot.OffsetY=0;
+                if(i==j) tempedgeForPlot.OffsetY=-3.5; //примерно на столько нужно сместить, чтобы не на петлях надписи не перекрывали номера узлов
                 VecedgeForPlot.push_back(tempedgeForPlot);
             }
         }
