@@ -79,8 +79,8 @@ void SetEdgesForPlot(std::vector<std::vector<int>>& AdjacencyMatrix, std::vector
                 tempedgeForPlot.VertIndex1=i;
                 tempedgeForPlot.VertIndex2=j;
                 tempedgeForPlot.Weight=WeightMatrix.at(i).at(j);
-                tempedgeForPlot.OffsetX=0; //тут пока оставим так (0 значение).
-                if(i==j) tempedgeForPlot.OffsetY=-3.5; //примерно на столько нужно сместить, чтобы не на петлях надписи не перекрывали номера узлов
+         //       tempedgeForPlot.OffsetX=0; //тут пока оставим так (0 значение). Тут ничего ставить не будем. Постараемся все "графические" величины указать в файле со скриптом.
+            //    if(i==j) tempedgeForPlot.OffsetY=-3.5; //примерно на столько нужно сместить, чтобы не на петлях надписи не перекрывали номера узлов
                 VecedgeForPlot.push_back(tempedgeForPlot);
             }
         }
