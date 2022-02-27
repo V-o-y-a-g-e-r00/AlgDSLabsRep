@@ -14,13 +14,15 @@ struct point
     int VertIndex=0;
     double x=0;
     double y=0;
+
+    int color=0; //
 };
 struct edgeForPlot
 {
     int VertIndex1=0;
     int VertIndex2=0;
     int Weight=0;
-    int OffsetX=0; //смещение для надписей весов
+    int OffsetX=0; //смещение для надписей весов не использую. Можно удалить их из структруры
     int OffsetY=0;    
 
 };
@@ -193,7 +195,7 @@ int main(int, char**) {
     int seed=time(0);
     //int seed=0;
 
-    int N=20;
+    int N=5;
     std::vector<std::vector<int>> AdjacencyMatrix(N);
     std::vector<std::vector<int>>::iterator iteri;
     for(iteri=AdjacencyMatrix.begin(); iteri!=AdjacencyMatrix.end(); iteri++)
@@ -204,7 +206,7 @@ int main(int, char**) {
   //  std::cout<< "AdjacencyMatrix.size()"<<AdjacencyMatrix.size()<<std::endl;
  //   std::cout<< "AdjacencyMatrix.at(0).size()"<<AdjacencyMatrix.at(0).size()<<std::endl;
   //  std::cout<< "AdjacencyMatrix[0][0]"<<AdjacencyMatrix.at(0).at(0)<<std::endl;
-    GenerateAdjacencyMatrix(AdjacencyMatrix, seed, 0.25);
+    GenerateAdjacencyMatrix(AdjacencyMatrix, seed, 0.5);
 //   std::cout<< "AdjacencyMatrix[0][0]"<<AdjacencyMatrix.at(0).at(0)<<std::endl;
 
     PrintMatrix<int>(AdjacencyMatrix, "AdjacencyMatrix");
