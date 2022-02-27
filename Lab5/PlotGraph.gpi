@@ -1,8 +1,14 @@
 #! /usr/bin/gnuplot -persist
 #Константы
 LOOPOFFSET='5'
-LOOPWEIGHTOFFSET='3.5'
-EdgesLoopWight=5;
+LOOPWEIGHTOFFSET='10'
+EdgesLoopWeight=5;
+set style line 1 lc rgb '#000000' lw 1   #Для ребер
+set style line 10 lc rgb "white" #Для узлов
+
+
+WeightOffset='0' #на петли не виляет
+
 
 #Имена файлов с индексами и координатами точек и с информацией о ребрах
 flePnts = 'pnts.dat'
@@ -28,17 +34,20 @@ loadEdgesLoops = sprintf('< gawk '' FNR==NR{x[$1]=$2;y[$1]=$3;next;}   {if($1==$
 
 # gawk ' FNR==NR{x[$1]=$2;y[$1]=$3;next;}   {printf "%%f\t%%f\n%%f\t%%f\n\n", x[$1], y[$1], x[$2], y[$2];} ' pnts.dat edges.dat
 
-loadWeightsNoLoops = sprintf('< gawk '' FNR==NR{x[$1]=$2;y[$1]=$3;next;} {if($1!=$2) printf "%%f\t%%f\t%%s\n", (x[$1]+x[$2])/2 + $4, (y[$1]+y[$2])/2 + $5, $3} '' %s %s',flePnts, fleEdges);
+loadWeightsNoLoops = sprintf('< gawk '' FNR==NR{x[$1]=$2;y[$1]=$3;next;} {if($1!=$2) printf "%%f\t%%f\t%%s\n", (x[$1]+x[$2])/2 + $4, (y[$1]+y[$2])/2 + $5-%s, $3} '' %s %s',WeightOffset, flePnts, fleEdges);
   loadWeightsLoops = sprintf('< gawk '' FNR==NR{x[$1]=$2;y[$1]=$3;next;} {if($1==$2) printf "%%f\t%%f\t%%s\n", (x[$1]+x[$2])/2 + $4, (y[$1]+y[$2])/2 + $5 - %s, $3} '' %s %s',LOOPWEIGHTOFFSET, flePnts, fleEdges);
 
 
 plot \
-	loadEdgesLoops using 1:2:(EdgesLoopWight) with circles lc rgb "green" notitle, \
-    loadEdges using 1:2 with lines lc rgb "black" lw 2 notitle, \
-    flePnts using 2:3:(2) with circles fill solid lc rgb "black" notitle, \
-    flePnts using 2:3:1 with labels tc rgb "green" font "Arial Bold" notitle, \
-    loadWeightsNoLoops using 1:2:3 with labels tc rgb "red" center font "Arial Bold", \
-    loadWeightsLoops using 1:2:3 with labels tc rgb "red" center font "Arial Bold"
+	loadEdgesLoops using 1:2:(EdgesLoopWeight) with circles ls 1 notitle, \
+    loadEdges using 1:2 with lines ls 1 notitle, \
+    flePnts using 2:3:(2) with circles fill solid ls 10 notitle, \
+    flePnts using 2:3:(2) with circles lc rgb "black" notitle, \
+    flePnts using 2:3:1 with labels tc rgb "black" font "Arial Bold" notitle, \
+    loadWeightsNoLoops using 1:2 with points pt 5 lc rgb "white" notitle, \
+    loadWeightsNoLoops using 1:2:3 with labels tc rgb "black" center font "Arial Bold" notitle, \
+    loadWeightsLoops using 1:2 with points pt 5 lc rgb "white" notitle, \
+    loadWeightsLoops using 1:2:3 with labels tc rgb "black" center font "Arial Bold" notitle
 
 
 #plot \

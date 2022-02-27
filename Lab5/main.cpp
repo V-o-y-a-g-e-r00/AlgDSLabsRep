@@ -193,7 +193,7 @@ int main(int, char**) {
     int seed=time(0);
     //int seed=0;
 
-    int N=10;
+    int N=20;
     std::vector<std::vector<int>> AdjacencyMatrix(N);
     std::vector<std::vector<int>>::iterator iteri;
     for(iteri=AdjacencyMatrix.begin(); iteri!=AdjacencyMatrix.end(); iteri++)
@@ -204,7 +204,7 @@ int main(int, char**) {
   //  std::cout<< "AdjacencyMatrix.size()"<<AdjacencyMatrix.size()<<std::endl;
  //   std::cout<< "AdjacencyMatrix.at(0).size()"<<AdjacencyMatrix.at(0).size()<<std::endl;
   //  std::cout<< "AdjacencyMatrix[0][0]"<<AdjacencyMatrix.at(0).at(0)<<std::endl;
-    GenerateAdjacencyMatrix(AdjacencyMatrix, seed, 0.1);
+    GenerateAdjacencyMatrix(AdjacencyMatrix, seed, 0.25);
 //   std::cout<< "AdjacencyMatrix[0][0]"<<AdjacencyMatrix.at(0).at(0)<<std::endl;
 
     PrintMatrix<int>(AdjacencyMatrix, "AdjacencyMatrix");
