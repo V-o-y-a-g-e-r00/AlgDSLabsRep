@@ -2,8 +2,10 @@
 #Константы
 LOOPOFFSET='5'
 LOOPWEIGHTOFFSET='10'
-EdgesLoopWeight=5;
-set style line 1 lc rgb '#000000' lw 1   #Для ребер
+EdgesLoopWidth=5;
+set style line 1 lc rgb '#0000FF' lw 1   #Для ребер
+set style line 2 lc rgb '#00FF00' lw 1
+
 set style line 11 lc rgb "white" #Для узлов
 set style line 12 lc rgb "green"
 set style line 13 lc rgb "blue"
@@ -34,7 +36,7 @@ set size square
 #Т.е. x[$1]=$2;y[$1]=$3; заполняет массивы x и y значениями 2 и 3 столбцов файла pnts.dat Запись x[$1] означает, что индексы берутся из 1 столбца файла.После чего выполняется действие {printf "%%f\t%%f\n%%f\t%%f\n\n", x[$1], y[$1], x[$2], y[$2];} уже для второго файла
 #Во втором файле у нас в 1 и 2 строках номера вершин, связянных друг с другом. т.е. в выходной строке у нас координаты начала и конца линий. Причем отдельные линии раделяются между собой пустой строкой
 #printf в данном случае также команда gawk, а не bush или gnuplot
-loadEdges = sprintf('< gawk '' FNR==NR{x[$1]=$2;y[$1]=$3;next;}   {printf "%%f\t%%f\n%%f\t%%f\n\n", x[$1], y[$1], x[$2], y[$2];} '' %s %s', flePnts, fleEdges);
+loadEdges = sprintf('< gawk '' FNR==NR{x[$1]=$2;y[$1]=$3;next;}   {printf "%%f\t%%f\t%%d\n%%f\t%%f\t%%d\n\n", x[$1], y[$1], $4, x[$2], y[$2], $4;} '' %s %s', flePnts, fleEdges);
 loadEdgesLoops = sprintf('< gawk '' FNR==NR{x[$1]=$2;y[$1]=$3;next;}   {if($1==$2) printf "%%f\t%%f\n", x[$1], y[$1]-%s;} '' %s %s', LOOPOFFSET, flePnts, fleEdges);  
 
 # gawk ' FNR==NR{x[$1]=$2;y[$1]=$3;next;}   {printf "%%f\t%%f\n%%f\t%%f\n\n", x[$1], y[$1], x[$2], y[$2];} ' pnts.dat edges.dat
@@ -43,9 +45,10 @@ loadWeightsNoLoops = sprintf('< gawk '' FNR==NR{x[$1]=$2;y[$1]=$3;next;} {if($1!
   loadWeightsLoops = sprintf('< gawk '' FNR==NR{x[$1]=$2;y[$1]=$3;next;} {if($1==$2) printf "%%f\t%%f\t%%s\n", (x[$1]+x[$2])/2 + $4, (y[$1]+y[$2])/2 + $5 - %s, $3} '' %s %s',LOOPWEIGHTOFFSET, flePnts, fleEdges);
 
 
+
+#loadEdgesLoops using 1:2:():4 with circles lc var notitle
 plot \
-	loadEdgesLoops using 1:2:(EdgesLoopWeight) with circles ls 1 notitle, \
-    loadEdges using 1:2 with lines ls 1 notitle, \
+    loadEdges using 1:2:3 with lines lc var notitle, \
     flePnts using 2:3:(2):4 with circles fill solid lc var notitle, \
     flePnts using 2:3:(2) with circles lc rgb "black" notitle, \
     flePnts using 2:3:1 with labels tc rgb "black" font "Arial Bold" notitle, \

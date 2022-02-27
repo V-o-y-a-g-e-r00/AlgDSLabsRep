@@ -22,6 +22,7 @@ struct edgeForPlot
     int VertIndex1=0;
     int VertIndex2=0;
     int Weight=0;
+    int color=1; //1 черный 2 зеленый; 3 голубой; 4 красный
   //  int OffsetX=0; //смещение для надписей весов не использую. Можно удалить их из структруры
   //  int OffsetY=0;    
 
@@ -67,6 +68,7 @@ void SetVertCoord(int N, int CenterX=0, int CenterY=0, const char* fname="pnts.d
         fd<< std::fixed <<std::setprecision(3)<<iter->VertIndex<< "\t"<<iter->x<<"\t"<<iter->y<<"\t"<<iter->color<<std::endl;
         iter++;
     }
+    fd<<"#VertIndex; x; y; color"<<std::endl;
     fd.close();
 }
 void SetEdgesForPlot(std::vector<std::vector<int>>& AdjacencyMatrix, std::vector<std::vector<int>>& WeightMatrix, const char* fname="edges.dat")
@@ -89,8 +91,9 @@ void SetEdgesForPlot(std::vector<std::vector<int>>& AdjacencyMatrix, std::vector
     std::ofstream fd(fname);
     for(auto& Viter: VecedgeForPlot)
     {
-        fd<<Viter.VertIndex1<<"\t"<<Viter.VertIndex2<<"\t"<<Viter.Weight<<"\t"<<std::endl;
+        fd<<Viter.VertIndex1<<"\t"<<Viter.VertIndex2<<"\t"<<Viter.Weight<<"\t"<<Viter.color<<std::endl;
     }
+    fd<<"#VertIndex1;VertIndex2;Weight;color"<<std::endl;
     fd.close();
 
 /*    
