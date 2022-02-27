@@ -15,6 +15,15 @@ struct point
     double x=0;
     double y=0;
 };
+struct edgeForPlot
+{
+    int VertIndex1=0;
+    int VertIndex2=0;
+    int Weight=0;
+    int OffsetX=0; //смещение для надписей весов
+    int OffsetY=0;    
+
+};
 
 void SetVertCoord(int N, int CenterX=0, int CenterY=0, const char* fname="pnts.dat")
 {
@@ -57,6 +66,44 @@ void SetVertCoord(int N, int CenterX=0, int CenterY=0, const char* fname="pnts.d
         iter++;
     }
     fd.close();
+}
+void SetEdgesForPlot(std::vector<std::vector<int>>& AdjacencyMatrix, std::vector<std::vector<int>>& WeightMatrix, const char* fname="edges.dat")
+{
+    std::vector<edgeForPlot> VecedgeForPlot;
+    for(int i=0; i<AdjacencyMatrix.size(); i++)
+        for(int j=i; j<AdjacencyMatrix.size(); j++) //просматриваем только верхний угл. Граф у нас неориентированный! Тут заполняется вектор с ребрами
+        {
+            edgeForPlot tempedgeForPlot;
+            if(AdjacencyMatrix.at(i).at(j)==1)
+            {
+                tempedgeForPlot.VertIndex1=i;
+                tempedgeForPlot.VertIndex2=j;
+                tempedgeForPlot.Weight=WeightMatrix.at(i).at(j);
+                tempedgeForPlot.OffsetX=0; //тут пока оставим так (0 значение).
+                tempedgeForPlot.OffsetY=0;
+                VecedgeForPlot.push_back(tempedgeForPlot);
+            }
+        }
+    std::ofstream fd(fname);
+    for(auto& Viter: VecedgeForPlot)
+    {
+        fd<<Viter.VertIndex1<<"\t"<<Viter.VertIndex2<<"\t"<<Viter.Weight<<"\t"<<Viter.OffsetX<<"\t"<<Viter.OffsetY<<std::endl;
+    }
+    fd.close();
+
+/*    
+    auto Witeri=WeightMatrix.begin();
+    for(auto& Aiteri: AdjacencyMatrix)
+    {
+        auto Witerj=Witeri->begin();
+        for(auto& Aiterj: Aiteri)
+        {
+            VecedgeForPlot
+            Witerj++;
+        }
+        Witeri++;
+    }
+*/
 }
 /*bool EventHappend(double probability, int precision) //Для хороших результатов здесь нужно не использовать большие percision
 {
@@ -123,11 +170,28 @@ void PrintMatrix(std::vector<std::vector<T>> Matrix, const char* MatrixName)
         std::cout<<std::endl;
     }
 }
+template<typename T>
+void PrintMatrixToFile(std::vector<std::vector<T>> Matrix, const char* MatrixName, const char* filename)
+{
+    std::ofstream fd(filename);
+    typename std::vector<std::vector<T>>::iterator iteri; //два итератора, для итерации по строкам и ячейкам(столбцам) .Без typename вообще не компилируется, хотя казалось бы.
+    typename std::vector<T>::iterator iterj;
+    for(iteri=Matrix.begin(); iteri!=Matrix.end(); iteri++)
+    {
+       // fd<< MatrixName<<"["<<std::distance(Matrix.begin(), iteri) <<"]=";
+        for(iterj=iteri->begin(); iterj!=iteri->end(); iterj++)
+        {
+            fd<< (*iterj)<<"\t";
+        }
+        fd<<std::endl;
+    }
+    fd.close();
+}
 
 int main(int, char**) {
     std::cout << "Hello, world!\n";
-   // int seed=time(0);
-    int seed=0;
+    int seed=time(0);
+    //int seed=0;
 
     int N=10;
     std::vector<std::vector<int>> AdjacencyMatrix(N);
@@ -140,12 +204,14 @@ int main(int, char**) {
   //  std::cout<< "AdjacencyMatrix.size()"<<AdjacencyMatrix.size()<<std::endl;
  //   std::cout<< "AdjacencyMatrix.at(0).size()"<<AdjacencyMatrix.at(0).size()<<std::endl;
   //  std::cout<< "AdjacencyMatrix[0][0]"<<AdjacencyMatrix.at(0).at(0)<<std::endl;
-    GenerateAdjacencyMatrix(AdjacencyMatrix, seed, 0.66);
+    GenerateAdjacencyMatrix(AdjacencyMatrix, seed, 0.1);
 //   std::cout<< "AdjacencyMatrix[0][0]"<<AdjacencyMatrix.at(0).at(0)<<std::endl;
 
     PrintMatrix<int>(AdjacencyMatrix, "AdjacencyMatrix");
-//   SetVertCoord(50);
-//    system("./PlotGraph.gpi");
+    PrintMatrixToFile(AdjacencyMatrix, "AdjacencyMatrix", "AdjacencyMatrixOut.txt");
+    SetEdgesForPlot(AdjacencyMatrix, AdjacencyMatrix, "edges.dat");
+    SetVertCoord(N);
+    system("./PlotGraph.gpi");
 
    /* int seed=0;
     seed=time(0);
