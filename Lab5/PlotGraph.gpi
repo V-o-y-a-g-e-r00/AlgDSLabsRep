@@ -50,4 +50,11 @@ plot \
 # -persist позволяет держать окно открытым после завершения скрипта
 #
 #
-#
+#Addicionally, if you want to add arrows to the edges, you have to do these steps:
+
+#Add the arrow style:
+
+#set style arrow 1 head filled size screen 0.025,10,40 lc rgb "black" lw 2
+#Change the command with lines for with vectors
+
+#loadEdges using 1:2:3:4 with vectors arrowstyle 1  notitle, \
