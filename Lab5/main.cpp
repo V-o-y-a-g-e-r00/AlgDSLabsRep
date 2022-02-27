@@ -15,15 +15,15 @@ struct point
     double x=0;
     double y=0;
 
-    int color=0; //
+    int color=11; //Определяет стиль в gnuplot. 11 белый; 12 зеленый; 13 голубой; 14 красный
 };
 struct edgeForPlot
 {
     int VertIndex1=0;
     int VertIndex2=0;
     int Weight=0;
-    int OffsetX=0; //смещение для надписей весов не использую. Можно удалить их из структруры
-    int OffsetY=0;    
+  //  int OffsetX=0; //смещение для надписей весов не использую. Можно удалить их из структруры
+  //  int OffsetY=0;    
 
 };
 
@@ -64,7 +64,7 @@ void SetVertCoord(int N, int CenterX=0, int CenterY=0, const char* fname="pnts.d
     iter=pnts.begin();
     while(iter!=pnts.end())
     {
-        fd<< std::fixed <<std::setprecision(3)<<iter->VertIndex<< "\t"<<iter->x<<"\t"<<iter->y<<std::endl;
+        fd<< std::fixed <<std::setprecision(3)<<iter->VertIndex<< "\t"<<iter->x<<"\t"<<iter->y<<"\t"<<iter->color<<std::endl;
         iter++;
     }
     fd.close();
@@ -89,7 +89,7 @@ void SetEdgesForPlot(std::vector<std::vector<int>>& AdjacencyMatrix, std::vector
     std::ofstream fd(fname);
     for(auto& Viter: VecedgeForPlot)
     {
-        fd<<Viter.VertIndex1<<"\t"<<Viter.VertIndex2<<"\t"<<Viter.Weight<<"\t"<<Viter.OffsetX<<"\t"<<Viter.OffsetY<<std::endl;
+        fd<<Viter.VertIndex1<<"\t"<<Viter.VertIndex2<<"\t"<<Viter.Weight<<"\t"<<std::endl;
     }
     fd.close();
 
