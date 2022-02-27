@@ -1,8 +1,8 @@
 #! /usr/bin/gnuplot -persist
 
 #Отображаемая область xrange
-set xr [0:100]   
-set yr [0:100]
+set xr [-50:50]   
+set yr [-50:50]
 
 #Устанавливаем одинаковый масштаб по осям
 set size square   
@@ -33,7 +33,7 @@ loadWeights = sprintf('< gawk '' FNR==NR{x[$1]=$2;y[$1]=$3;next;} {printf "%%f\t
 
 plot \
     loadEdges using 1:2 with lines lc rgb "black" lw 2 notitle, \
-    flePnts using 2:3:(0.6) with circles fill solid lc rgb "black" notitle, \
+    flePnts using 2:3:(2) with circles fill solid lc rgb "black" notitle, \
     flePnts using 2:3:1 with labels tc rgb "green" font "Arial Bold" notitle, \
     loadWeights using 1:2:3 with labels tc rgb "red" center font "Arial Bold" title loadWeights
 
