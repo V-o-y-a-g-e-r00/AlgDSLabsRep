@@ -4,6 +4,8 @@
 #include <vector>
 #include <fstream>
 #include <iomanip> //setprecision
+
+#define RADIUS 40
 struct point
 {
     int VertIndex=0;
@@ -13,7 +15,7 @@ struct point
 
 void SetVertCoord(int N, int CenterX=0, int CenterY=0, const char* fname="pnts.dat")
 {
-    double r=40;
+    double r=RADIUS;
     double alpha=0;
     double dalpha=2*M_PI/N;
     
@@ -24,11 +26,14 @@ void SetVertCoord(int N, int CenterX=0, int CenterY=0, const char* fname="pnts.d
     std::vector<point>::iterator iter;
     for(int i=0; i<N; i++)
     {
-        (i%2==0) ? r/=1.5 : r*=1.5;
+        //(i%2==0) ? r/=1.5 : r*=1.5;
+        
         pnts.at(i).VertIndex=CurrVertIndex;
         pnts.at(i).x=cos(alpha)*r;
         pnts.at(i).y=sin(alpha)*r;
         
+        if(i%8<4) r-=RADIUS*0.15;
+        else r+=RADIUS*0.15;
 
         CurrVertIndex++;
         alpha+=dalpha;
@@ -54,6 +59,6 @@ void SetVertCoord(int N, int CenterX=0, int CenterY=0, const char* fname="pnts.d
 
 int main(int, char**) {
     std::cout << "Hello, world!\n";
-    SetVertCoord(16);
+    SetVertCoord(50);
     system("./PlotGraph.gpi");
 }
