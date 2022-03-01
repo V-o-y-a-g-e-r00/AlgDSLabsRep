@@ -163,11 +163,19 @@ void GenerateAdjacencyMatrixProb(std::vector<std::vector<int>>& AdjacencyMatrix,
 
 void GenerateAdjacencyMatrixMNumber(std::vector<std::vector<int>>& AdjacencyMatrix, int seed, int m) //генерируем матрицу смежности. m -число ребер в случайном графе
 {
+
     //настраиваем генератор
     std::default_random_engine generator(seed);
 
     int n=(AdjacencyMatrix.size()+1)*AdjacencyMatrix.size()/2; //общее число случаев в классическом определении вероятности (пользуемся формулой арфиметической прогрессии для нахождения числа ячеек)
-    
+    //проверка на одз
+    if(m>n)
+    {
+        std::string str;
+        std::stringstream ss;
+        ss << "m=" <<m<<" is too big! (max m=n="<<n<<")"<<std::endl;
+        throw(ss.str());
+    }
 
     std::vector<std::vector<int>>::iterator iteri; //два итератора, для итерации по строкам и ячейкам(столбцам)
     std::vector<int>::iterator iterj;
@@ -245,11 +253,11 @@ void PrintMatrixToFile(std::vector<std::vector<T>> Matrix, const char* MatrixNam
 }
 
 int main(int, char**) {
-    std::cout << "Hello, world!\n";
+//    std::cout << "Hello, world!\n";
     int seed=time(0);
     //int seed=0; 
 
-    int N=2;
+    int N=5;
     std::vector<std::vector<int>> AdjacencyMatrix(N);
     std::vector<std::vector<int>>::iterator iteri;
     for(iteri=AdjacencyMatrix.begin(); iteri!=AdjacencyMatrix.end(); iteri++)
@@ -259,7 +267,12 @@ int main(int, char**) {
     }
 
 //    GenerateAdjacencyMatrixProb(AdjacencyMatrix, seed, 0.5);
-    GenerateAdjacencyMatrixMNumber(AdjacencyMatrix, seed, 1);
+    try {GenerateAdjacencyMatrixMNumber(AdjacencyMatrix, seed, 15);}
+    catch(std::string str)
+    {
+        std::cout<<"exeption:"<<str<<std::endl;
+        return -1;
+    }
 
     PrintMatrix<int>(AdjacencyMatrix, "AdjacencyMatrix");
     PrintMatrixToFile(AdjacencyMatrix, "AdjacencyMatrix", "AdjacencyMatrixOut.txt");
