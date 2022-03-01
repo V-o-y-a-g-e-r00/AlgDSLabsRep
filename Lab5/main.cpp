@@ -9,91 +9,89 @@
 #include <random> 
 
 #define RADIUS 40
-struct point
+struct vertex
 {
     int VertIndex=0;
     double x=0;
     double y=0;
+    int Color=11; //Определяет стиль в gnuplot. 11 белый; 12 зеленый; 13 голубой; 14 красный
 
-    int color=11; //Определяет стиль в gnuplot. 11 белый; 12 зеленый; 13 голубой; 14 красный
 };
-struct edgeForPlot
+struct edge
 {
-    int VertIndex1=0;
-    int VertIndex2=0;
-    int Weight=0;
-    int color=1; //1 черный 2 зеленый; 3 голубой; 4 красный
-  //  int OffsetX=0; //смещение для надписей весов не использую. Можно удалить их из структруры
-  //  int OffsetY=0;    
+    int Color=1; //1 черный 2 зеленый; 3 голубой; 4 красный
 
+    int Adjacency=0; //существование ребра
+    int Weight=0; //вес ребра
 };
 
-void SetVertCoord(int N, int CenterX=0, int CenterY=0, const char* fname="pnts.dat")
+void SetVertXYForPlot(std::vector<vertex> Vertices, int CenterX=0, int CenterY=0, const char* fname="Vertices.dat")
 {
     double r=RADIUS;
     double alpha=0;
-    double dalpha=2*M_PI/N;
+    double dalpha=2*M_PI/Vertices.size();
     
     double x, y;
     int CurrVertIndex=0;
-    std::vector<point> pnts(N); 
+   // std::vector<point> pnts(N); 
 
-    std::vector<point>::iterator iter; //вектор с информацией об индексах и координатах вершин
-    for(int i=0; i<N; i++)
+ //   std::vector<point>::iterator iter; //вектор с информацией об индексах и координатах вершин
+ //   std::vector<vertex>::iterator iter;
+    for(int i=0; i<Vertices.size(); i++)
     {
         //(i%2==0) ? r/=1.5 : r*=1.5;
         
-        pnts.at(i).VertIndex=CurrVertIndex;
-        pnts.at(i).x=cos(alpha)*r;
-        pnts.at(i).y=sin(alpha)*r;
+        Vertices.at(i).VertIndex=i;
+        Vertices.at(i).x=cos(alpha)*r;
+        Vertices.at(i).y=sin(alpha)*r;
         
         if(i%8<4) r-=RADIUS*0.15; //в виде звезды
         else r+=RADIUS*0.15;
 
-        CurrVertIndex++;
+     //   CurrVertIndex++;
         alpha+=dalpha;
     }
 
-    iter=pnts.begin();
-    while(iter!=pnts.end()) //выводим индексы и координаты вершин на экран
+    std::vector<vertex>::iterator iter=Vertices.begin();
+    for(iter=Vertices.begin();iter!=Vertices.end();iter++) //выводим индексы и координаты вершин на экран
     {
-        std::cout<< "pnts element:"<< std::distance(pnts.begin(),iter)<<" :VertIndex="<< iter->VertIndex<< "; x="<<iter->x<<"; y="<<iter->y<<std::endl;
-        iter++;
+        std::cout<< "vertices element:"<< std::distance(Vertices.begin(),iter)<<" :VertIndex="<< iter->VertIndex<< "; x="<<iter->x<<"; y="<<iter->y<<"; Color="<<iter->y<<iter->Color<<std::endl;
     }
 
     std::ofstream fd(fname, std::ios_base::out|std::ios_base::trunc); //выводим индексы и координаты вершин в файлик
-    iter=pnts.begin();
-    while(iter!=pnts.end())
-    {
-        fd<< std::fixed <<std::setprecision(3)<<iter->VertIndex<< "\t"<<iter->x<<"\t"<<iter->y<<"\t"<<iter->color<<std::endl;
-        iter++;
-    }
     fd<<"#VertIndex; x; y; color"<<std::endl;
+    for(iter=Vertices.begin();iter!=Vertices.end();iter++)
+    {
+        fd<< std::fixed <<std::setprecision(3)<<iter->VertIndex<< "\t"<<iter->x<<"\t"<<iter->y<<"\t"<<iter->Color<<std::endl;
+    }
     fd.close();
 }
-void SetEdgesForPlot(std::vector<std::vector<int>>& AdjacencyMatrix, std::vector<std::vector<int>>& WeightMatrix, const char* fname="edges.dat")
+void SetEdgesForPlot(std::vector<std::vector<edge>>& Edges, const char* fname="EdgesForPlot.dat")
 {
-    std::vector<edgeForPlot> VecedgeForPlot;
-    for(int i=0; i<AdjacencyMatrix.size(); i++)
-        for(int j=i; j<AdjacencyMatrix.size(); j++) //просматриваем только верхний угл. Граф у нас неориентированный! Тут заполняется вектор с ребрами
+//    std::vector<edgeForPlot> VecedgeForPlot;
+    std::ofstream fd(fname);
+    for(int i=0; i<Edges.size(); i++)
+        for(int j=i; j<Edges.at(i).size(); j++) //просматриваем только верхний угл. Граф у нас неориентированный! Тут заполняется вектор с ребрами
         {
-            edgeForPlot tempedgeForPlot;
-            if(AdjacencyMatrix.at(i).at(j)==1)
+          //  edgeForPlot tempedgeForPlot;
+            std::cout<<i<<"\t"<<j<<"\t"<<Edges.at(i).at(j).Weight<<"\t"<<Edges.at(i).at(j).Color<<std::endl;
+            if(Edges.at(i).at(j).Adjacency==1)
             {
-                tempedgeForPlot.VertIndex1=i;
-                tempedgeForPlot.VertIndex2=j;
-                tempedgeForPlot.Weight=WeightMatrix.at(i).at(j);
+            //    Edges.at(i).at(j).VertIndex1=i;
+            //    Edges.at(i).at(j).VertIndex2=j;
+          //      Edges.at(i).at(j).Weight=WeightMatrix.at(i).at(j);
          //       tempedgeForPlot.OffsetX=0; //тут пока оставим так (0 значение). Тут ничего ставить не будем. Постараемся все "графические" величины указать в файле со скриптом.
             //    if(i==j) tempedgeForPlot.OffsetY=-3.5; //примерно на столько нужно сместить, чтобы не на петлях надписи не перекрывали номера узлов
-                VecedgeForPlot.push_back(tempedgeForPlot);
+             //   VecedgeForPlot.push_back(tempedgeForPlot);
+                fd<<i<<"\t"<<j<<"\t"<<Edges.at(i).at(j).Weight<<"\t"<<Edges.at(i).at(j).Color<<std::endl;
             }
         }
-    std::ofstream fd(fname);
-    for(auto& Viter: VecedgeForPlot)
+    
+/*    for(auto& Viter: VecedgeForPlot)
     {
         fd<<Viter.VertIndex1<<"\t"<<Viter.VertIndex2<<"\t"<<Viter.Weight<<"\t"<<Viter.color<<std::endl;
     }
-    fd<<"#VertIndex1;VertIndex2;Weight;color"<<std::endl;
+    fd<<"#VertIndex1;VertIndex2;Weight;color"<<std::endl;*/
     fd.close();
 
 /*    
@@ -120,7 +118,7 @@ void SetEdgesForPlot(std::vector<std::vector<int>>& AdjacencyMatrix, std::vector
         return;
     }
 }*/
-void GenerateAdjacencyMatrixProb(std::vector<std::vector<int>>& AdjacencyMatrix, int seed, double probability) //генерируем матрицу смежности. probability -вероятность появления ребра
+void GenerateAdjacencyProb(std::vector<std::vector<edge>>& Edges, int seed, double probability) //генерируем матрицу смежности. probability -вероятность появления ребра
 {
     //настраиваем генератор
     std::default_random_engine generator(seed);
@@ -128,18 +126,18 @@ void GenerateAdjacencyMatrixProb(std::vector<std::vector<int>>& AdjacencyMatrix,
 
     std::vector<std::vector<int>>::iterator iteri; //два итератора, для итерации по строкам и ячейкам(столбцам)
     std::vector<int>::iterator iterj;
-    for(int i=0; i<AdjacencyMatrix.size(); i++)
+    for(int i=0; i<Edges.size(); i++)
     {
-        for(int j=0; j<AdjacencyMatrix.at(i).size();j++)
+        for(int j=0; j<Edges.at(i).size();j++)
         {
             if(j>=i)
             {
                 //int dice_roll = distribution(generator);
-                AdjacencyMatrix.at(i).at(j)=distribution(generator); //генерируем ребро.
+                Edges.at(i).at(j).Adjacency=distribution(generator); //генерируем ребро.
             }
             else
             {
-                AdjacencyMatrix.at(i).at(j)=AdjacencyMatrix.at(j).at(i); //граф неориентированный
+                Edges.at(i).at(j).Adjacency=Edges.at(i).at(j).Adjacency; //граф неориентированный
             }
         }
     }
@@ -161,13 +159,13 @@ void GenerateAdjacencyMatrixProb(std::vector<std::vector<int>>& AdjacencyMatrix,
 
 }
 
-void GenerateAdjacencyMatrixMNumber(std::vector<std::vector<int>>& AdjacencyMatrix, int seed, int m) //генерируем матрицу смежности. m -число ребер в случайном графе
+void GenerateAdjacencyMNumber(std::vector<std::vector<edge>>& Edges, int seed, int m) //генерируем матрицу смежности. m -число ребер в случайном графе
 {
 
     //настраиваем генератор
     std::default_random_engine generator(seed);
 
-    int n=(AdjacencyMatrix.size()+1)*AdjacencyMatrix.size()/2; //общее число случаев в классическом определении вероятности (пользуемся формулой арфиметической прогрессии для нахождения числа ячеек)
+    int n=(Edges.size()+1)*Edges.size()/2; //общее число случаев в классическом определении вероятности (пользуемся формулой арфиметической прогрессии для нахождения числа ячеек)
     //проверка на одз
     if(m>n)
     {
@@ -179,16 +177,16 @@ void GenerateAdjacencyMatrixMNumber(std::vector<std::vector<int>>& AdjacencyMatr
 
     std::vector<std::vector<int>>::iterator iteri; //два итератора, для итерации по строкам и ячейкам(столбцам)
     std::vector<int>::iterator iterj;
-    for(int i=0; i<AdjacencyMatrix.size(); i++)
+    for(int i=0; i<Edges.size(); i++)
     {
-        for(int j=0; j<AdjacencyMatrix.at(i).size();j++)
+        for(int j=0; j<Edges.at(i).size();j++)
         {
             if(j>=i)
             {
                 std::discrete_distribution<int> distribution {1-(double)m/n, (double)m/n}; //
                 //int dice_roll = distribution(generator);
-                AdjacencyMatrix.at(i).at(j)=distribution(generator); //генерируем ребро.
-                if(AdjacencyMatrix.at(i).at(j)!=0) //пользуемся классическим определением вероятности
+                Edges.at(i).at(j).Adjacency=distribution(generator); //генерируем ребро.
+                if(Edges.at(i).at(j).Adjacency!=0) //пользуемся классическим определением вероятности
                 {
                     m--;
                     n--;
@@ -200,27 +198,27 @@ void GenerateAdjacencyMatrixMNumber(std::vector<std::vector<int>>& AdjacencyMatr
             }
             else
             {
-                AdjacencyMatrix.at(i).at(j)=AdjacencyMatrix.at(j).at(i); //граф неориентированный
+                Edges.at(i).at(j).Adjacency=Edges.at(j).at(i).Adjacency; //граф неориентированный
             }
         }
     }
 }
 
-void SetGraphInfo(std::vector<std::vector<int>>& AdjacencyMatrix, const char* filename) //число вершин и ребер в файл
+void SetGraphInfo(std::vector<std::vector<edge>>& Edges, const char* filename) //число вершин и ребер в файл
 {
     int m=0; //число ребер в графе
-    for(int i=0; i<AdjacencyMatrix.size(); i++)
-        for(int j=i; j<AdjacencyMatrix.at(i).size(); j++)
+    for(int i=0; i<Edges.size(); i++)
+        for(int j=i; j<Edges.at(i).size(); j++)
         {
-            m+=AdjacencyMatrix.at(i).at(j);
+            m+=Edges.at(i).at(j).Adjacency;
         }
     std::ofstream fd(filename);
   //  fd<<AdjacencyMatrix.size()<<"\t"<<m<<std::endl;
-    fd<<"\"n="<<AdjacencyMatrix.size()<<";m="<<m<< "\""<<std::endl;
+    fd<<"\"n="<<Edges.size()<<";m="<<m<< "\""<<std::endl;
     fd.close();
 }
 template<typename T>
-void PrintMatrix(std::vector<std::vector<T>> Matrix, const char* MatrixName)
+void PrintMatrix(std::vector<std::vector<T>>& Matrix, const char* MatrixName)
 {
     typename std::vector<std::vector<T>>::iterator iteri; //два итератора, для итерации по строкам и ячейкам(столбцам) .Без typename вообще не компилируется, хотя казалось бы.
     typename std::vector<T>::iterator iterj;
@@ -235,7 +233,7 @@ void PrintMatrix(std::vector<std::vector<T>> Matrix, const char* MatrixName)
     }
 }
 template<typename T>
-void PrintMatrixToFile(std::vector<std::vector<T>> Matrix, const char* MatrixName, const char* filename)
+void PrintMatrixToFile(std::vector<std::vector<T>>& Matrix, const char* MatrixName, const char* filename)
 {
     std::ofstream fd(filename);
     typename std::vector<std::vector<T>>::iterator iteri; //два итератора, для итерации по строкам и ячейкам(столбцам) .Без typename вообще не компилируется, хотя казалось бы.
@@ -252,9 +250,10 @@ void PrintMatrixToFile(std::vector<std::vector<T>> Matrix, const char* MatrixNam
     fd.close();
 }
 
-bool DFSConnectivityCheck(std::vector<std::vector<int>> AdjacencyMatrix) //Проверка связности графа с помощью обхода в глубину
+bool DFSConnectivityCheck(std::vector<std::vector<int>>& AdjacencyMatrix, std::vector<vertex>& vertices) //Проверка связности графа с помощью обхода в глубину
 {
-
+    return false;
+}
 
 /*
 
@@ -269,7 +268,7 @@ int dfs(u: int, visited: bool[]):
     return visitedVertices
 
     */
-}
+//}
 
 int main(int, char**) {
 //    std::cout << "Hello, world!\n";
@@ -277,27 +276,30 @@ int main(int, char**) {
     //int seed=0; 
 
     int N=5;
-    std::vector<std::vector<int>> AdjacencyMatrix(N);
-    std::vector<std::vector<int>>::iterator iteri;
-    for(iteri=AdjacencyMatrix.begin(); iteri!=AdjacencyMatrix.end(); iteri++)
-    {
-        iteri->resize(N);
-        std::cout<< "iteri->size()"<<iteri->size()<<std::endl;
-    }
+    std::vector<vertex> Vertices(N);
+    std::vector<std::vector<edge>> Edges(N);
+ //   std::vector<std::vector<edge>>::iterator iteri;
+ //   for(iteri=AdjacencyMatrix.begin(); iteri!=AdjacencyMatrix.end(); iteri++)
+  //  {
+ //       iteri->resize(N);
+ //       std::cout<< "iteri->size()"<<iteri->size()<<std::endl;
+ //   }
+    for(auto& iter: Edges)
+        iter.resize(N);
 
-//    GenerateAdjacencyMatrixProb(AdjacencyMatrix, seed, 0.5);
-    try {GenerateAdjacencyMatrixMNumber(AdjacencyMatrix, seed, 3);}
+//    GenerateAdjacencyProb(Edges, seed, 0.5);
+    try {GenerateAdjacencyMNumber(Edges, seed, 3);}
     catch(std::string str)
     {
         std::cout<<"exeption:"<<str<<std::endl;
         return -1;
     }
 
-    PrintMatrix<int>(AdjacencyMatrix, "AdjacencyMatrix");
-    PrintMatrixToFile(AdjacencyMatrix, "AdjacencyMatrix", "AdjacencyMatrixOut.txt");
-    SetEdgesForPlot(AdjacencyMatrix, AdjacencyMatrix, "edges.dat");
-    SetVertCoord(N);
-    SetGraphInfo(AdjacencyMatrix, "GraphInfo.dat"); //число вершин и ребер в файл
+//    PrintMatrix<int>(AdjacencyMatrix, "AdjacencyMatrix");
+//    PrintMatrixToFile(AdjacencyMatrix, "AdjacencyMatrix", "AdjacencyMatrixOut.txt");
+    SetEdgesForPlot(Edges);
+    SetVertXYForPlot(Vertices);
+    SetGraphInfo(Edges, "GraphInfo.dat"); //число вершин и ребер в файл
     system("./PlotGraph.gpi");
 
    /* int seed=0;

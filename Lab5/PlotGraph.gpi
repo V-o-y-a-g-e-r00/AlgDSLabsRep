@@ -17,8 +17,8 @@ WeightOffset='0' #на петли не виляет
 
 
 #Имена файлов с индексами и координатами точек; с информацией о ребрах; с легендой
-flePnts = 'pnts.dat'
-fleEdges = 'edges.dat'
+flePnts = 'Vertices.dat'
+fleEdges = 'EdgesForPlot.dat'
 GraphInfo= 'GraphInfo.dat'
 
 #Отображаемая область xrange
