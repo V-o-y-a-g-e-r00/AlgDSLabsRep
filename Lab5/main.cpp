@@ -160,6 +160,19 @@ void GenerateAdjacencyMatrix(std::vector<std::vector<int>>& AdjacencyMatrix, int
 
 
 }
+void SetGraphInfo(std::vector<std::vector<int>>& AdjacencyMatrix, const char* filename) //число вершин и ребер в файл
+{
+    int m=0; //число ребер в графе
+    for(int i=0; i<AdjacencyMatrix.size(); i++)
+        for(int j=i; j<AdjacencyMatrix.at(i).size(); j++)
+        {
+            m+=AdjacencyMatrix.at(i).at(j);
+        }
+    std::ofstream fd(filename);
+  //  fd<<AdjacencyMatrix.size()<<"\t"<<m<<std::endl;
+    fd<<"\"n="<<AdjacencyMatrix.size()<<";m="<<m<< "\""<<std::endl;
+    fd.close();
+}
 template<typename T>
 void PrintMatrix(std::vector<std::vector<T>> Matrix, const char* MatrixName)
 {
@@ -198,7 +211,7 @@ int main(int, char**) {
     int seed=time(0);
     //int seed=0;
 
-    int N=5;
+    int N=1;
     std::vector<std::vector<int>> AdjacencyMatrix(N);
     std::vector<std::vector<int>>::iterator iteri;
     for(iteri=AdjacencyMatrix.begin(); iteri!=AdjacencyMatrix.end(); iteri++)
@@ -216,6 +229,7 @@ int main(int, char**) {
     PrintMatrixToFile(AdjacencyMatrix, "AdjacencyMatrix", "AdjacencyMatrixOut.txt");
     SetEdgesForPlot(AdjacencyMatrix, AdjacencyMatrix, "edges.dat");
     SetVertCoord(N);
+    SetGraphInfo(AdjacencyMatrix, "GraphInfo.dat"); //число вершин и ребер в файл
     system("./PlotGraph.gpi");
 
    /* int seed=0;
