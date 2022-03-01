@@ -91,10 +91,9 @@ class edges
 public:
     struct edge
     {
-        int Color=1; //1 черный 2 зеленый; 3 голубой; 4 красный
-
         int Adjacency=0; //существование ребра
         int Weight=0; //вес ребра
+        int Color=1; //1 черный 2 зеленый; 3 голубой; 4 красный
     };
     std::vector<std::vector<edge>> Vector;
 
@@ -278,7 +277,7 @@ int main(int, char**) {
 
 
 //    GenerateAdjacencyProb(Edges, seed, 0.5);
-    try {GenerateAdjacencyMNumber(Edges, seed, 3);}
+    try {GenerateAdjacencyMNumber(Edges, seed, 50);}
     catch(std::string str)
     {
         std::cout<<"exeption:"<<str<<std::endl;
