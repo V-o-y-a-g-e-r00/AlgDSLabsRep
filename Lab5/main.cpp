@@ -25,6 +25,27 @@ public:
     std::vector<vertex> Vector;
 
     vertices(int N): Vector(N){}
+    void PrintVertices(const char* filename="std::cout")
+    {
+        if(!strcmp(filename, "std::cout")) //если строки равны
+        {
+            std::cout<<"#VertIndex; x; y; color"<<std::endl;
+            for(auto& i: Vector)
+            {
+                std::cout<<i.VertIndex<<" "<<i.x<<" "<<i.y<<" "<<i.Color<<std::endl;
+            }
+        }
+        else
+        {
+            std::ofstream fd(filename); 
+            fd<<"#VertIndex; x; y; color"<<std::endl;
+            for(auto& i: Vector)
+            {
+                fd<<i.VertIndex<<" "<<i.x<<" "<<i.y<<" "<<i.Color<<std::endl;
+            }
+            fd.close();
+        }
+    }
     void SetVertXYForPlot(int CenterX=0, int CenterY=0, const char* fname="Vertices.dat")
     {
         double r=RADIUS;
@@ -46,7 +67,7 @@ public:
             else r+=RADIUS*0.15;
             alpha+=dalpha;
         }
-
+/*
         std::vector<vertex>::iterator iter=Vector.begin();
         for(iter=Vector.begin();iter!=Vector.end();iter++) //выводим индексы и координаты вершин на экран
         {
@@ -60,6 +81,7 @@ public:
             fd<< std::fixed <<std::setprecision(3)<<iter->VertIndex<< "\t"<<iter->x<<"\t"<<iter->y<<"\t"<<iter->Color<<std::endl;
         }
         fd.close();
+        */
     }
 
 };
@@ -107,9 +129,7 @@ public:
         }
     }
     void SetEdgesForPlot(const char* fname="EdgesForPlot.dat")
-    {
-     //   PrintEdges(Vector, std::cout);
-        
+    {       
         std::ofstream fd(fname);
         for(int i=0; i<Vector.size(); i++)
             for(int j=i; j<Vector.at(i).size(); j++) //просматриваем только верхний угл. Граф у нас неориентированный! Тут заполняется вектор с ребрами
@@ -252,7 +272,7 @@ int main(int, char**) {
     int seed=time(0);
     //int seed=0; 
 
-    int N=5;
+    int N=50;
     vertices Vertices(N);
     edges Edges(N);
 
@@ -270,7 +290,10 @@ int main(int, char**) {
 
     Edges.SetEdgesForPlot();
     Edges.PrintEdges();
+    Edges.PrintEdges("Edges.txt");
     Vertices.SetVertXYForPlot();
+    Vertices.PrintVertices();
+    Vertices.PrintVertices("Vertices.dat");
     SetGraphInfo(Edges, "GraphInfo.dat"); //число вершин и ребер в файл
     system("./PlotGraph.gpi");
 }
