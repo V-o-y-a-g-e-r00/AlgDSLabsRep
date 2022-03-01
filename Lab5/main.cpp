@@ -252,6 +252,25 @@ void PrintMatrixToFile(std::vector<std::vector<T>> Matrix, const char* MatrixNam
     fd.close();
 }
 
+bool DFSConnectivityCheck(std::vector<std::vector<int>> AdjacencyMatrix) //Проверка связности графа с помощью обхода в глубину
+{
+
+
+/*
+
+// visited — массив цветов вершин  
+                             
+int dfs(u: int, visited: bool[]):              
+    int visitedVertices = 1
+    visited[u] = true                           // помечаем вершину как пройденную
+    for v: uv ∈ E                               // проходим по смежным с u вершинам
+        if not visited[v]                       // проверяем, не находились ли мы ранее в выбранной вершине
+            visitedVertices += dfs(v, visited)
+    return visitedVertices
+
+    */
+}
+
 int main(int, char**) {
 //    std::cout << "Hello, world!\n";
     int seed=time(0);
@@ -267,7 +286,7 @@ int main(int, char**) {
     }
 
 //    GenerateAdjacencyMatrixProb(AdjacencyMatrix, seed, 0.5);
-    try {GenerateAdjacencyMatrixMNumber(AdjacencyMatrix, seed, 15);}
+    try {GenerateAdjacencyMatrixMNumber(AdjacencyMatrix, seed, 3);}
     catch(std::string str)
     {
         std::cout<<"exeption:"<<str<<std::endl;
