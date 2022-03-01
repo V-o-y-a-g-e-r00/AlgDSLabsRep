@@ -147,7 +147,7 @@ public:
 
 };
 
-void GenerateAdjacencyProb(edges& Edges, int seed, double probability) //генерируем матрицу смежности. probability -вероятность появления ребра
+void GenerateAdjacencyProb(edges& Edges, int seed, double probability, bool IsWithLoops) //генерируем матрицу смежности. probability -вероятность появления ребра
 {
     //настраиваем генератор
     std::default_random_engine generator(seed);
@@ -159,20 +159,41 @@ void GenerateAdjacencyProb(edges& Edges, int seed, double probability) //ген�
     {
         for(int j=0; j<Edges.Vector.at(i).size();j++)
         {
-            if(j>=i)
+            if(IsWithLoops)
             {
-                //int dice_roll = distribution(generator);
-                Edges.Vector.at(i).at(j).Adjacency=distribution(generator); //генерируем ребро.
+                if(j>=i)
+                {
+                    //int dice_roll = distribution(generator);
+                    Edges.Vector.at(i).at(j).Adjacency=distribution(generator); //генерируем ребро.
+                }
+                else
+                {
+                    Edges.Vector.at(i).at(j).Adjacency=Edges.Vector.at(i).at(j).Adjacency; //граф неориентированный
+                }
             }
             else
             {
-                Edges.Vector.at(i).at(j).Adjacency=Edges.Vector.at(i).at(j).Adjacency; //граф неориентированный
+                if(j==i) Edges.Vector.at(i).at(j).Adjacency=0;
+                else
+                {
+                    if(j>i)
+                    {
+                        //int dice_roll = distribution(generator);
+                        Edges.Vector.at(i).at(j).Adjacency=distribution(generator); //генерируем ребро.
+                    }
+                    else
+                    {
+                        Edges.Vector.at(i).at(j).Adjacency=Edges.Vector.at(i).at(j).Adjacency; //граф неориентированный
+                    }
+                }
+
             }
         }
+
     }
 }
 
-void GenerateAdjacencyMNumber(edges& Edges, int seed, int m) //генерируем матрицу смежности. m -число ребер в случайном графе
+void GenerateAdjacencyMNumberWithLoops(edges& Edges, int seed, int m) //генерируем матрицу смежности. m -число ребер в случайном графе.
 {
 
     //настраиваем генератор
@@ -212,6 +233,57 @@ void GenerateAdjacencyMNumber(edges& Edges, int seed, int m) //генериру�
             else
             {
                 Edges.Vector.at(i).at(j).Adjacency=Edges.Vector.at(j).at(i).Adjacency; //граф неориентированный
+            }
+        }
+    }
+}
+void GenerateAdjacencyMNumberNoLoops(edges& Edges, int seed, int m) //генерируем матрицу смежности. m -число ребер в случайном графе.
+{
+
+    //настраиваем генератор
+    std::default_random_engine generator(seed);
+
+    int n=(Edges.Vector.size()-1+0)*Edges.Vector.size()/2; //общее число случаев в классическом определении вероятности (пользуемся формулой арфиметической прогрессии для нахождения числа ячеек)
+    //проверка на одз
+    if(m>n)
+    {
+        std::string str;
+        std::stringstream ss;
+        ss << "m=" <<m<<" is too big! (max m=n="<<n<<")"<<std::endl;
+        throw(ss.str());
+    }
+
+    std::vector<std::vector<int>>::iterator iteri; //два итератора, для итерации по строкам и ячейкам(столбцам)
+    std::vector<int>::iterator iterj;
+    for(int i=0; i<Edges.Vector.size(); i++)
+    {
+        for(int j=0; j<Edges.Vector.at(i).size();j++)
+        {
+            if(j==i)
+            {
+                Edges.Vector.at(i).at(j).Adjacency=0;
+            }
+            else
+            {
+                if(j>i)
+                {
+                    std::discrete_distribution<int> distribution {1-(double)m/n, (double)m/n}; //
+                    //int dice_roll = distribution(generator);
+                    Edges.Vector.at(i).at(j).Adjacency=distribution(generator); //генерируем ребро.
+                    if(Edges.Vector.at(i).at(j).Adjacency!=0) //пользуемся классическим определением вероятности
+                    {
+                        m--;
+                        n--;
+                    }
+                    else
+                    {
+                        n--;
+                    }
+                }
+                else
+                {
+                    Edges.Vector.at(i).at(j).Adjacency=Edges.Vector.at(j).at(i).Adjacency; //граф неориентированный
+                }
             }
         }
     }
@@ -271,18 +343,19 @@ int main(int, char**) {
     int seed=time(0);
     //int seed=0; 
 
-    int N=50;
+    int N=5;
     vertices Vertices(N);
     edges Edges(N);
 
 
-//    GenerateAdjacencyProb(Edges, seed, 0.5);
-    try {GenerateAdjacencyMNumber(Edges, seed, 50);}
+    GenerateAdjacencyProb(Edges, seed, 0.5, false);
+//    try {GenerateAdjacencyMNumberWithLoops(Edges, seed, 25);}
+ /*   try {GenerateAdjacencyMNumberNoLoops(Edges, seed, 4);}
     catch(std::string str)
     {
         std::cout<<"exeption:"<<str<<std::endl;
         return -1;
-    }
+    }*/
 
 //    PrintMatrix<int>(AdjacencyMatrix, "AdjacencyMatrix");
 //    PrintMatrixToFile(AdjacencyMatrix, "AdjacencyMatrix", "AdjacencyMatrixOut.txt");
