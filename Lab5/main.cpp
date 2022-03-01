@@ -120,7 +120,7 @@ void SetEdgesForPlot(std::vector<std::vector<int>>& AdjacencyMatrix, std::vector
         return;
     }
 }*/
-void GenerateAdjacencyMatrix(std::vector<std::vector<int>>& AdjacencyMatrix, int seed, double probability) //генерируем матрицу смежности
+void GenerateAdjacencyMatrixProb(std::vector<std::vector<int>>& AdjacencyMatrix, int seed, double probability) //генерируем матрицу смежности. probability -вероятность появления ребра
 {
     //настраиваем генератор
     std::default_random_engine generator(seed);
@@ -160,6 +160,44 @@ void GenerateAdjacencyMatrix(std::vector<std::vector<int>>& AdjacencyMatrix, int
 
 
 }
+
+void GenerateAdjacencyMatrixMNumber(std::vector<std::vector<int>>& AdjacencyMatrix, int seed, int m) //генерируем матрицу смежности. m -число ребер в случайном графе
+{
+    //настраиваем генератор
+    std::default_random_engine generator(seed);
+
+    int n=(AdjacencyMatrix.size()+1)*AdjacencyMatrix.size()/2; //общее число случаев в классическом определении вероятности (пользуемся формулой арфиметической прогрессии для нахождения числа ячеек)
+    
+
+    std::vector<std::vector<int>>::iterator iteri; //два итератора, для итерации по строкам и ячейкам(столбцам)
+    std::vector<int>::iterator iterj;
+    for(int i=0; i<AdjacencyMatrix.size(); i++)
+    {
+        for(int j=0; j<AdjacencyMatrix.at(i).size();j++)
+        {
+            if(j>=i)
+            {
+                std::discrete_distribution<int> distribution {1-(double)m/n, (double)m/n}; //
+                //int dice_roll = distribution(generator);
+                AdjacencyMatrix.at(i).at(j)=distribution(generator); //генерируем ребро.
+                if(AdjacencyMatrix.at(i).at(j)!=0) //пользуемся классическим определением вероятности
+                {
+                    m--;
+                    n--;
+                }
+                else
+                {
+                    n--;
+                }
+            }
+            else
+            {
+                AdjacencyMatrix.at(i).at(j)=AdjacencyMatrix.at(j).at(i); //граф неориентированный
+            }
+        }
+    }
+}
+
 void SetGraphInfo(std::vector<std::vector<int>>& AdjacencyMatrix, const char* filename) //число вершин и ребер в файл
 {
     int m=0; //число ребер в графе
@@ -209,9 +247,9 @@ void PrintMatrixToFile(std::vector<std::vector<T>> Matrix, const char* MatrixNam
 int main(int, char**) {
     std::cout << "Hello, world!\n";
     int seed=time(0);
-    //int seed=0;
+    //int seed=0; 
 
-    int N=1;
+    int N=2;
     std::vector<std::vector<int>> AdjacencyMatrix(N);
     std::vector<std::vector<int>>::iterator iteri;
     for(iteri=AdjacencyMatrix.begin(); iteri!=AdjacencyMatrix.end(); iteri++)
@@ -219,11 +257,9 @@ int main(int, char**) {
         iteri->resize(N);
         std::cout<< "iteri->size()"<<iteri->size()<<std::endl;
     }
-  //  std::cout<< "AdjacencyMatrix.size()"<<AdjacencyMatrix.size()<<std::endl;
- //   std::cout<< "AdjacencyMatrix.at(0).size()"<<AdjacencyMatrix.at(0).size()<<std::endl;
-  //  std::cout<< "AdjacencyMatrix[0][0]"<<AdjacencyMatrix.at(0).at(0)<<std::endl;
-    GenerateAdjacencyMatrix(AdjacencyMatrix, seed, 0.5);
-//   std::cout<< "AdjacencyMatrix[0][0]"<<AdjacencyMatrix.at(0).at(0)<<std::endl;
+
+//    GenerateAdjacencyMatrixProb(AdjacencyMatrix, seed, 0.5);
+    GenerateAdjacencyMatrixMNumber(AdjacencyMatrix, seed, 1);
 
     PrintMatrix<int>(AdjacencyMatrix, "AdjacencyMatrix");
     PrintMatrixToFile(AdjacencyMatrix, "AdjacencyMatrix", "AdjacencyMatrixOut.txt");
