@@ -11,7 +11,7 @@ PictureName=$(gawk -F "\t" 'FNR==2{printf "%s", $4}' VarsForScript.dat)
 VerticesRadius=2
 
 SavePictureVar=""
-if [[ $IsSavePictureToFile -eq 1 ]]
+if [[ $IsSavePictureToFile -ne 0 ]]
 then
 read -r -d '' SavePictureVar<<ADDTEXT0
 set terminal pdfcairo size 6, 5 #этот неплохо работает. Размер в дюймах
@@ -44,8 +44,8 @@ ADDTEXT1
 else
 #Граф ориентированный
 read -r -d '' plotvar<<ADDTEXT2
-#loadEdges=x первой веришны; y первой вершины; Color; dx(векторы требуют такой формат); dy; Color       x[\$2]-x[\$1] -это координата векторов без учета радиуса вершины графа
-loadEdges = sprintf('< gawk '' FNR==NR{x[\$1]=\$2;y[\$1]=\$3;next;}   {printf "%%f\t%%f\t%%f\t%%f\t%%d\n\n", x[\$1], y[\$1], (x[\$2]-x[\$1])*(1-$VerticesRadius/sqrt((x[\$2]-x[\$1])*(x[\$2]-x[\$1])+(y[\$2]-y[\$1])*(y[\$2]-y[\$1]))), (y[\$2]-y[\$1])*(1-$VerticesRadius/sqrt((x[\$2]-x[\$1])*(x[\$2]-x[\$1])+(y[\$2]-y[\$1])*(y[\$2]-y[\$1]))), \$4;} '' %s %s', flePnts, fleEdges);
+#loadEdges=x первой веришны; y первой вершины; Color; dx(векторы требуют такой формат); dy; Color       x[\$2]-x[\$1] -это координата векторов без учета радиуса вершины графа. +0.01 нужно, чтобы в случае, когда вершини лежат друг на друге, не было деления на 0. 
+loadEdges = sprintf('< gawk '' FNR==NR{x[\$1]=\$2;y[\$1]=\$3;next;}   {printf "%%f\t%%f\t%%f\t%%f\t%%d\n\n", x[\$1], y[\$1], (x[\$2]-x[\$1])*(1-$VerticesRadius/sqrt((x[\$2]-x[\$1])*(x[\$2]-x[\$1])+(y[\$2]-y[\$1])*(y[\$2]-y[\$1])+0.01)), (y[\$2]-y[\$1])*(1-$VerticesRadius/sqrt((x[\$2]-x[\$1])*(x[\$2]-x[\$1])+(y[\$2]-y[\$1])*(y[\$2]-y[\$1])+0.01)), \$4;} '' %s %s', flePnts, fleEdges);
 
 plot \
     loadEdgesLoops using 1:2:(EdgesLoopRadius):3 with circles lc var notitle, \
@@ -75,10 +75,10 @@ set style line 2 lc rgb "green" lw 1
 set style line 3 lc rgb "blue" lw 1
 set style line 4 lc rgb "red" lw 1
 
-set style arrow 1 head filled size 6,6,12 ls 1
-set style arrow 2 head filled size 6,6,12 ls 2
-set style arrow 3 head filled size 6,6,12 ls 3
-set style arrow 4 head filled size 6,6,12 ls 4
+set style arrow 1 head filled size 4,12,36 ls 1
+set style arrow 2 head filled size 4,12,36 ls 2
+set style arrow 3 head filled size 4,12,36 ls 3
+set style arrow 4 head filled size 4,12,36 ls 4
 
 set style line 11 lc rgb "white" #Для узлов
 set style line 12 lc rgb "green"

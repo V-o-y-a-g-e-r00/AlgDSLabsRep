@@ -9,10 +9,10 @@ set style line 2 lc rgb "green" lw 1
 set style line 3 lc rgb "blue" lw 1
 set style line 4 lc rgb "red" lw 1
 
-set style arrow 1 head filled size 6,6,12 ls 1
-set style arrow 2 head filled size 6,6,12 ls 2
-set style arrow 3 head filled size 6,6,12 ls 3
-set style arrow 4 head filled size 6,6,12 ls 4
+set style arrow 1 head filled size 4,12,36 ls 1
+set style arrow 2 head filled size 4,12,36 ls 2
+set style arrow 3 head filled size 4,12,36 ls 3
+set style arrow 4 head filled size 4,12,36 ls 4
 
 set style line 11 lc rgb "white" #Для узлов
 set style line 12 lc rgb "green"
@@ -65,8 +65,8 @@ loadGraphInfo = sprintf('< gawk '' {n=$1;m=$2;} {printf "n=%%d\tm=%%d", n, m} ''
 
 
 #Немного через , но сойдет.
-#loadEdges=x первой веришны; y первой вершины; Color; dx(векторы требуют такой формат); dy; Color       x[$2]-x[$1] -это координата векторов без учета радиуса вершины графа
-loadEdges = sprintf('< gawk '' FNR==NR{x[$1]=$2;y[$1]=$3;next;}   {printf "%%f\t%%f\t%%f\t%%f\t%%d\n\n", x[$1], y[$1], (x[$2]-x[$1])*(1-2/sqrt((x[$2]-x[$1])*(x[$2]-x[$1])+(y[$2]-y[$1])*(y[$2]-y[$1]))), (y[$2]-y[$1])*(1-2/sqrt((x[$2]-x[$1])*(x[$2]-x[$1])+(y[$2]-y[$1])*(y[$2]-y[$1]))), $4;} '' %s %s', flePnts, fleEdges);
+#loadEdges=x первой веришны; y первой вершины; Color; dx(векторы требуют такой формат); dy; Color       x[$2]-x[$1] -это координата векторов без учета радиуса вершины графа. +0.01 нужно, чтобы в случае, когда вершини лежат друг на друге, не было деления на 0. 
+loadEdges = sprintf('< gawk '' FNR==NR{x[$1]=$2;y[$1]=$3;next;}   {printf "%%f\t%%f\t%%f\t%%f\t%%d\n\n", x[$1], y[$1], (x[$2]-x[$1])*(1-2/sqrt((x[$2]-x[$1])*(x[$2]-x[$1])+(y[$2]-y[$1])*(y[$2]-y[$1])+0.01)), (y[$2]-y[$1])*(1-2/sqrt((x[$2]-x[$1])*(x[$2]-x[$1])+(y[$2]-y[$1])*(y[$2]-y[$1])+0.01)), $4;} '' %s %s', flePnts, fleEdges);
 
 plot     loadEdgesLoops using 1:2:(EdgesLoopRadius):3 with circles lc var notitle,     loadEdges using 1:2:3:4:5 with vectors arrowstyle var  notitle,     flePnts using 2:3:(2):4 with circles fill solid lc var notitle,     flePnts using 2:3:(2) with circles lc rgb "black" notitle,     flePnts using 2:3:1 with labels tc rgb "black" font "Arial Bold" notitle,     loadWeightsNoLoops using 1:2 with points pt 5 lc rgb "white" notitle,     loadWeightsNoLoops using 1:2:3 with labels tc rgb "black" center font "Arial Bold" notitle,     loadWeightsLoops using 1:2 with points pt 5 lc rgb "white" notitle,     loadWeightsLoops using 1:2:3 with labels tc rgb "black" center font "Arial Bold" notitle,     1 / 0 title "n=5 m=10" with points lc rgb "white",     1 / 0 title "1" with points lc rgb "white",     1 / 0 title "0" with points lc rgb "white"
 
