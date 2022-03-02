@@ -165,5 +165,36 @@ void SetVarsForScript(edges& Edges, bool IsOriented, bool IsSavePictureToFile, c
     fd<<"\"n="<<Edges.Vector.size()<<"; m="<<m<< "\"\t"<<IsOriented<<"\t"<<IsSavePictureToFile<<"\t"<<PictureName<<std::endl;
     fd.close();
 }
-
+/*template<typename T>
+void PrintMatrix(std::vector<std::vector<T>>& Matrix, const char* MatrixName)
+{
+    typename std::vector<std::vector<T>>::iterator iteri; //два итератора, для итерации по строкам и ячейкам(столбцам) .Без typename вообще не компилируется, хотя казалось бы.
+    typename std::vector<T>::iterator iterj;
+    for(iteri=Matrix.begin(); iteri!=Matrix.end(); iteri++)
+    {
+        std::cout<< MatrixName<<"["<<std::distance(Matrix.begin(), iteri) <<"]=";
+        for(iterj=iteri->begin(); iterj!=iteri->end(); iterj++)
+        {
+            std::cout<< (*iterj)<<"\t";
+        }
+        std::cout<<std::endl;
+    }
+} */
+/*template<typename T>
+void PrintMatrixToFile(std::vector<std::vector<T>>& Matrix, const char* MatrixName, const char* filename)
+{
+    std::ofstream fd(filename);
+    typename std::vector<std::vector<T>>::iterator iteri; //два итератора, для итерации по строкам и ячейкам(столбцам) .Без typename вообще не компилируется, хотя казалось бы.
+    typename std::vector<T>::iterator iterj;
+    for(iteri=Matrix.begin(); iteri!=Matrix.end(); iteri++)
+    {
+       // fd<< MatrixName<<"["<<std::distance(Matrix.begin(), iteri) <<"]=";
+        for(iterj=iteri->begin(); iterj!=iteri->end(); iterj++)
+        {
+            fd<< (*iterj)<<"\t";
+        }
+        fd<<std::endl;
+    }
+    fd.close();
+}*/
 #endif //FUNC_H_INCLUDED
