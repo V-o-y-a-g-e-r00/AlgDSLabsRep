@@ -16,7 +16,7 @@
 
 int main(int, char**) {
     int seed=time(0);
-    //int seed=0; 
+ //   int seed=4; //с seed 4 получается 3 итерации в Adjacency при n=5 m=4
 
     int N=5;
     vertices Vertices(N);
@@ -30,14 +30,14 @@ int main(int, char**) {
     {
         std::cout<<"exeption:"<<str<<std::endl;
         return -1;
-    }
-*/
+    } */
+
     int iteration=0;
     std::default_random_engine generator(seed);
-    while(!IsConnectedDFS(Vertices, Edges, 1, false))
+    while(!IsConnectedDFS(Vertices, Edges, 0, false))
     {
-        ShowPlot(Vertices, Edges);
-        getchar();
+    //    ShowPlot(Vertices, Edges);
+    //    getchar();
         std::cout<<"Generating Adjacency: iteration: "<<iteration<<std::endl;
         Vertices.ResetColors();
         try {GenerateAdjacencyMNumberNoLoops(Edges, 4, generator);}
@@ -48,7 +48,7 @@ int main(int, char**) {
         }
         iteration++;
     }
-
+    GenerateWeights(Edges, generator, 1, 100); //все норм. Если seed принял какое-либо значение, то им определяется количество попыток, которые будут сделаны, чтобы получить Adjacency однозначно, поэтому при данном seed Weight будет также однозначным
 
     Vertices.SetVertXYForPlot();
     Vertices.PrintVertices();

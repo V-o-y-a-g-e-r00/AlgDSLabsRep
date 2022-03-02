@@ -122,8 +122,8 @@ void GenerateAdjacencyMNumberNoLoops(edges& Edges, int m, std::default_random_en
         throw(ss.str());
     }
 
-    std::vector<std::vector<int>>::iterator iteri; //два итератора, для итерации по строкам и ячейкам(столбцам)
-    std::vector<int>::iterator iterj;
+ //   std::vector<std::vector<int>>::iterator iteri; //два итератора, для итерации по строкам и ячейкам(столбцам)
+ //   std::vector<int>::iterator iterj;
     for(int i=0; i<Edges.Vector.size(); i++)
     {
         for(int j=0; j<Edges.Vector.at(i).size();j++)
@@ -157,6 +157,19 @@ void GenerateAdjacencyMNumberNoLoops(edges& Edges, int m, std::default_random_en
         }
     }
 }
+void GenerateWeights(edges& Edges, std::default_random_engine& generator, int WeightMin, int WeightMax)
+{
+    std::uniform_int_distribution<int> distribution(WeightMin, WeightMax);
+    for(auto& i: Edges.Vector)
+        for(auto& j: i)
+        {
+            if(j.Adjacency==1)
+            {
+                j.Weight=distribution(generator);
+            }
+        }
+}
+
 
 void SetVarsForScript(edges& Edges, bool IsOriented, bool IsSavePictureToFile, const char* PictureName, const char* filename) //Эти величины будет читать bash скрипт. Edges, чтобы мы могли вывести число вершин и ребер 
 {
