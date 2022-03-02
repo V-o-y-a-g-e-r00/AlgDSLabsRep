@@ -54,13 +54,15 @@ int main(int, char**) {
     }while(!IsConnectedDFS(Vertices, Edges, 0, PresentHandler));
     GenerateWeights(Edges, generator, 1, 100); //все норм. Если seed принял какое-либо значение, то им определяется количество попыток, которые будут сделаны, чтобы получить Adjacency однозначно, поэтому при данном seed Weight будет также однозначным
 
-    Vertices.SetVertXYForPlot();
+ //   Vertices.SetVertXYForPlot();
     Vertices.PrintVertices();
-    Vertices.PrintVertices("Vertices.dat");
-    Edges.SetEdgesForPlot(); //Вывод в файл для рисования графа
+ //   Vertices.PrintVertices("Vertices.dat");
+ //   Edges.SetEdgesForPlot(); //Вывод в файл для рисования графа
     Edges.PrintEdges(); 
-    Edges.PrintEdges("Edges.txt"); //вывод информации о ребрах для наглядности. Не используется для рисования графа
+//    Edges.PrintEdges("Edges.txt"); //вывод информации о ребрах для наглядности. Не используется для рисования графа
 
-    SetVarsForScript(Edges, false, false, "Pic1", "VarsForScript.dat"); //число вершин и ребер в файл
-    system("./PlotGraph.bash");
+
+ //   SetVarsForScript(Edges, false, false, "Pic1", "VarsForScript.dat"); //число вершин и ребер в файл
+ //   system("./PlotGraph.bash");
+    ShowPlot(Vertices, Edges, true, "PicRez");
 }
