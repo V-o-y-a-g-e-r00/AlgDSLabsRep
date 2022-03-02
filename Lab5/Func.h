@@ -8,6 +8,8 @@
 #include <random> 
 
 #include "edges.h"
+#include "vertices.h"
+#include "presenthandler.h"
 
 
 void GenerateAdjacencyProb(edges& Edges, int seed, double probability, bool IsWithLoops) //генерируем матрицу смежности. probability -вероятность появления ребра
@@ -171,7 +173,7 @@ void GenerateWeights(edges& Edges, std::default_random_engine& generator, int We
 }
 
 
-void SetVarsForScript(edges& Edges, bool IsOriented, bool IsSavePictureToFile, const char* PictureName, const char* filename) //Эти величины будет читать bash скрипт. Edges, чтобы мы могли вывести число вершин и ребер 
+void SetVarsForScript(edges& Edges, bool IsOriented, bool IsSavePictureToFile, std::string PictureName, const char* filename) //Эти величины будет читать bash скрипт. Edges, чтобы мы могли вывести число вершин и ребер 
 {
     int m=0; //число ребер в графе
     for(int i=0; i<Edges.Vector.size(); i++)
@@ -216,17 +218,17 @@ void PrintMatrixToFile(std::vector<std::vector<T>>& Matrix, const char* MatrixNa
     }
     fd.close();
 }*/
-void ShowPlot(vertices& Vertices, edges& Edges, bool IsSavePictureToFile=false, const char* PictureName="Pic1")
+void ShowPlot(vertices& Vertices, edges& Edges, bool IsSavePictureToFile, std::string PictureName) //PictureName без расширения
 {
     Vertices.SetVertXYForPlot();
     Vertices.PrintVertices("Vertices.dat");
     Edges.SetEdgesForPlot(); //Вывод в файл для рисования графа 
     Edges.PrintEdges("Edges.txt"); //вывод информации о ребрах для наглядности. Не используется для рисования графа
 
-    SetVarsForScript(Edges, false, false, PictureName, "VarsForScript.dat"); //число вершин и ребер в файл
+    SetVarsForScript(Edges, false, IsSavePictureToFile, PictureName, "VarsForScript.dat"); //число вершин и ребер в файл
     system("./PlotGraph.bash");
 }
-int DFS(vertices& Vertices, edges& Edges, int StartVert, bool IsStepByStep)
+int DFS(vertices& Vertices, edges& Edges, int StartVert, presenthandler& PresentHandler) //IsStepByStep 0-не по шагам; 1-по шагам; 2-вывод в файл
 {
   /*  if(StartVert>=Vertices.Vector.size() || StartVert<0)
     {
@@ -241,22 +243,40 @@ int DFS(vertices& Vertices, edges& Edges, int StartVert, bool IsStepByStep)
     {
         if((Edges.Vector.at(StartVert).at(j).Adjacency==1) && (Vertices.Vector.at(j).Color!=12))
         {
-            if(IsStepByStep)
+            if(PresentHandler.Mode>=1)
             {
-                ShowPlot(Vertices, Edges);
-                getchar();
+                ShowPlot(Vertices, Edges, PresentHandler.Mode-1, std::string("Pic").append(PresentHandler.GetFileNumberAndIncrease()));
+                if(PresentHandler.Mode==1) getchar();
             }
-            ColoredVertNumber+=DFS(Vertices, Edges, j, IsStepByStep);
+            ColoredVertNumber+=DFS(Vertices, Edges, j, PresentHandler);
             
         }
     }
     return ColoredVertNumber;
 }
-bool IsConnectedDFS(vertices& Vertices, edges& Edges, int StartVert, bool IsStepByStep) //Проверка связности графа с помощью обхода в глубину
+bool IsConnectedDFS(vertices& Vertices, edges& Edges, int StartVert, presenthandler& PresentHandler) //Проверка связности графа с помощью обхода в глубину
 {
 //    int dtemp=DFS(Vertices, Edges, StartVert);
 //    std::cout<<"DFS="<<dtemp<<" Vertices.Vector.size()="<<Vertices.Vector.size()<<std::endl;
-    if(DFS(Vertices, Edges, StartVert, IsStepByStep)==Vertices.Vector.size()) return true;
-    else return false;
+    if(DFS(Vertices, Edges, StartVert, PresentHandler)==Vertices.Vector.size())
+    {
+        if(PresentHandler.Mode>=1)
+        {
+            ShowPlot(Vertices, Edges, PresentHandler.Mode-1, std::string("Pic").append(PresentHandler.GetFileNumberAndIncrease()));
+            if(PresentHandler.Mode==1) getchar();
+        }
+        Vertices.ResetColors();
+        return true;
+    }
+    else
+    {
+        if(PresentHandler.Mode>=1)
+        {
+            ShowPlot(Vertices, Edges, PresentHandler.Mode-1, std::string("Pic").append(PresentHandler.GetFileNumberAndIncrease()));
+            if(PresentHandler.Mode==1) getchar();
+        }
+        Vertices.ResetColors();
+        return false;
+    }
 }
 #endif //FUNC_H_INCLUDED
