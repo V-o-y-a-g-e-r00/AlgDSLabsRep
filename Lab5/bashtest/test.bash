@@ -2,11 +2,19 @@
 #Скрипт генерирует скрипт для gnuplot. Это необходимо, т.к. gnuplot не достаточно хорошо умеет работать с переменными.
 #Тут будут переменные, которые влияют на генерацию.
 # -F разделитель полей
-nmtitle=$(gawk -F "\t" 'FNR==2{printf "%s", $1}' varsforscript.dat)
-IsOriented=$(gawk -F "\t" 'FNR==2{printf "%s", $2}' varsforscript.dat)
-IsSavePictureToFile=$(gawk -F "\t" 'FNR==2{printf "%s", $3}' varsforscript.dat)
+nmtitle=$(gawk -F "\t" 'FNR==2{printf "%s", $1}' VarsForScript.dat)
+IsOriented=$(gawk -F "\t" 'FNR==2{printf "%s", $2}' VarsForScript.dat)
+IsSavePictureToFile=$(gawk -F "\t" 'FNR==2{printf "%s", $3}' VarsForScript.dat)
+PictureName=$(gawk -F "\t" 'FNR==2{printf "%s", $4}' VarsForScript.dat)
 
-
+SavePictureVar=""
+if [[ $IsSavePictureToFile -eq 1 ]]
+then
+read -r -d '' SavePictureVar<<ADDTEXT0
+set terminal pdfcairo size 6, 5 #этот неплохо работает. Размер в дюймах
+set output "$PictureName.pdf"
+ADDTEXT0
+fi
 
 if [[ $IsOriented -eq 0 ]]
 then
@@ -114,7 +122,10 @@ loadGraphInfo = sprintf('< gawk '' {n=\$1;m=\$2;} {printf "n=%%d\tm=%%d", n, m} 
 
 #Тут номера столбцов не везде совпадают с номерами столбцов в исходном файле. Т.к. gawk формирует строку, которая воспринимается как файл. И у неё свои столбцы
 
-#Немного через ж, но сойдет.
+#Будем ли выводить в файл. (полезно для серии изображений)
+$SavePictureVar
+
+#Немного через , но сойдет.
 $plotvar
 
 #plot \
@@ -133,3 +144,9 @@ $plotvar
 ADDTEXT3
 chmod +x test.gpi
 ./test.gpi
+#Конвертируем картинку
+if [[ $IsSavePictureToFile -eq 1 ]]
+then
+convert -verbose -density 300 -trim $PictureName.pdf -quality 100 -flatten -sharpen 0x1.0 $PictureName.png
+fi
+
