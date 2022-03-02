@@ -31,12 +31,15 @@ void GenerateAdjacencyProb(edges& Edges, int seed, double probability, bool IsWi
                 }
                 else
                 {
-                    Edges.Vector.at(i).at(j).Adjacency=Edges.Vector.at(i).at(j).Adjacency; //граф неориентированный
+                    Edges.Vector.at(i).at(j).Adjacency=Edges.Vector.at(j).at(i).Adjacency; //граф неориентированный
                 }
             }
             else
             {
-                if(j==i) Edges.Vector.at(i).at(j).Adjacency=0;
+                if(j==i)
+                {
+                    Edges.Vector.at(i).at(j).Adjacency=0;
+                }
                 else
                 {
                     if(j>i)
@@ -46,7 +49,7 @@ void GenerateAdjacencyProb(edges& Edges, int seed, double probability, bool IsWi
                     }
                     else
                     {
-                        Edges.Vector.at(i).at(j).Adjacency=Edges.Vector.at(i).at(j).Adjacency; //граф неориентированный
+                        Edges.Vector.at(i).at(j).Adjacency=Edges.Vector.at(j).at(i).Adjacency; //граф неориентированный
                     }
                 }
 
@@ -55,7 +58,10 @@ void GenerateAdjacencyProb(edges& Edges, int seed, double probability, bool IsWi
 
     }
 }
-
+void test(edges& Edges)
+{
+    
+}
 void GenerateAdjacencyMNumberWithLoops(edges& Edges, int seed, int m) //генерируем матрицу смежности. m -число ребер в случайном графе.
 {
  
