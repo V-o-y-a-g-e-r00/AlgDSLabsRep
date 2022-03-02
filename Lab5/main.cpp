@@ -23,7 +23,7 @@ int main(int, char**) {
     edges Edges(N);
 
 
-    GenerateAdjacencyProb(Edges, seed, 0.5, true);
+    GenerateAdjacencyProb(Edges, seed, 0.5, false);
 //    try {GenerateAdjacencyMNumberWithLoops(Edges, seed, 25);}
  /*   try {GenerateAdjacencyMNumberNoLoops(Edges, seed, 4);}
     catch(std::string str)

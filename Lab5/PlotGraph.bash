@@ -47,8 +47,7 @@ read -r -d '' plotvar<<ADDTEXT2
 #loadEdges=x первой веришны; y первой вершины; Color; dx(векторы требуют такой формат); dy; Color       x[\$2]-x[\$1] -это координата векторов без учета радиуса вершины графа. +0.01 нужно, чтобы в случае, когда вершини лежат друг на друге, не было деления на 0. 
 loadEdges = sprintf('< gawk '' FNR==NR{x[\$1]=\$2;y[\$1]=\$3;next;}   {printf "%%f\t%%f\t%%f\t%%f\t%%d\n\n", x[\$1], y[\$1], (x[\$2]-x[\$1])*(1-$VerticesRadius/sqrt((x[\$2]-x[\$1])*(x[\$2]-x[\$1])+(y[\$2]-y[\$1])*(y[\$2]-y[\$1])+0.01)), (y[\$2]-y[\$1])*(1-$VerticesRadius/sqrt((x[\$2]-x[\$1])*(x[\$2]-x[\$1])+(y[\$2]-y[\$1])*(y[\$2]-y[\$1])+0.01)), \$4;} '' %s %s', flePnts, fleEdges);
 
-plot \
-    loadEdgesLoops using 1:2:(EdgesLoopRadius):3 with circles lc var notitle, \
+plot loadEdgesLoops using 1:2:(EdgesLoopRadius):3 with circles lc var notitle, \
     loadEdges using 1:2:3:4:5 with vectors arrowstyle var  notitle, \
     flePnts using 2:3:($VerticesRadius):4 with circles fill solid lc var notitle, \
     flePnts using 2:3:($VerticesRadius) with circles lc rgb "black" notitle, \
@@ -148,6 +147,8 @@ $plotvar
 #
 ADDTEXT3
 chmod +x PlotGraph.gpi
+#Избавляемся от надоедливых варнингов, перенаправляя вывод в этот файл.
+#./PlotGraph.gpi 2>/dev/null
 ./PlotGraph.gpi
 #Конвертируем картинку
 if [[ $IsSavePictureToFile -eq 1 ]]
