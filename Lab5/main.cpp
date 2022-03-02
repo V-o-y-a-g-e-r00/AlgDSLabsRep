@@ -10,10 +10,16 @@
 #include "edges.h"
 #include "Func.h"
 
-/*bool DFSConnectivityCheck(std::vector<std::vector<int>>& AdjacencyMatrix, std::vector<vertex>& vertices) //Проверка связности графа с помощью обхода в глубину
+
+int DFS(edges& Edges,vertices& Vertices, int StartVert)
 {
-    return false;
-}*/
+  //  Vertices.Vector.at()
+}
+bool DFSConnectivityCheck(edges& Edges,vertices& Vertices) //Проверка связности графа с помощью обхода в глубину
+{
+
+    
+}
 int main(int, char**) {
     int seed=time(0);
     //int seed=0; 
@@ -41,6 +47,6 @@ int main(int, char**) {
     Edges.PrintEdges(); 
     Edges.PrintEdges("Edges.txt"); //вывод информации о ребрах для наглядности. Не используется для рисования графа
 
-    SetVarsForScript(Edges, true, false, "Pic1", "VarsForScript.dat"); //число вершин и ребер в файл
+    SetVarsForScript(Edges, false, false, "Pic1", "VarsForScript.dat"); //число вершин и ребер в файл
     system("./PlotGraph.bash");
 }

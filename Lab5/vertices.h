@@ -14,7 +14,7 @@ class vertices
 public:
     struct vertex
     {
-        int VertIndex=0;
+    //    int VertIndex=0;
         double x=0;
         double y=0;
         int Color=11; //Определяет стиль в gnuplot. 11 белый; 12 зеленый; 13 голубой; 14 красный
@@ -27,19 +27,19 @@ public:
     {
         if(!strcmp(filename, "std::cout")) //если строки равны
         {
-            std::cout<<"#VertIndex; x; y; color"<<std::endl;
-            for(auto& i: Vector)
+            std::cout<<"#i; x; y; color"<<std::endl;
+            for(int i=0; i<Vector.size(); i++)
             {
-                std::cout<<i.VertIndex<<" "<<i.x<<" "<<i.y<<" "<<i.Color<<std::endl;
+                std::cout<<i<<" "<<Vector.at(i).x<<" "<<Vector.at(i).y<<" "<<Vector.at(i).Color<<std::endl;
             }
         }
         else
         {
             std::ofstream fd(filename); 
-            fd<<"#VertIndex; x; y; color"<<std::endl;
-            for(auto& i: Vector)
+            fd<<"#i; x; y; color"<<std::endl;
+            for(int i=0; i<Vector.size(); i++)
             {
-                fd<<i.VertIndex<<" "<<i.x<<" "<<i.y<<" "<<i.Color<<std::endl;
+                fd<<i<<" "<<Vector.at(i).x<<" "<<Vector.at(i).y<<" "<<Vector.at(i).Color<<std::endl;
             }
             fd.close();
         }
@@ -57,7 +57,7 @@ public:
         {
             //(i%2==0) ? r/=1.5 : r*=1.5;
             
-            Vector.at(i).VertIndex=i;
+        //    Vector.at(i).VertIndex=i;
             Vector.at(i).x=cos(alpha)*r;
             Vector.at(i).y=sin(alpha)*r;
             

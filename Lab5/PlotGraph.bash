@@ -10,6 +10,14 @@ PictureName=$(gawk -F "\t" 'FNR==2{printf "%s", $4}' VarsForScript.dat)
 #gawk передать переменную gnuplot не удастся, наверное. Проще сделать так.
 VerticesRadius=2
 
+if [[ $IsOriented -eq 0 ]]
+then
+#Граф неориентированный
+WeightPosVar=0.5
+else
+WeightPosVar=0.7
+fi
+
 SavePictureVar=""
 if [[ $IsSavePictureToFile -ne 0 ]]
 then
@@ -120,7 +128,7 @@ loadEdgesLoops = sprintf('< gawk '' FNR==NR{x[\$1]=\$2;y[\$1]=\$3;next;}   {if(\
 
 # gawk ' FNR==NR{x[\$1]=\$2;y[\$1]=\$3;next;}   {printf "%%f\t%%f\n%%f\t%%f\n\n", x[\$1], y[\$1], x[\$2], y[\$2];} ' pnts.dat edges.dat
 
-loadWeightsNoLoops = sprintf('< gawk '' FNR==NR{x[\$1]=\$2;y[\$1]=\$3;next;} {if(\$1!=\$2 && \$2!="") printf "%%f\t%%f\t%%s\n", (x[\$1]+x[\$2])/2, (y[\$1]+y[\$2])/2 - %s, \$3} '' %s %s',WeightOffset, flePnts, fleEdges);
+loadWeightsNoLoops = sprintf('< gawk '' FNR==NR{x[\$1]=\$2;y[\$1]=\$3;next;} {if(\$1!=\$2 && \$2!="") printf "%%f\t%%f\t%%s\n", x[\$1]+(x[\$2]-x[\$1])*$WeightPosVar, y[\$1]+(y[\$2]-y[\$1])*$WeightPosVar - %s, \$3} '' %s %s',WeightOffset, flePnts, fleEdges);
   loadWeightsLoops = sprintf('< gawk '' FNR==NR{x[\$1]=\$2;y[\$1]=\$3;next;} {if(\$1==\$2) printf "%%f\t%%f\t%%s\n", (x[\$1]+x[\$2])/2, (y[\$1]+y[\$2])/2 - %s, \$3} '' %s %s',LOOPWEIGHTOFFSET, flePnts, fleEdges);
 loadGraphInfo = sprintf('< gawk '' {n=\$1;m=\$2;} {printf "n=%%d\tm=%%d", n, m} '' %s', GraphInfo);
 
@@ -155,4 +163,3 @@ if [[ $IsSavePictureToFile -eq 1 ]]
 then
 convert -verbose -density 300 -trim $PictureName.pdf -quality 100 -flatten -sharpen 0x1.0 $PictureName.png
 fi
-
