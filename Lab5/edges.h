@@ -23,7 +23,7 @@ public:
         for(auto& iter: Vector)
             iter.resize(N);
     }
-    void PrintEdges(const char* filename="std::cout") // можно ввести "std::cout" и тогда информация будет выведена в консоль
+    void PrintEdges(const char* filename="std::cout") // можно ввести "std::cout" и тогда информация будет выведена в консоль. Для рисования графиков не используется
     {
         if(!strcmp(filename, "std::cout")) //если строки равны
         {
@@ -51,7 +51,7 @@ public:
     void SetEdgesForPlot(const char* fname="EdgesForPlot.dat")
     {       
         std::ofstream fd(fname);
-        std::cout<<"#i j Weight Color"<<std::endl;
+        fd<<"#i;j;Weight;Color"<<std::endl;
         for(int i=0; i<Vector.size(); i++)
             for(int j=i; j<Vector.at(i).size(); j++) //просматриваем только верхний угл. Граф у нас неориентированный! Тут заполняется вектор с ребрами
             {  
@@ -63,9 +63,6 @@ public:
             }
         fd.close();
     }
-    //Функции для вывода отдельных полей в виде матриц в файл. Не используются для рисования графиков. Нужны, чтобы сохранить результат.
-    
-
 
 };
 

@@ -58,10 +58,10 @@ void GenerateAdjacencyProb(edges& Edges, int seed, double probability, bool IsWi
 
     }
 }
-void test(edges& Edges)
+/* void test(edges& Edges)
 {
     
-}
+}*/
 void GenerateAdjacencyMNumberWithLoops(edges& Edges, int seed, int m) //генерируем матрицу смежности. m -число ребер в случайном графе.
 {
  
@@ -203,4 +203,47 @@ void PrintMatrixToFile(std::vector<std::vector<T>>& Matrix, const char* MatrixNa
     }
     fd.close();
 }*/
+void ShowPlot(vertices& Vertices, edges& Edges, bool IsSavePictureToFile=false, const char* PictureName="Pic1")
+{
+    Vertices.SetVertXYForPlot();
+    Vertices.PrintVertices("Vertices.dat");
+    Edges.SetEdgesForPlot(); //Вывод в файл для рисования графа 
+    Edges.PrintEdges("Edges.txt"); //вывод информации о ребрах для наглядности. Не используется для рисования графа
+
+    SetVarsForScript(Edges, false, false, PictureName, "VarsForScript.dat"); //число вершин и ребер в файл
+    system("./PlotGraph.bash");
+}
+int DFS(vertices& Vertices, edges& Edges, int StartVert, bool IsStepByStep)
+{
+  /*  if(StartVert>=Vertices.Vector.size() || StartVert<0)
+    {
+        std::stringstream ss;
+        ss<<"StartVert cannot be equal to "<< StartVert <<std::endl;
+        throw(ss.str());
+    }
+    */
+    Vertices.Vector.at(StartVert).Color=12;
+    int ColoredVertNumber=1;
+    for(int j=0; j<Vertices.Vector.size(); j++)
+    {
+        if((Edges.Vector.at(StartVert).at(j).Adjacency==1) && (Vertices.Vector.at(j).Color!=12))
+        {
+            if(IsStepByStep)
+            {
+                ShowPlot(Vertices, Edges);
+                getchar();
+            }
+            ColoredVertNumber+=DFS(Vertices, Edges, j, IsStepByStep);
+            
+        }
+    }
+    return ColoredVertNumber;
+}
+bool IsConnectedDFS(vertices& Vertices, edges& Edges, int StartVert, bool IsStepByStep) //Проверка связности графа с помощью обхода в глубину
+{
+//    int dtemp=DFS(Vertices, Edges, StartVert);
+//    std::cout<<"DFS="<<dtemp<<" Vertices.Vector.size()="<<Vertices.Vector.size()<<std::endl;
+    if(DFS(Vertices, Edges, StartVert, IsStepByStep)==Vertices.Vector.size()) return true;
+    else return false;
+}
 #endif //FUNC_H_INCLUDED
