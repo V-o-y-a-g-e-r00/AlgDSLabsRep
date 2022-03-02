@@ -62,11 +62,11 @@ void GenerateAdjacencyProb(edges& Edges, int seed, double probability, bool IsWi
 {
     
 }*/
-void GenerateAdjacencyMNumberWithLoops(edges& Edges, int seed, int m) //генерируем матрицу смежности. m -число ребер в случайном графе.
+void GenerateAdjacencyMNumberWithLoops(edges& Edges, int m, std::default_random_engine& generator) //генерируем матрицу смежности. m -число ребер в случайном графе. generator нужно передавать, если мы хотим, чтобы была возможность генерации одинаковой последовательности при многократном вызове функции
 {
  
     //настраиваем генератор
-    std::default_random_engine generator(seed);
+//    std::default_random_engine generator(seed);
 
     int n=(Edges.Vector.size()+1)*Edges.Vector.size()/2; //общее число случаев в классическом определении вероятности (пользуемся формулой арфиметической прогрессии для нахождения числа ячеек)
     //проверка на одз
@@ -106,11 +106,11 @@ void GenerateAdjacencyMNumberWithLoops(edges& Edges, int seed, int m) //гене
         }
     }
 }
-void GenerateAdjacencyMNumberNoLoops(edges& Edges, int seed, int m) //генерируем матрицу смежности. m -число ребер в случайном графе.
+void GenerateAdjacencyMNumberNoLoops(edges& Edges, int m, std::default_random_engine& generator) //генерируем матрицу смежности. m -число ребер в случайном графе.
 {
 
     //настраиваем генератор
-    std::default_random_engine generator(seed);
+//    std::default_random_engine generator(seed);
 
     int n=(Edges.Vector.size()-1+0)*Edges.Vector.size()/2; //общее число случаев в классическом определении вероятности (пользуемся формулой арфиметической прогрессии для нахождения числа ячеек)
     //проверка на одз

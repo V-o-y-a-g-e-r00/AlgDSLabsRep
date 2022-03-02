@@ -65,21 +65,10 @@ public:
             else r+=RADIUS*0.15;
             alpha+=dalpha;
         }
-/*
-        std::vector<vertex>::iterator iter=Vector.begin();
-        for(iter=Vector.begin();iter!=Vector.end();iter++) //выводим индексы и координаты вершин на экран
-        {
-            std::cout<< "vertices element:"<< std::distance(Vector.begin(),iter)<<" :VertIndex="<< iter->VertIndex<< "; x="<<iter->x<<"; y="<<iter->y<<"; Color="<<iter->y<<iter->Color<<std::endl;
-        }
-
-        std::ofstream fd(fname, std::ios_base::out|std::ios_base::trunc); //выводим индексы и координаты вершин в файлик
-        fd<<"#VertIndex; x; y; color"<<std::endl;
-        for(iter=Vector.begin();iter!=Vector.end();iter++)
-        {
-            fd<< std::fixed <<std::setprecision(3)<<iter->VertIndex<< "\t"<<iter->x<<"\t"<<iter->y<<"\t"<<iter->Color<<std::endl;
-        }
-        fd.close();
-        */
+    }
+    void ResetColors()
+    {
+        for(auto& i: Vector) i.Color=11;
     }
 
 };

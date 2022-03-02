@@ -25,21 +25,30 @@ int main(int, char**) {
 
  //   GenerateAdjacencyProb(Edges, seed, 0.5, false);
 //    try {GenerateAdjacencyMNumberWithLoops(Edges, seed, 25);}
-    try {GenerateAdjacencyMNumberNoLoops(Edges, seed, 6);}
+/*    try {GenerateAdjacencyMNumberNoLoops(Edges, seed, 6);}
     catch(std::string str)
     {
         std::cout<<"exeption:"<<str<<std::endl;
         return -1;
     }
+*/
+    int iteration=0;
+    std::default_random_engine generator(seed);
+    while(!IsConnectedDFS(Vertices, Edges, 1, false))
+    {
+        ShowPlot(Vertices, Edges);
+        getchar();
+        std::cout<<"Generating Adjacency: iteration: "<<iteration<<std::endl;
+        Vertices.ResetColors();
+        try {GenerateAdjacencyMNumberNoLoops(Edges, 4, generator);}
+        catch(std::string str)
+        {
+            std::cout<<"exeption:"<<str<<std::endl;
+            return -1;
+        }
+        iteration++;
+    }
 
- //   Vertices.SetVertXYForPlot();
- //   Edges.SetEdgesForPlot(); //Вывод в файл для рисования графа
- //   Edges.PrintEdges("Edges.txt");
-
-    int temp;//=DFS(Vertices, Edges, 0);
-    temp=IsConnectedDFS(Vertices, Edges, 1, true);
-    std::cout<<"temp="<<temp<<std::endl;
-  //  test(Edges);
 
     Vertices.SetVertXYForPlot();
     Vertices.PrintVertices();
