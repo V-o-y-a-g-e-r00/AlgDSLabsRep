@@ -7,6 +7,9 @@ IsOriented=$(gawk -F "\t" 'FNR==2{printf "%s", $2}' VarsForScript.dat)
 IsSavePictureToFile=$(gawk -F "\t" 'FNR==2{printf "%s", $3}' VarsForScript.dat)
 PictureName=$(gawk -F "\t" 'FNR==2{printf "%s", $4}' VarsForScript.dat)
 
+#gawk передать переменную gnuplot не удастся, наверное. Проще сделать так.
+VerticesRadius=2
+
 SavePictureVar=""
 if [[ $IsSavePictureToFile -eq 1 ]]
 then
@@ -27,8 +30,8 @@ loadEdges = sprintf('< gawk '' FNR==NR{x[\$1]=\$2;y[\$1]=\$3;next;}   {printf "%
 plot \
     loadEdgesLoops using 1:2:(EdgesLoopRadius):3 with circles lc var notitle, \
     loadEdges using 1:2:3 with lines lc var notitle, \
-    flePnts using 2:3:(2):4 with circles fill solid lc var notitle, \
-    flePnts using 2:3:(2) with circles lc rgb "black" notitle, \
+    flePnts using 2:3:($VerticesRadius):4 with circles fill solid lc var notitle, \
+    flePnts using 2:3:($VerticesRadius) with circles lc rgb "black" notitle, \
     flePnts using 2:3:1 with labels tc rgb "black" font "Arial Bold" notitle, \
     loadWeightsNoLoops using 1:2 with points pt 5 lc rgb "white" notitle, \
     loadWeightsNoLoops using 1:2:3 with labels tc rgb "black" center font "Arial Bold" notitle, \
@@ -39,15 +42,16 @@ plot \
     1 / 0 title "$IsSavePictureToFile" with points lc rgb "white"
 ADDTEXT1
 else
+#Граф ориентированный
 read -r -d '' plotvar<<ADDTEXT2
-#loadEdges=x первой веришны; y первой вершины; Color; dx(векторы требуют такой формат); dy; Color
-loadEdges = sprintf('< gawk '' FNR==NR{x[\$1]=\$2;y[\$1]=\$3;next;}   {printf "%%f\t%%f\t%%f\t%%f\t%%d\n\n", x[\$1], y[\$1], x[\$2]-x[\$1], y[\$2]-y[\$1], \$4;} '' %s %s', flePnts, fleEdges);
+#loadEdges=x первой веришны; y первой вершины; Color; dx(векторы требуют такой формат); dy; Color       x[\$2]-x[\$1] -это координата векторов без учета радиуса вершины графа
+loadEdges = sprintf('< gawk '' FNR==NR{x[\$1]=\$2;y[\$1]=\$3;next;}   {printf "%%f\t%%f\t%%f\t%%f\t%%d\n\n", x[\$1], y[\$1], (x[\$2]-x[\$1])*(1-$VerticesRadius/sqrt((x[\$2]-x[\$1])*(x[\$2]-x[\$1])+(y[\$2]-y[\$1])*(y[\$2]-y[\$1]))), (y[\$2]-y[\$1])*(1-$VerticesRadius/sqrt((x[\$2]-x[\$1])*(x[\$2]-x[\$1])+(y[\$2]-y[\$1])*(y[\$2]-y[\$1]))), \$4;} '' %s %s', flePnts, fleEdges);
 
 plot \
     loadEdgesLoops using 1:2:(EdgesLoopRadius):3 with circles lc var notitle, \
     loadEdges using 1:2:3:4:5 with vectors arrowstyle var  notitle, \
-    flePnts using 2:3:(2):4 with circles fill solid lc var notitle, \
-    flePnts using 2:3:(2) with circles lc rgb "black" notitle, \
+    flePnts using 2:3:($VerticesRadius):4 with circles fill solid lc var notitle, \
+    flePnts using 2:3:($VerticesRadius) with circles lc rgb "black" notitle, \
     flePnts using 2:3:1 with labels tc rgb "black" font "Arial Bold" notitle, \
     loadWeightsNoLoops using 1:2 with points pt 5 lc rgb "white" notitle, \
     loadWeightsNoLoops using 1:2:3 with labels tc rgb "black" center font "Arial Bold" notitle, \
@@ -59,12 +63,13 @@ plot \
 ADDTEXT2
 fi
 
-cat > test.gpi <<ADDTEXT3
+cat > PlotGraph.gpi <<ADDTEXT3
 #! /usr/bin/gnuplot -persist
 #Константы
 LOOPOFFSET='5'
 LOOPWEIGHTOFFSET='10'
 EdgesLoopRadius=5;
+
 set style line 1 lc rgb '#0000FF' lw 1   #Для ребер
 set style line 2 lc rgb "green" lw 1
 set style line 3 lc rgb "blue" lw 1
@@ -142,8 +147,8 @@ $plotvar
 #
 #
 ADDTEXT3
-chmod +x test.gpi
-./test.gpi
+chmod +x PlotGraph.gpi
+./PlotGraph.gpi
 #Конвертируем картинку
 if [[ $IsSavePictureToFile -eq 1 ]]
 then
