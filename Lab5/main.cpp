@@ -56,11 +56,14 @@ int main(int, char**) {
     Edges.PrintEdges(); 
     ShowPlot(Vertices, Edges, false, false, "PicRez");
 
-    std::vector<std::vector<int>> MPath(N);
+    std::vector<std::vector<int>> MPath(N), MPathLength(N);
     for(auto& i: MPath) i.resize(N);
+    for(auto& i: MPathLength) i.resize(N);
+
     MPath[0][0]=1;
-    FloydWarshall(Vertices, Edges, MPath);
-    PrintMatrix(MPath, "MPath");
+    FloydWarshall(Vertices, Edges, MPathLength, MPath);
     Edges.PrintEdges();
+    PrintMatrix(MPathLength, "MPathLength");
+    PrintMatrix(MPath, "MPath");
 
 }

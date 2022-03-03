@@ -162,14 +162,20 @@ void GenerateAdjacencyMNumberNoLoops(edges& Edges, int m, std::default_random_en
 void GenerateWeights(edges& Edges, std::default_random_engine& generator, int WeightMin, int WeightMax)
 {
     std::uniform_int_distribution<int> distribution(WeightMin, WeightMax);
-    for(auto& i: Edges.Vector)
-        for(auto& j: i)
+    for(int i=0; i<Edges.Vector.size(); i++)
+    {
+        for(int j=0; j<Edges.Vector.at(i).size();j++)
         {
-            if(j.Adjacency==1)
+            if(j>=i)
             {
-                j.Weight=distribution(generator);
+                Edges.Vector.at(i).at(j).Weight=distribution(generator);
+            }
+            else
+            {
+                Edges.Vector.at(i).at(j).Weight=Edges.Vector.at(j).at(i).Weight;
             }
         }
+    }
 }
 
 

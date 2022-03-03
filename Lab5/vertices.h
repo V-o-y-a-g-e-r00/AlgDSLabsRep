@@ -31,7 +31,7 @@ public:
             std::cout<<"#i; x; y; color;weight"<<std::endl;
             for(int i=0; i<Vector.size(); i++)
             {
-                std::cout<<i<<" "<<Vector.at(i).x<<" "<<Vector.at(i).y<<" "<<Vector.at(i).Color<<Vector.at(i).Weight<<std::endl;
+                std::cout<<i<<" "<<Vector.at(i).x<<" "<<Vector.at(i).y<<" "<<Vector.at(i).Color<<" "<<Vector.at(i).Weight<<std::endl;
             }
         }
         else

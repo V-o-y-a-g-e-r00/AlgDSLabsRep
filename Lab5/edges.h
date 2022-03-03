@@ -6,6 +6,8 @@
 #include <cstring>
 #include <vector>
 
+#include <iomanip>
+#include <sstream>
 
 class edges
 {
@@ -31,7 +33,14 @@ public:
             for(auto& i: Vector)
             {
                 for(auto& j: i)
-                    std::cout<<"["<<j.Adjacency<<" "<<j.Weight<<" "<<j.Color<<"] ";
+                {
+                    std::stringstream ss;
+                    ss<<"["<<j.Adjacency<<" "<<j.Weight<<" "<<j.Color<<"]";
+                //    std::cout.setf(std::ios::left);
+                 //   std::cout.left;
+                //    std::cout<<std::setfill('=')<<std::setw(20) << std::left << ss.str();
+                    std::cout<<std::setw(10) << std::left << ss.str();
+                }
                 std::cout<<std::endl;
             }
         }
