@@ -6,17 +6,24 @@
 #include <fstream> //для файлов
 #include <iomanip>      // std::setprecision
 
+#include <random>
+
+#include "vertices.h"
+#include "edges.h"
+
 class statisticsGraph
 {
 private:
     int CurrentSize=0; //текущее число вершин в графе
 
     int NStart=0, NEnd=0, NStep=0;
+    double MRatio=0; //Отношение числа ребер к максимально возможному для данного графа (будет округляться до целого числа m)
     int WeightMax=0; //максимальный вес ребер графа
     int NumberOfRuns=1; //число прогонов для каждого размера(числа вершин) графа
 public:
 //в callback будут Vertices Edges SourceVert DestVert   параметры для результатов работы MPath MPathLenght для ФлойдаУоршелла  Lenght для Дейкстры и т.д.  PresentHandler
-    statisticsGraph()
+    template<typename... CallBackParamsTail>
+    statisticsGraph(int NNStart, int NNEnd, int NNStep, double MRatio, int WeightMax, int NNumberOfRuns, std::default_random_engine& generator, const char* filename, void(*CallBack)(vertices&, edges&, CallBackParamsTail...), CallBackParamsTail ...callbackparamstail)
     {
 
     }
