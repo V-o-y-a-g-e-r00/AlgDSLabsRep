@@ -17,6 +17,7 @@ public:
     //    int VertIndex=0;
         double x=0;
         double y=0;
+        int Weight=0;
         int Color=11; //Определяет стиль в gnuplot. 11 белый; 12 зеленый; 13 голубой; 14 красный
 
     };

@@ -6,9 +6,11 @@ nmtitle=$(gawk -F "\t" 'FNR==2{printf "%s", $1}' VarsForScript.dat)
 IsOriented=$(gawk -F "\t" 'FNR==2{printf "%s", $2}' VarsForScript.dat)
 IsSavePictureToFile=$(gawk -F "\t" 'FNR==2{printf "%s", $3}' VarsForScript.dat)
 PictureName=$(gawk -F "\t" 'FNR==2{printf "%s", $4}' VarsForScript.dat)
+IsWithVertices
 
 #gawk передать переменную gnuplot не удастся, наверное. Проще сделать так.
 VerticesRadius=2
+VerticesWeightsOffset=$VerticesRadius+2
 
 if [[ $IsOriented -eq 0 ]]
 then
@@ -35,6 +37,9 @@ read -r -d '' plotvar<<ADDTEXT1
 #loadEdges=x первой веришны; y первой вершины; Color; x второй веришны; y второй вершины; Color
 loadEdges = sprintf('< gawk '' FNR==NR{x[\$1]=\$2;y[\$1]=\$3;next;}   {printf "%%f\t%%f\t%%d\n%%f\t%%f\t%%d\n\n", x[\$1], y[\$1], \$4, x[\$2], y[\$2], \$4;} '' %s %s', flePnts, fleEdges);
 
+
+loadVerticesWeights = sprintf('< gawk '' {printf "%%f\t%%f\t%%s\n", \$2, \$3 + $VerticesWeightsOffset, \$5} '' %s', flePnts);
+
 plot \
     loadEdgesLoops using 1:2:(EdgesLoopRadius):3 with circles lc var notitle, \
     loadEdges using 1:2:3 with lines lc var notitle, \
@@ -45,9 +50,12 @@ plot \
     loadWeightsNoLoops using 1:2:3 with labels tc rgb "black" center font "Arial Bold" notitle, \
     loadWeightsLoops using 1:2 with points pt 5 lc rgb "white" notitle, \
     loadWeightsLoops using 1:2:3 with labels tc rgb "black" center font "Arial Bold" notitle, \
+    loadVerticesWeights using 1:2:3 with labels tc rgb "black" center font "Arial Bold" notitle, \
     1 / 0 title $nmtitle with points lc rgb "white", \
     1 / 0 title "$IsOriented" with points lc rgb "white", \
     1 / 0 title "$IsSavePictureToFile" with points lc rgb "white"
+
+
 ADDTEXT1
 else
 #Граф ориентированный

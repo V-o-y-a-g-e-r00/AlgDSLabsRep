@@ -24,7 +24,7 @@ int main(int, char**) {
     edges Edges(N);
 
     presenthandler PresentHandler; //для отображения шагов
-    PresentHandler.Mode=2;
+    PresentHandler.Mode=1;
 
 
  //   GenerateAdjacencyProb(Edges, seed, 0.5, false);
