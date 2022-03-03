@@ -6,7 +6,7 @@ nmtitle=$(gawk -F "\t" 'FNR==2{printf "%s", $1}' VarsForScript.dat)
 IsOriented=$(gawk -F "\t" 'FNR==2{printf "%s", $2}' VarsForScript.dat)
 IsSavePictureToFile=$(gawk -F "\t" 'FNR==2{printf "%s", $3}' VarsForScript.dat)
 PictureName=$(gawk -F "\t" 'FNR==2{printf "%s", $4}' VarsForScript.dat)
-IsWithVertices
+IsWithVerticesWeights=$(gawk -F "\t" 'FNR==2{printf "%s", $5}' VarsForScript.dat)
 
 #gawk передать переменную gnuplot не удастся, наверное. Проще сделать так.
 VerticesRadius=2
@@ -19,6 +19,22 @@ WeightPosVar=0.5
 else
 WeightPosVar=0.7
 fi
+
+#Чтобы можно было отключать показ весов вершин.
+loadVerticesWeightsVar="loadVerticesWeights= \"1 / 0\""
+if [[ $IsWithVerticesWeights -ne 0 ]]
+then
+#Если нужно с весами
+read -r -d '' loadVerticesWeightsVar<<HEREDOCWEIGHTS1
+loadVerticesWeights = sprintf('< gawk '' {printf "%%f\t%%f\t%%s\n", \$2, \$3 + $VerticesWeightsOffset, \$5} '' %s', flePnts);
+HEREDOCWEIGHTS1
+else
+#Отправляем читать gawk заведомо пустой столбец 10
+read -r -d '' loadVerticesWeightsVar<<HEREDOCWEIGHTS2
+loadVerticesWeights = sprintf('< gawk '' {printf "%%f\t%%f\t%%s\n", \$2, \$3 + $VerticesWeightsOffset, \$10} '' %s', flePnts);
+HEREDOCWEIGHTS2
+fi
+
 
 SavePictureVar=""
 if [[ $IsSavePictureToFile -ne 0 ]]
@@ -38,7 +54,7 @@ read -r -d '' plotvar<<ADDTEXT1
 loadEdges = sprintf('< gawk '' FNR==NR{x[\$1]=\$2;y[\$1]=\$3;next;}   {printf "%%f\t%%f\t%%d\n%%f\t%%f\t%%d\n\n", x[\$1], y[\$1], \$4, x[\$2], y[\$2], \$4;} '' %s %s', flePnts, fleEdges);
 
 
-loadVerticesWeights = sprintf('< gawk '' {printf "%%f\t%%f\t%%s\n", \$2, \$3 + $VerticesWeightsOffset, \$5} '' %s', flePnts);
+
 
 plot \
     loadEdgesLoops using 1:2:(EdgesLoopRadius):3 with circles lc var notitle, \
@@ -133,6 +149,8 @@ set size square
 
 
 loadEdgesLoops = sprintf('< gawk '' FNR==NR{x[\$1]=\$2;y[\$1]=\$3;next;}   {if(\$1==\$2) printf "%%f\t%%f\t%%d\n", x[\$1], y[\$1]-%s, \$4;} '' %s %s', LOOPOFFSET, flePnts, fleEdges);  
+
+$loadVerticesWeightsVar
 
 # gawk ' FNR==NR{x[\$1]=\$2;y[\$1]=\$3;next;}   {printf "%%f\t%%f\n%%f\t%%f\n\n", x[\$1], y[\$1], x[\$2], y[\$2];} ' pnts.dat edges.dat
 
