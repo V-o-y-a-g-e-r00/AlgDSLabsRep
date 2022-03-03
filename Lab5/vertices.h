@@ -28,19 +28,19 @@ public:
     {
         if(!strcmp(filename, "std::cout")) //если строки равны
         {
-            std::cout<<"#i; x; y; color"<<std::endl;
+            std::cout<<"#i; x; y; color;weight"<<std::endl;
             for(int i=0; i<Vector.size(); i++)
             {
-                std::cout<<i<<" "<<Vector.at(i).x<<" "<<Vector.at(i).y<<" "<<Vector.at(i).Color<<std::endl;
+                std::cout<<i<<" "<<Vector.at(i).x<<" "<<Vector.at(i).y<<" "<<Vector.at(i).Color<<Vector.at(i).Weight<<std::endl;
             }
         }
         else
         {
             std::ofstream fd(filename); 
-            fd<<"#i; x; y; color"<<std::endl;
+            fd<<"#i; x; y; color;weight"<<std::endl;
             for(int i=0; i<Vector.size(); i++)
             {
-                fd<<i<<" "<<Vector.at(i).x<<" "<<Vector.at(i).y<<" "<<Vector.at(i).Color<<std::endl;
+                fd<<i<<" "<<Vector.at(i).x<<" "<<Vector.at(i).y<<" "<<Vector.at(i).Color<<" "<<Vector.at(i).Weight<<std::endl;
             }
             fd.close();
         }

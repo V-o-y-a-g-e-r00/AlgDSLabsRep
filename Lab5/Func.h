@@ -173,7 +173,7 @@ void GenerateWeights(edges& Edges, std::default_random_engine& generator, int We
 }
 
 
-void SetVarsForScript(edges& Edges, bool IsOriented, bool IsSavePictureToFile, std::string PictureName, const char* filename) //Эти величины будет читать bash скрипт. Edges, чтобы мы могли вывести число вершин и ребер 
+void SetVarsForScript(edges& Edges, bool IsOriented, bool IsWithVerticesWeights, bool IsSavePictureToFile, std::string PictureName,const char* filename) //Эти величины будет читать bash скрипт. Edges, чтобы мы могли вывести число вершин и ребер 
 {
     int m=0; //число ребер в графе
     for(int i=0; i<Edges.Vector.size(); i++)
@@ -182,8 +182,8 @@ void SetVarsForScript(edges& Edges, bool IsOriented, bool IsSavePictureToFile, s
             m+=Edges.Vector.at(i).at(j).Adjacency;
         }
     std::ofstream fd(filename);
-    fd<<"#nmtitle IsOriented IsSavePictureToFile PictureName"<<std::endl;
-    fd<<"\"n="<<Edges.Vector.size()<<"; m="<<m<< "\"\t"<<IsOriented<<"\t"<<IsSavePictureToFile<<"\t"<<PictureName<<std::endl;
+    fd<<"#nmtitle IsOriented IsSavePictureToFile PictureName IsWithVerticesWeights"<<std::endl;
+    fd<<"\"n="<<Edges.Vector.size()<<"; m="<<m<< "\"\t"<<IsOriented<<"\t"<<IsSavePictureToFile<<"\t"<<PictureName<<"\t"<<IsWithVerticesWeights<<std::endl;
     fd.close();
 }
 /*template<typename T>
@@ -218,14 +218,14 @@ void PrintMatrixToFile(std::vector<std::vector<T>>& Matrix, const char* MatrixNa
     }
     fd.close();
 }*/
-void ShowPlot(vertices& Vertices, edges& Edges, bool IsSavePictureToFile, std::string PictureName) //PictureName без расширения
+void ShowPlot(vertices& Vertices, edges& Edges, bool IsWithVerticesWeights, bool IsSavePictureToFile, std::string PictureName) //PictureName без расширения
 {
     Vertices.SetVertXYForPlot();
     Vertices.PrintVertices("Vertices.dat");
     Edges.SetEdgesForPlot(); //Вывод в файл для рисования графа 
     Edges.PrintEdges("Edges.txt"); //вывод информации о ребрах для наглядности. Не используется для рисования графа
 
-    SetVarsForScript(Edges, false, IsSavePictureToFile, PictureName, "VarsForScript.dat"); //число вершин и ребер в файл
+    SetVarsForScript(Edges, false, IsWithVerticesWeights, IsSavePictureToFile, PictureName, "VarsForScript.dat"); //число вершин и ребер в файл
     system("./PlotGraph.bash");
 }
 int DFS(vertices& Vertices, edges& Edges, int StartVert, presenthandler& PresentHandler) //IsStepByStep 0-не по шагам; 1-по шагам; 2-вывод в файл
@@ -245,7 +245,7 @@ int DFS(vertices& Vertices, edges& Edges, int StartVert, presenthandler& Present
         {
             if(PresentHandler.Mode>=1)
             {
-                ShowPlot(Vertices, Edges, PresentHandler.Mode-1, std::string("Pic").append(PresentHandler.GetFileNumberAndIncrease()));
+                ShowPlot(Vertices, Edges, false, PresentHandler.Mode-1, std::string("Pic").append(PresentHandler.GetFileNumberAndIncrease()));
                 if(PresentHandler.Mode==1) getchar();
             }
             ColoredVertNumber+=DFS(Vertices, Edges, j, PresentHandler);
@@ -262,7 +262,7 @@ bool IsConnectedDFS(vertices& Vertices, edges& Edges, int StartVert, presenthand
     {
         if(PresentHandler.Mode>=1)
         {
-            ShowPlot(Vertices, Edges, PresentHandler.Mode-1, std::string("Pic").append(PresentHandler.GetFileNumberAndIncrease()));
+            ShowPlot(Vertices, Edges, false, PresentHandler.Mode-1, std::string("Pic").append(PresentHandler.GetFileNumberAndIncrease()));
             if(PresentHandler.Mode==1) getchar();
         }
         Vertices.ResetColors();
@@ -272,7 +272,7 @@ bool IsConnectedDFS(vertices& Vertices, edges& Edges, int StartVert, presenthand
     {
         if(PresentHandler.Mode>=1)
         {
-            ShowPlot(Vertices, Edges, PresentHandler.Mode-1, std::string("Pic").append(PresentHandler.GetFileNumberAndIncrease()));
+            ShowPlot(Vertices, Edges, false, PresentHandler.Mode-1, std::string("Pic").append(PresentHandler.GetFileNumberAndIncrease()));
             if(PresentHandler.Mode==1) getchar();
         }
         Vertices.ResetColors();

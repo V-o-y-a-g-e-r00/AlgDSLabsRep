@@ -24,7 +24,7 @@ int main(int, char**) {
     edges Edges(N);
 
     presenthandler PresentHandler; //для отображения шагов
-    PresentHandler.Mode=1;
+    PresentHandler.Mode=0;
 
 
  //   GenerateAdjacencyProb(Edges, seed, 0.5, false);
@@ -64,5 +64,5 @@ int main(int, char**) {
 
  //   SetVarsForScript(Edges, false, false, "Pic1", "VarsForScript.dat"); //число вершин и ребер в файл
  //   system("./PlotGraph.bash");
-    ShowPlot(Vertices, Edges, true, "PicRez");
+    ShowPlot(Vertices, Edges, true, false, "PicRez");
 }
