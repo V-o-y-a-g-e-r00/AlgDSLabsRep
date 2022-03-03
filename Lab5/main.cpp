@@ -10,7 +10,7 @@
 #include "edges.h"
 #include "presenthandler.h"
 #include "Func.h"
-
+#include "ShortestPathFunc.h"
 
 
 
@@ -40,8 +40,6 @@ int main(int, char**) {
     std::default_random_engine generator(seed);
     do
     {
-    //    ShowPlot(Vertices, Edges);
-    //    getchar();
         std::cout<<"Generating Adjacency: iteration: "<<iteration<<std::endl;
        
         try {GenerateAdjacencyMNumberNoLoops(Edges, 4, generator);}
@@ -54,15 +52,15 @@ int main(int, char**) {
     }while(!IsConnectedDFS(Vertices, Edges, 0, PresentHandler));
     GenerateWeights(Edges, generator, 1, 100); //все норм. Если seed принял какое-либо значение, то им определяется количество попыток, которые будут сделаны, чтобы получить Adjacency однозначно, поэтому при данном seed Weight будет также однозначным
 
- //   Vertices.SetVertXYForPlot();
     Vertices.PrintVertices();
- //   Vertices.PrintVertices("Vertices.dat");
- //   Edges.SetEdgesForPlot(); //Вывод в файл для рисования графа
     Edges.PrintEdges(); 
-//    Edges.PrintEdges("Edges.txt"); //вывод информации о ребрах для наглядности. Не используется для рисования графа
-
-
- //   SetVarsForScript(Edges, false, false, "Pic1", "VarsForScript.dat"); //число вершин и ребер в файл
- //   system("./PlotGraph.bash");
     ShowPlot(Vertices, Edges, false, false, "PicRez");
+
+    std::vector<std::vector<int>> MPath(N);
+    for(auto& i: MPath) i.resize(N);
+    MPath[0][0]=1;
+    FloydWarshall(Vertices, Edges, MPath);
+    PrintMatrix(MPath, "MPath");
+    Edges.PrintEdges();
+
 }
