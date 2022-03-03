@@ -64,5 +64,5 @@ int main(int, char**) {
 
  //   SetVarsForScript(Edges, false, false, "Pic1", "VarsForScript.dat"); //число вершин и ребер в файл
  //   system("./PlotGraph.bash");
-    ShowPlot(Vertices, Edges, true, false, "PicRez");
+    ShowPlot(Vertices, Edges, false, false, "PicRez");
 }

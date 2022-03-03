@@ -88,6 +88,7 @@ plot loadEdgesLoops using 1:2:(EdgesLoopRadius):3 with circles lc var notitle, \
     loadWeightsNoLoops using 1:2:3 with labels tc rgb "black" center font "Arial Bold" notitle, \
     loadWeightsLoops using 1:2 with points pt 5 lc rgb "white" notitle, \
     loadWeightsLoops using 1:2:3 with labels tc rgb "black" center font "Arial Bold" notitle, \
+    loadVerticesWeights using 1:2:3 with labels tc rgb "black" center font "Arial Bold" notitle, \
     1 / 0 title $nmtitle with points lc rgb "white", \
     1 / 0 title "$IsOriented" with points lc rgb "white", \
     1 / 0 title "$IsSavePictureToFile" with points lc rgb "white"
