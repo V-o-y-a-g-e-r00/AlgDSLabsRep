@@ -229,57 +229,37 @@ bool IsConnectedDFS(Graph& Graph1, int StartVert, presenthandler& PresentHandler
         return false;
     }
 }
-/*
-void GenerateAdjacencyMNumberNoLoopsGraph(Graph& Graph1, int m, std::default_random_engine& generator) //генерируем матрицу смежности. m -число ребер в случайном графе.
+template<typename T>
+void PrintMatrix(std::vector<std::vector<T>>& Matrix, const char* MatrixName)
 {
-
-    //настраиваем генератор
-//    std::default_random_engine generator(seed);
-
-    int n=(Graph1.Edges.size()-1+0)*Graph1.Edges.size()/2; //общее число случаев в классическом определении вероятности (пользуемся формулой арфиметической прогрессии для нахождения числа ячеек)
-    //проверка на одз
-    if(m>n)
+    typename std::vector<std::vector<T>>::iterator iteri; //два итератора, для итерации по строкам и ячейкам(столбцам) .Без typename вообще не компилируется, хотя казалось бы.
+    typename std::vector<T>::iterator iterj;
+    for(iteri=Matrix.begin(); iteri!=Matrix.end(); iteri++)
     {
-        std::string str;
-        std::stringstream ss;
-        ss << "m=" <<m<<" is too big! (max m=n="<<n<<")"<<std::endl;
-        throw(ss.str());
-    }
-
- //   std::vector<std::vector<int>>::iterator iteri; //два итератора, для итерации по строкам и ячейкам(столбцам)
- //   std::vector<int>::iterator iterj;
-    for(int i=0; i<Graph1.Edges.size(); i++)
-    {
-        for(int j=0; j<Graph1.Edges.at(i).size();j++)
+        std::cout<< MatrixName<<"["<<std::distance(Matrix.begin(), iteri) <<"]=";
+        for(iterj=iteri->begin(); iterj!=iteri->end(); iterj++)
         {
-            if(j==i)
-            {
-                Graph1.Edges.at(i).at(j).Adjacency=0;
-            }
-            else
-            {
-                if(j>i)
-                {
-                    std::discrete_distribution<int> distribution {1-(double)m/n, (double)m/n}; //
-                    //int dice_roll = distribution(generator);
-                    Graph1.Edges.at(i).at(j).Adjacency=distribution(generator); //генерируем ребро.
-                    if(Graph1.Edges.at(i).at(j).Adjacency!=0) //пользуемся классическим определением вероятности
-                    {
-                        m--;
-                        n--;
-                    }
-                    else
-                    {
-                        n--;
-                    }
-                }
-                else
-                {
-                    Graph1.Edges.at(i).at(j).Adjacency=Graph1.Edges.at(j).at(i).Adjacency; //граф неориентированный
-                }
-            }
+            std::cout<< (*iterj)<<"\t";
         }
+        std::cout<<std::endl;
     }
+    std::cout<<"----------"<<std::endl;
 }
-*/
+/*template<typename T>
+void PrintMatrixToFile(std::vector<std::vector<T>>& Matrix, const char* MatrixName, const char* filename)
+{
+    std::ofstream fd(filename);
+    typename std::vector<std::vector<T>>::iterator iteri; //два итератора, для итерации по строкам и ячейкам(столбцам) .Без typename вообще не компилируется, хотя казалось бы.
+    typename std::vector<T>::iterator iterj;
+    for(iteri=Matrix.begin(); iteri!=Matrix.end(); iteri++)
+    {
+       // fd<< MatrixName<<"["<<std::distance(Matrix.begin(), iteri) <<"]=";
+        for(iterj=iteri->begin(); iterj!=iteri->end(); iterj++)
+        {
+            fd<< (*iterj)<<"\t";
+        }
+        fd<<std::endl;
+    }
+    fd.close();
+}*/
 #endif //FUNC_H_INCLUDED

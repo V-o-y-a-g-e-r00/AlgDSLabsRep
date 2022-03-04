@@ -56,21 +56,12 @@ int main(int, char**) {
 
     Graph1.ShowPlot(false, "Pic");
 
-
- /*
-    Vertices.PrintVertices();
-    Edges.PrintEdges(); 
-    ShowPlot(Vertices, Edges, false, false, "PicRez");
-
     std::vector<std::vector<int>> MPath(N), MPathLength(N);
     for(auto& i: MPath) i.resize(N);
     for(auto& i: MPathLength) i.resize(N);
 
-    MPath[0][0]=1;
-    FloydWarshall(Vertices, Edges, MPathLength, MPath);
-    Edges.PrintEdges();
+    FloydWarshall(Graph1, MPathLength, MPath);
+    Graph1.PrintEdges();
     PrintMatrix(MPathLength, "MPathLength");
     PrintMatrix(MPath, "MPath");
-
-*/
 }
