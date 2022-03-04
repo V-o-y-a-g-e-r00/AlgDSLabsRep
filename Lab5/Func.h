@@ -174,10 +174,25 @@ void GenerateWeights(Graph& Graph1, std::default_random_engine& generator, int W
         }
     }
 }
-
-
-
-
+bool IsConnectedDFS(Graph& Graph1, int StartVert, presenthandler& PresentHandler); //Проверка связности графа с помощью обхода в глубину
+void GenerateGraph(Graph& Graph1, int m, int WeightMax, std::default_random_engine& generator, presenthandler& PresentHandler)
+{
+    int iteration=0;
+    do
+    {
+        std::cout<<"Generating Adjacency: iteration: "<<iteration<<std::endl;
+       
+        try {GenerateAdjacencyMNumberNoLoops(Graph1, 4, generator);}
+        catch(std::string str)
+        {
+            std::cout<<"exeption:"<<str<<std::endl;
+            getchar();
+        //    return -1;
+        }
+        iteration++;
+    }while(!IsConnectedDFS(Graph1, 0, PresentHandler));
+    GenerateWeights(Graph1, generator, 1, 100); //все норм. Если seed принял какое-либо значение, то им определяется количество попыток, которые будут сделаны, чтобы получить Adjacency однозначно, поэтому при данном seed Weight будет также однозначным
+}
 int DFS(Graph& Graph1, int StartVert, presenthandler& PresentHandler) //IsStepByStep 0-не по шагам; 1-по шагам; 2-вывод в файл
 {
   /*  if(StartVert>=Vertices.Vector.size() || StartVert<0)

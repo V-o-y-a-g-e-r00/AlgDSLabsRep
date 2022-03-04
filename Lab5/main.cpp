@@ -64,4 +64,9 @@ int main(int, char**) {
     Graph1.PrintEdges();
     PrintMatrix(MPathLength, "MPathLength");
     PrintMatrix(MPath, "MPath");
+
+
+
+//    StatisticsGraph(5, 10, 1, 0.75, 100, 1, generator1, "FloydWarshellOut.txt", );
+
 }
