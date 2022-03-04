@@ -12,6 +12,9 @@ public:
     derived(): refx(base::x)
     {
         std::cout<<"refx="<< refx <<std::endl;
+        refx=11;
+        std::cout<<"refx="<< refx <<std::endl;
+        std::cout<<"base::x="<< base::x <<std::endl;
     }
 
 };
@@ -19,5 +22,5 @@ public:
 int main(int, char**) {
     std::cout << "Hello, world!\n";
     derived derived1;
-    
+
 }
