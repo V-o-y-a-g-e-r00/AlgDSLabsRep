@@ -16,21 +16,25 @@
 class VisualGraph: public BaseGraph
 {
 public:
+    VisualGraph(int N, bool NIsOriented=false):BaseGraph(N, NIsOriented)
+    {
+
+    }
 
 //void SetVarsForScript(edges& Edges, bool IsOriented, bool IsWithVerticesWeights, bool IsSavePictureToFile, std::string PictureName,const char* filename) //Эти величины будет читать bash скрипт. Edges, чтобы мы могли вывести число вершин и ребер 
-void SetVarsForScript(bool IsSavePictureToFile, std::string PictureName, const char* filename) //Эти величины будет читать bash скрипт. Edges, чтобы мы могли вывести число вершин и ребер 
-{
-    int m=0; //число ребер в графе
-    for(int i=0; i<Edges.size(); i++)
-        for(int j=i; j<Edges.at(i).size(); j++)
-        {
-            m+=Edges.at(i).at(j).Adjacency;
-        }
-    std::ofstream fd(filename);
-    fd<<"#nmtitle IsOriented IsSavePictureToFile PictureName IsWithVerticesWeights"<<std::endl;
-    fd<<"\"n="<<Edges.size()<<"; m="<<m<< "\"\t"<<IsOriented<<"\t"<<IsSavePictureToFile<<"\t"<<PictureName<<"\t"<<IsWithVerticesWeights<<std::endl;
-    fd.close();
-}
+    void SetVarsForScript(bool IsSavePictureToFile, std::string PictureName, const char* filename) //Эти величины будет читать bash скрипт. Edges, чтобы мы могли вывести число вершин и ребер 
+    {
+        int m=0; //число ребер в графе
+        for(int i=0; i<Edges.size(); i++)
+            for(int j=i; j<Edges.at(i).size(); j++)
+            {
+                m+=Edges.at(i).at(j).Adjacency;
+            }
+        std::ofstream fd(filename);
+        fd<<"#nmtitle IsOriented IsSavePictureToFile PictureName IsWithVerticesWeights"<<std::endl;
+        fd<<"\"n="<<Edges.size()<<"; m="<<m<< "\"\t"<<IsOriented<<"\t"<<IsSavePictureToFile<<"\t"<<PictureName<<"\t"<<IsWithVerticesWeights<<std::endl;
+        fd.close();
+    }
 /*
 template<typename T>
 void PrintMatrix(std::vector<std::vector<T>>& Matrix, const char* MatrixName)
@@ -67,7 +71,7 @@ void PrintMatrixToFile(std::vector<std::vector<T>>& Matrix, const char* MatrixNa
 }*/
 
 
-void PrintVertices(const char* filename="std::cout")
+    void PrintVertices(const char* filename="std::cout")
     {
         if(!strcmp(filename, "std::cout")) //если строки равны
         {
@@ -115,7 +119,7 @@ void PrintVertices(const char* filename="std::cout")
 
 
 
-void PrintEdges(const char* filename="std::cout") // можно ввести "std::cout" и тогда информация будет выведена в консоль. Для рисования графиков не используется
+    void PrintEdges(const char* filename="std::cout") // можно ввести "std::cout" и тогда информация будет выведена в консоль. Для рисования графиков не используется
     {
         if(!strcmp(filename, "std::cout")) //если строки равны
         {
@@ -157,27 +161,22 @@ void PrintEdges(const char* filename="std::cout") // можно ввести "st
             //    std::cout<<i<<"\t"<<j<<"\t"<<Edges.at(i).at(j).Weight<<"\t"<<Edges.at(i).at(j).Color<<std::endl;
                 if(Edges.at(i).at(j).Adjacency==1)
                 {   
-                    fd<<i<<"\t"<<j<<"\t"<<Vector.at(i).at(j).Weight<<"\t"<<Vector.at(i).at(j).Color<<std::endl;
+                    fd<<i<<"\t"<<j<<"\t"<<Edges.at(i).at(j).Weight<<"\t"<<Edges.at(i).at(j).Color<<std::endl;
                 }
             }
         fd.close();
     }
 
+    void ShowPlot(bool IsSavePictureToFile, std::string PictureName) //PictureName без расширения
+    {
+        SetVertXYForPlot();
+        PrintVertices("Vertices.dat");
+        SetEdgesForPlot(); //Вывод в файл для рисования графа 
+        PrintEdges("Edges.txt"); //вывод информации о ребрах для наглядности. Не используется для рисования графа
 
-
-
-
-
-void ShowPlot(bool IsSavePictureToFile, std::string PictureName) //PictureName без расширения
-{
-    SetVertXYForPlot();
-    PrintVertices("Vertices.dat");
-    Edges.SetEdgesForPlot(); //Вывод в файл для рисования графа 
-    Edges.PrintEdges("Edges.txt"); //вывод информации о ребрах для наглядности. Не используется для рисования графа
-
-    SetVarsForScript(IsSavePictureToFile, PictureName, "VarsForScript.dat"); //число вершин и ребер в файл
-    system("./PlotGraph.bash");
-}
+        SetVarsForScript(IsSavePictureToFile, PictureName, "VarsForScript.dat"); //число вершин и ребер в файл
+        system("./PlotGraph.bash");
+    }
 
 };
 

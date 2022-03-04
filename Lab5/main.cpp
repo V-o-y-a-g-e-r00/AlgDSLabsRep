@@ -13,7 +13,8 @@
 #include "ShortestPathFunc.h"
 
 #include "BaseGraph.h"
-
+#include "VisualGraph.h"
+#include "Graph.h"
 
 
 int main(int, char**) {

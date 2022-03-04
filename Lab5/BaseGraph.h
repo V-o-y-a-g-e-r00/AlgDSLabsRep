@@ -28,7 +28,7 @@ std::vector<std::vector<edge>> Edges;
 bool IsOriented=false; //Ну тоже свойства графа, как-никак. Т.е. не отображения, а самого графа.
 bool IsWithVerticesWeights=false;
 
-BaseGraph(int N):Vertices(N), Edges(N)
+BaseGraph(int N, bool NIsOriented=false):Vertices(N), Edges(N), IsOriented(NIsOriented)
 {
     for(auto& i: Edges)
     {
