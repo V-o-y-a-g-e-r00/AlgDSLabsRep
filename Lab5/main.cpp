@@ -29,7 +29,7 @@ int main(int, char**) {
     Graph1.ShowPlot(false, "Pic");
     getchar();
 
-
+ 
 
   //  int seed=time(0);
     
