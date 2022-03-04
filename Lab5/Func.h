@@ -182,7 +182,7 @@ void GenerateGraph(Graph& Graph1, int m, int WeightMax, std::default_random_engi
     {
         std::cout<<"Generating Adjacency: iteration: "<<iteration<<std::endl;
        
-        try {GenerateAdjacencyMNumberNoLoops(Graph1, 4, generator);}
+        try {GenerateAdjacencyMNumberNoLoops(Graph1, m, generator);}
         catch(std::string str)
         {
             std::cout<<"exeption:"<<str<<std::endl;

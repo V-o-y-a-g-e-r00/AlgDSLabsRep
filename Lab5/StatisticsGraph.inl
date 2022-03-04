@@ -23,7 +23,7 @@ private:
 public:
 //в callback будут Vertices Edges SourceVert DestVert   параметры для результатов работы MPath MPathLenght для ФлойдаУоршелла  Lenght для Дейкстры и т.д.  PresentHandler
     template<typename... CallBackParamsTail> //CallBackGenerate m WeightMax
-    StatisticsGraph(int NNStart, int NNEnd, int NNStep, double NMRatio, int NWeightMax, int NNumberOfRuns, std::default_random_engine& generator, presenthandler& PresentHandler, const char* filename, void (*CallBackGenerate)(Graph&, int, int, std::default_random_engine&, presenthandler&), void(*CallBackFind)(Graph&, CallBackParamsTail&...), CallBackParamsTail& ...callbackparamstail): NStart(NNStart), NEnd(NNEnd), NStep(NNStep), MRatio(NMRatio), WeightMax(NWeightMax), NumberOfRuns(NNumberOfRuns)
+    StatisticsGraph(int NNStart, int NNEnd, int NNStep, double NMRatio, int NWeightMax, int NNumberOfRuns, std::default_random_engine& generator, presenthandler& PresentHandler, const char* filename, void (*CallBackGenerate)(Graph&, int, int, std::default_random_engine&, presenthandler&), void(*CallBackFind)(Graph&, CallBackParamsTail&...), void(*CallBackTailHandler)(int N, CallBackParamsTail&...), CallBackParamsTail& ...callbackparamstail): NStart(NNStart), NEnd(NNEnd), NStep(NNStep), MRatio(NMRatio), WeightMax(NWeightMax), NumberOfRuns(NNumberOfRuns)
     {
         printLabel(filename);
 
@@ -34,9 +34,10 @@ public:
             for(int k=0; k<NumberOfRuns; k++) //Число прогонов для данного числа вершин N
             {
                 Graph Graph1(CurrentSize);
-                CurrentM= (Graph1.Edges.size()-1+0)*Graph1.Edges.size()/2 * MRatio; //максимально возможное количество ребер на интересующий нас процент
+                CurrentM= (double)(Graph1.Edges.size()-1+0)*Graph1.Edges.size()/2 * MRatio; //максимально возможное количество ребер на интересующий нас процент
                 CallBackGenerate(Graph1, CurrentM, WeightMax, generator, PresentHandler); //генерируем подходящий граф               
                 
+                CallBackTailHandler(CurrentSize, callbackparamstail...); //Управляемся с "лишними" параметрами функции поиска. В частности, изменяем размеры их массивов.
                 clock_t timeStart=clock(); //число тиков с начала выполнения программы
                 CallBackFind(Graph1, callbackparamstail...);
                 clock_t timeEnd=clock();

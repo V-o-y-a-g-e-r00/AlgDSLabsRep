@@ -27,18 +27,18 @@ int main(int, char**) {
     presenthandler PresentHandler; //для отображения шагов
     PresentHandler.Mode=1;
 
-    Graph Graph1(N, false);
+ /*  Graph Graph1(N, false);
     Graph1.IsWithVerticesWeights=false;
     
     //GenerateAdjacencyProb(Graph1, 0.5, generator1, false);
     //GenerateAdjacencyMNumberNoLoops(Graph1, 4, generator1);
-/*  try{ GenerateAdjacencyMNumberNoLoops(Graph1, 4, generator1); }
-    catch(std::string str)
-    {
-        std::cout<<"exeption:"<<str<<std::endl;
-        return -1;
-    }
-*/
+// try{ GenerateAdjacencyMNumberNoLoops(Graph1, 4, generator1); }
+ //   catch(std::string str)
+ //   {
+ //       std::cout<<"exeption:"<<str<<std::endl;
+ //       return -1;
+ //   }
+
     int iteration=0;
     do
     {
@@ -65,8 +65,10 @@ int main(int, char**) {
     PrintMatrix(MPathLength, "MPathLength");
     PrintMatrix(MPath, "MPath");
 
-
-
-//    StatisticsGraph(5, 10, 1, 0.75, 100, 1, generator1, "FloydWarshellOut.txt", );
+*/
+    std::vector<std::vector<int>> MPath(N), MPathLength(N);
+    for(auto& i: MPath) i.resize(N);
+    for(auto& i: MPathLength) i.resize(N);
+    StatisticsGraph(6, 10, 1, 1, 100, 1, generator1, PresentHandler, "FloydWarshellOut.txt", GenerateGraph, FloydWarshall, FloydWarshallCallBackParamsTailHandler, MPathLength, MPath);
 
 }

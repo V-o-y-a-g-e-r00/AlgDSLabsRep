@@ -41,7 +41,14 @@ void FloydWarshall(Graph& Graph1, std::vector<std::vector<int>>& MPathLength, st
             }
         }
     }
+}
+void FloydWarshallCallBackParamsTailHandler(int N, std::vector<std::vector<int>>& MPathLength, std::vector<std::vector<int>>& MPath) //чтобы в объекте класса статистики функция работала как нужно.
+{
+    MPathLength.resize(N);
+    for(auto& i: MPathLength) i.resize(N);
 
+    MPath.resize(N);
+    for(auto& i: MPath) i.resize(N);
 }
 
 #endif //SHORTESTPATHFUNC_H_INCLUDED
