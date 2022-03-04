@@ -4,10 +4,9 @@
 #include <vector>
 #include <limits>
 
-#include "vertices.h"
-#include "edges.h"
-
 #include "Func.h"
+/*
+
 
 //matrix - матрица смежности
 void FloydWarshall(vertices& Vertices, edges& Edges, std::vector<std::vector<int>>& MPathLength, std::vector<std::vector<int>>& MPath)
@@ -44,5 +43,5 @@ void FloydWarshall(vertices& Vertices, edges& Edges, std::vector<std::vector<int
     }
 
 }
-
+*/
 #endif //SHORTESTPATHFUNC_H_INCLUDED

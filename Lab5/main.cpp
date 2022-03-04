@@ -6,8 +6,6 @@
 //#include <random> 
 //#include <filesystem> //для создания директорий
 
-#include "vertices.h"
-#include "edges.h"
 #include "presenthandler.h"
 #include "Func.h"
 #include "ShortestPathFunc.h"
@@ -19,6 +17,8 @@
 
 
 int main(int, char**) {
+    
+    //  int seed=time(0);
     int seed=4; //с seed 4 получается 3 итерации в Adjacency при n=5 m=4
      int N=5;
 
@@ -32,10 +32,10 @@ int main(int, char**) {
 
 
 
-  //  int seed=time(0);
+
     
 
-   
+/*   
     vertices Vertices(N);
     edges Edges(N);
 
@@ -45,12 +45,12 @@ int main(int, char**) {
 
  //   GenerateAdjacencyProb(Edges, seed, 0.5, false);
 //    try {GenerateAdjacencyMNumberWithLoops(Edges, seed, 25);}
-/*    try {GenerateAdjacencyMNumberNoLoops(Edges, seed, 6);}
+    try {GenerateAdjacencyMNumberNoLoops(Edges, seed, 6);}
     catch(std::string str)
     {
         std::cout<<"exeption:"<<str<<std::endl;
         return -1;
-    } */
+    } 
 
     int iteration=0;
     std::default_random_engine generator(seed);
@@ -81,5 +81,5 @@ int main(int, char**) {
     Edges.PrintEdges();
     PrintMatrix(MPathLength, "MPathLength");
     PrintMatrix(MPath, "MPath");
-
+*/
 }
