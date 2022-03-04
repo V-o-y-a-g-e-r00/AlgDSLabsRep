@@ -12,9 +12,10 @@
 #include "Func.h"
 #include "ShortestPathFunc.h"
 
-#include "BaseGraph.h"
-#include "VisualGraph.h"
+//#include "BaseGraph.h"
+//#include "VisualGraph.h"
 #include "Graph.h"
+#include "StatisticsGraph.inl"
 
 
 int main(int, char**) {

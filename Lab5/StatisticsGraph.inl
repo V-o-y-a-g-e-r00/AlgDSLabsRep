@@ -8,10 +8,9 @@
 
 #include <random>
 
-#include "vertices.h"
-#include "edges.h"
+#include "Graph.h"
 
-class statisticsGraph
+class StatisticsGraph
 {
 private:
     int CurrentSize=0; //текущее число вершин в графе
@@ -23,7 +22,7 @@ private:
 public:
 //в callback будут Vertices Edges SourceVert DestVert   параметры для результатов работы MPath MPathLenght для ФлойдаУоршелла  Lenght для Дейкстры и т.д.  PresentHandler
     template<typename... CallBackParamsTail>
-    statisticsGraph(int NNStart, int NNEnd, int NNStep, double MRatio, int WeightMax, int NNumberOfRuns, std::default_random_engine& generator, const char* filename, void(*CallBack)(vertices&, edges&, CallBackParamsTail&...), CallBackParamsTail& ...callbackparamstail)
+    StatisticsGraph(int NNStart, int NNEnd, int NNStep, double MRatio, int WeightMax, int NNumberOfRuns, std::default_random_engine& generator, const char* filename, void (*CallBackGenerate)(Graph&, int, std::default_random_engine&), void(*CallBackFind)(Graph&, CallBackParamsTail&...), CallBackParamsTail& ...callbackparamstail)
     {
 
     }
@@ -32,7 +31,7 @@ public:
 
 };
 
-
+/*
 template<typename T>
 class statistics
 {
@@ -94,5 +93,5 @@ public:
        // fd<<std::endl;
         fd.close();
     }
-};
+};*/
 #endif //STATISTICSGRAPH_INL_INCLUDED
