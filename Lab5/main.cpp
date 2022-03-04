@@ -12,6 +12,7 @@
 #include "Func.h"
 #include "ShortestPathFunc.h"
 
+#include "BaseGraph.h"
 
 
 
