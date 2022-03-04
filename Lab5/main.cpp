@@ -18,10 +18,22 @@
 
 
 int main(int, char**) {
-  //  int seed=time(0);
     int seed=4; //с seed 4 получается 3 итерации в Adjacency при n=5 m=4
+     int N=5;
 
-    int N=5;
+    Graph Graph1(N, false);
+    Graph1.IsWithVerticesWeights=true;
+    std::default_random_engine generator1(seed);
+    GenerateAdjacencyMNumberNoLoopsGraph(Graph1, 4, generator1);
+    Graph1.ShowPlot(false, "Pic");
+    getchar();
+
+
+
+  //  int seed=time(0);
+    
+
+   
     vertices Vertices(N);
     edges Edges(N);
 
