@@ -66,9 +66,7 @@ int main(int, char**) {
     PrintMatrix(MPath, "MPath");
 
 */
-    std::vector<std::vector<int>> MPath(N), MPathLength(N);
-    for(auto& i: MPath) i.resize(N);
-    for(auto& i: MPathLength) i.resize(N);
+    std::vector<std::vector<int>> MPath, MPathLength;
     StatisticsGraph(6, 10, 1, 1, 100, 1, generator1, PresentHandler, "FloydWarshellOut.txt", GenerateGraph, FloydWarshall, FloydWarshallCallBackParamsTailHandler, MPathLength, MPath);
 
 }
