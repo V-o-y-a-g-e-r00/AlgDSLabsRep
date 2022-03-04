@@ -35,8 +35,10 @@ public:
             {
                 Graph Graph1(CurrentSize);
                 CurrentM= (double)(Graph1.Edges.size()-1+0)*Graph1.Edges.size()/2 * MRatio; //максимально возможное количество ребер на интересующий нас процент
+                std::cout<<"Graph generating started"<<std::endl;
                 CallBackGenerate(Graph1, CurrentM, WeightMax, generator, PresentHandler); //генерируем подходящий граф               
-                
+                std::cout<<"Graph generating ended"<<std::endl;
+
                 CallBackTailHandler(CurrentSize, callbackparamstail...); //Управляемся с "лишними" параметрами функции поиска. В частности, изменяем размеры их массивов.
                 clock_t timeStart=clock(); //число тиков с начала выполнения программы
                 CallBackFind(Graph1, callbackparamstail...);

@@ -1,0 +1,11 @@
+#filename=FloydWarshellOut.txt; MRatio=1; WeightMax=100; NumberOfRuns=1
+100	0.064
+200	0.487
+300	1.618
+400	3.851
+500	7.392
+600	12.677
+700	20.146
+800	29.958
+900	42.873
+1000	58.811
