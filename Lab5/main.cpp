@@ -20,54 +20,44 @@ int main(int, char**) {
     
     //  int seed=time(0);
     int seed=4; //с seed 4 получается 3 итерации в Adjacency при n=5 m=4
-     int N=5;
-
-    Graph Graph1(N, false);
-    Graph1.IsWithVerticesWeights=true;
     std::default_random_engine generator1(seed);
-    GenerateAdjacencyMNumberNoLoopsGraph(Graph1, 4, generator1);
-    Graph1.edgesEdges.ResetColors();
-    Graph1.ShowPlot(false, "Pic");
-    getchar();
 
-
-
-
-    
-
-/*   
-    vertices Vertices(N);
-    edges Edges(N);
+    int N=5;
 
     presenthandler PresentHandler; //для отображения шагов
-    PresentHandler.Mode=0;
+    PresentHandler.Mode=1;
 
-
- //   GenerateAdjacencyProb(Edges, seed, 0.5, false);
-//    try {GenerateAdjacencyMNumberWithLoops(Edges, seed, 25);}
-    try {GenerateAdjacencyMNumberNoLoops(Edges, seed, 6);}
+    Graph Graph1(N, false);
+    Graph1.IsWithVerticesWeights=false;
+    
+    //GenerateAdjacencyProb(Graph1, 0.5, generator1, false);
+    //GenerateAdjacencyMNumberNoLoops(Graph1, 4, generator1);
+/*  try{ GenerateAdjacencyMNumberNoLoops(Graph1, 4, generator1); }
     catch(std::string str)
     {
         std::cout<<"exeption:"<<str<<std::endl;
         return -1;
-    } 
-
+    }
+*/
     int iteration=0;
-    std::default_random_engine generator(seed);
     do
     {
         std::cout<<"Generating Adjacency: iteration: "<<iteration<<std::endl;
        
-        try {GenerateAdjacencyMNumberNoLoops(Edges, 4, generator);}
+        try {GenerateAdjacencyMNumberNoLoops(Graph1, 4, generator1);}
         catch(std::string str)
         {
             std::cout<<"exeption:"<<str<<std::endl;
             return -1;
         }
         iteration++;
-    }while(!IsConnectedDFS(Vertices, Edges, 0, PresentHandler));
-    GenerateWeights(Edges, generator, 1, 100); //все норм. Если seed принял какое-либо значение, то им определяется количество попыток, которые будут сделаны, чтобы получить Adjacency однозначно, поэтому при данном seed Weight будет также однозначным
+    }while(!IsConnectedDFS(Graph1, 0, PresentHandler));
+    GenerateWeights(Graph1, generator1, 1, 100); //все норм. Если seed принял какое-либо значение, то им определяется количество попыток, которые будут сделаны, чтобы получить Adjacency однозначно, поэтому при данном seed Weight будет также однозначным
 
+    Graph1.ShowPlot(false, "Pic");
+
+
+ /*
     Vertices.PrintVertices();
     Edges.PrintEdges(); 
     ShowPlot(Vertices, Edges, false, false, "PicRez");
@@ -81,5 +71,6 @@ int main(int, char**) {
     Edges.PrintEdges();
     PrintMatrix(MPathLength, "MPathLength");
     PrintMatrix(MPath, "MPath");
+
 */
 }

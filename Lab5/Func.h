@@ -13,10 +13,9 @@
 #include "Graph.h"
 
 
-void GenerateAdjacencyProb(Graph& Graph1, int seed, double probability, bool IsWithLoops) //генерируем матрицу смежности. probability -вероятность появления ребра
+void GenerateAdjacencyProb(Graph& Graph1, double probability, std::default_random_engine generator, bool IsWithLoops) //генерируем матрицу смежности. probability -вероятность появления ребра
 {
     //настраиваем генератор
-    std::default_random_engine generator(seed);
     std::discrete_distribution<int> distribution {1-probability, probability}; //единички генерируются с вероятностью probability, а нолики с вероятностью 1-probability
 
  //   std::vector<std::vector<int>>::iterator iteri; //два итератора, для итерации по строкам и ячейкам(столбцам)
@@ -230,7 +229,7 @@ bool IsConnectedDFS(Graph& Graph1, int StartVert, presenthandler& PresentHandler
         return false;
     }
 }
-//=============================Для Graph 
+/*
 void GenerateAdjacencyMNumberNoLoopsGraph(Graph& Graph1, int m, std::default_random_engine& generator) //генерируем матрицу смежности. m -число ребер в случайном графе.
 {
 
@@ -282,5 +281,5 @@ void GenerateAdjacencyMNumberNoLoopsGraph(Graph& Graph1, int m, std::default_ran
         }
     }
 }
-
+*/
 #endif //FUNC_H_INCLUDED
