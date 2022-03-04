@@ -25,6 +25,7 @@ int main(int, char**) {
     Graph1.IsWithVerticesWeights=true;
     std::default_random_engine generator1(seed);
     GenerateAdjacencyMNumberNoLoopsGraph(Graph1, 4, generator1);
+    Graph1.edgesEdges.ResetColors();
     Graph1.ShowPlot(false, "Pic");
     getchar();
 

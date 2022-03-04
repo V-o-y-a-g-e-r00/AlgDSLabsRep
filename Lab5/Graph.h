@@ -8,8 +8,9 @@ class Graph: public VisualGraph
 public:
     class vertices
     {
+    private:
+        std::vector<vertex>& refVertices; //ссылка на массив вершин, находящийся в родительском объекте. Решил сделать закрытой, т.к. обращение к одной сущности по двум именам не есть гуд.
     public:
-        std::vector<vertex>& refVertices; //ссылка на массив вершин, находящийся в родительском объекте
         vertices(std::vector<vertex>& NrefVertices): refVertices(NrefVertices)
         {
 
@@ -21,16 +22,22 @@ public:
     };
     class edges
     {
-    public:
+    private:
         std::vector<std::vector<edge>>& refEdges;
+    public:
         edges(std::vector<std::vector<edge>>& NrefEdges): refEdges(NrefEdges)
         {
 
         }
+        void ResetColors()
+        {
+            for(auto& i: refEdges)
+                for(auto& j: i) j.Color=1;
+        }
 
     };
 
-    vertices vertsVertices;
+    vertices vertsVertices; //обертки
     edges edgesEdges;
 
     Graph(int N, bool NIsOriented=false): VisualGraph(N, NIsOriented), vertsVertices(BaseGraph::Vertices), edgesEdges(BaseGraph::Edges) //инициализируем ссылки на массивы в базовом объекте
