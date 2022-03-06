@@ -1,3 +1,8 @@
+#! /usr/bin/bash
+filelistVar=$(gawk -F '\t' '{printf "%s", $2}' Plotfilelist.txt)
+
+
+cat > PlotScript.gpi << HEREDOC1
 #! /usr/bin/gnuplot -persist
 
 # Будем этим скриптом строить графики
@@ -58,7 +63,7 @@ set yrange [0:*]
 #listsize=5
 
 array filelist1[5]
-filelist="FloydWarshellOut.txt test.txt test2.txt "
+filelist=$filelistVar
 i=1
 do for [file in filelist] {
 #filelist(t)="FloydWarshellOut.txt"
@@ -72,8 +77,17 @@ i=i+1
 
 
 
-#plot \ 	"FloydWarshellOut.txt" using 1:2 notitle smooth csplines with lines linestyle 1, #    1 / 0 title "FloydWarshell" with lines linestyle 1
-#	f1(x) title title_f("f1", a1,u1, 0,b1) with lines linestyle 11,#	#	"QuickSortHoareOut.txt" using 1:2 notitle smooth csplines with lines linestyle 2, # 	1 / 0 title "QuickSortHoare" with lines linestyle 2, #	f2(x) title title_f("f2",a2, u2, v2,b2) with lines linestyle 12, #	#	"ShellSortOut.txt" using 1:2 notitle smooth csplines with lines linestyle 3, # 	1 / 0 title "ShellSort" with lines linestyle 3, #	 f3(x) title title_f("f3", a3,u3, v3, b3) with lines linestyle 13
+#plot \ 	"FloydWarshellOut.txt" using 1:2 notitle smooth csplines with lines linestyle 1, \
+#    1 / 0 title "FloydWarshell" with lines linestyle 1
+#	f1(x) title title_f("f1", a1,u1, 0,b1) with lines linestyle 11,\
+#	\
+#	"QuickSortHoareOut.txt" using 1:2 notitle smooth csplines with lines linestyle 2, \
+# 	1 / 0 title "QuickSortHoare" with lines linestyle 2, \
+#	f2(x) title title_f("f2",a2, u2, v2,b2) with lines linestyle 12, \
+#	\
+#	"ShellSortOut.txt" using 1:2 notitle smooth csplines with lines linestyle 3, \
+# 	1 / 0 title "ShellSort" with lines linestyle 3, \
+#	 f3(x) title title_f("f3", a3,u3, v3, b3) with lines linestyle 13
 
 plot for [j=1:i-1] filelist1[j] using 1:2 smooth csplines with lines linestyle j title filelist1[j]
 
@@ -85,3 +99,6 @@ plot for [j=1:i-1] filelist1[j] using 1:2 smooth csplines with lines linestyle j
 #
 #
 #
+HEREDOC1
+chmod +x PlotScript.gpi
+./PlotScript.gpi
