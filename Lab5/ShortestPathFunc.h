@@ -53,7 +53,7 @@ void FloydWarshallCallBackParamsTailHandler(int N, std::vector<std::vector<int>>
 }
 
 //Дейкстра==================================
-void Dijkstra(Graph& Graph1, int SourceIndex, std::vector<std::vector<int>>& Pathes, presenthandler& PresentHandler)
+void Dijkstra(Graph& Graph1, int& SourceIndex, std::vector<std::vector<int>>& Pathes, presenthandler& PresentHandler)
 {
     int MAX_WEIGHT=std::numeric_limits<int>::max();
     int NULL_INDEX=std::numeric_limits<int>::max();
@@ -61,6 +61,7 @@ void Dijkstra(Graph& Graph1, int SourceIndex, std::vector<std::vector<int>>& Pat
     int minWeight; //Вес вершины с минимальным весом
 
     //Подготовка цветов и весов вершин.
+    Graph1.IsWithVerticesWeights=true;
     Graph1.vertsVertices.ResetColors();
     for(auto& i: Graph1.Vertices)
     {
@@ -109,6 +110,8 @@ void Dijkstra(Graph& Graph1, int SourceIndex, std::vector<std::vector<int>>& Pat
 
 
     //Нахождение путей от исходной вершины до всех остальных вершин
+    Pathes.clear();
+    Pathes.resize(Graph1.Vertices.size());
     for(int DestIndex=0; DestIndex<Graph1.Vertices.size(); DestIndex++) //ищем путь до каждой вершины из исходной
     {
         // Восстановление пути
@@ -140,7 +143,14 @@ void Dijkstra(Graph& Graph1, int SourceIndex, std::vector<std::vector<int>>& Pat
             tempPath.pop_back();
         }
     }
+    if(PresentHandler.Mode>=1)
+    {
+        PrintMatrix(Pathes, "Pathes");
+    }
 }
-
+void DijkstraCallBackParamsTailHandler(int N, int& SourceIndex, std::vector<std::vector<int>>& Pathes, presenthandler& PresentHandler)
+{
+    return; //Данная функция ничего не делает
+}
 
 #endif //SHORTESTPATHFUNC_H_INCLUDED

@@ -27,14 +27,14 @@ int main(int, char**) {
     presenthandler PresentHandler; //для отображения шагов
     PresentHandler.Mode=0;
 
-    int N=5;
+    int N=10;
     Graph Graph1(N);
     Graph1.IsWithVerticesWeights=true;
-    GenerateGraph(Graph1, 4, 100, generator1, PresentHandler);
+    GenerateGraph(Graph1, 11, 100, generator1, PresentHandler);
     Graph1.ShowPlot(0, "");
 
     PresentHandler.Mode=1;
-    std::vector<std::vector<int>> Pathes(N);
+    std::vector<std::vector<int>> Pathes;
     Dijkstra(Graph1, 0, Pathes, PresentHandler);
 
 //    Graph1.ShowPlot(false, "");

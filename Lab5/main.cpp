@@ -22,59 +22,24 @@ int main(int, char**) {
     
     //  int seed=time(0);
     int seed=4; //с seed 4 получается 3 итерации в Adjacency при n=5 m=4
-    std::default_random_engine generator1(seed);
+    std::default_random_engine generator1(seed), generator2(seed); //будут генерировать одинаковые последовательности.
 
     int N=5;
 
-    presenthandler PresentHandler; //для отображения шагов
-    PresentHandler.Mode=0;
+    presenthandler PresentHandler0, PresentHandler1; //для отображения шагов
+    PresentHandler0.Mode=0;
+    PresentHandler1.Mode=1;
 
     plothandler PlotHandler;
 
- /*  Graph Graph1(N, false);
-    Graph1.IsWithVerticesWeights=false;
-    
-    //GenerateAdjacencyProb(Graph1, 0.5, generator1, false);
-    //GenerateAdjacencyMNumberNoLoops(Graph1, 4, generator1);
-// try{ GenerateAdjacencyMNumberNoLoops(Graph1, 4, generator1); }
- //   catch(std::string str)
- //   {
- //       std::cout<<"exeption:"<<str<<std::endl;
- //       return -1;
- //   }
-
-    int iteration=0;
-    do
-    {
-        std::cout<<"Generating Adjacency: iteration: "<<iteration<<std::endl;
-       
-        try {GenerateAdjacencyMNumberNoLoops(Graph1, 4, generator1);}
-        catch(std::string str)
-        {
-            std::cout<<"exeption:"<<str<<std::endl;
-            return -1;
-        }
-        iteration++;
-    }while(!IsConnectedDFS(Graph1, 0, PresentHandler));
-    GenerateWeights(Graph1, generator1, 1, 100); //все норм. Если seed принял какое-либо значение, то им определяется количество попыток, которые будут сделаны, чтобы получить Adjacency однозначно, поэтому при данном seed Weight будет также однозначным
-
-    Graph1.ShowPlot(false, "Pic");
-
-    std::vector<std::vector<int>> MPath(N), MPathLength(N);
-    for(auto& i: MPath) i.resize(N);
-    for(auto& i: MPathLength) i.resize(N);
-
-    FloydWarshall(Graph1, MPathLength, MPath);
-    Graph1.PrintEdges();
-    PrintMatrix(MPathLength, "MPathLength");
-    PrintMatrix(MPath, "MPath");
-
-*/
     std::vector<std::vector<int>> MPath, MPathLength;
-    StatisticsGraph(10, 100, 1, 0.2, 100, 1, generator1, PresentHandler, PlotHandler.addandreturn("FloydWarshellOut1.txt"), GenerateGraph, FloydWarshall, FloydWarshallCallBackParamsTailHandler, MPathLength, MPath);
+//    StatisticsGraph(10, 500, 10, 0.5, 100, 1, generator1, PresentHandler0, PlotHandler.addandreturn("FloydWarshellOut.txt"), GenerateGraph, FloydWarshall, FloydWarshallCallBackParamsTailHandler, MPathLength, MPath);
     
+    int SourceIndex=0;
+    std::vector<std::vector<int>> Pathes;
+    StatisticsGraph(100, 200, 100, 0.5, 100, 1, generator2, PresentHandler0, PlotHandler.addandreturn("DijkstraOut.txt"), GenerateGraph, Dijkstra, DijkstraCallBackParamsTailHandler, SourceIndex, Pathes, PresentHandler0);
 
-    PlotHandler.tofile("Plotfilelist.txt");
+//    PlotHandler.tofile("Plotfilelist.txt");
     system("./PlotScript.bash");
 
 }
