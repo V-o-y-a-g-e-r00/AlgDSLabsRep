@@ -5,6 +5,7 @@
 #include <time.h> //для измерения времени
 #include <fstream> //для файлов
 #include <iomanip>      // std::setprecision
+#include <string>
 
 #include <random>
 
@@ -23,7 +24,7 @@ private:
 public:
 //в callback будут Vertices Edges SourceVert DestVert   параметры для результатов работы MPath MPathLenght для ФлойдаУоршелла  Lenght для Дейкстры и т.д.  PresentHandler
     template<typename... CallBackParamsTail> //CallBackGenerate m WeightMax
-    StatisticsGraph(int NNStart, int NNEnd, int NNStep, double NMRatio, int NWeightMax, int NNumberOfRuns, std::default_random_engine& generator, presenthandler& PresentHandler, const char* filename, void (*CallBackGenerate)(Graph&, int, int, std::default_random_engine&, presenthandler&), void(*CallBackFind)(Graph&, CallBackParamsTail&...), void(*CallBackTailHandler)(int N, CallBackParamsTail&...), CallBackParamsTail& ...callbackparamstail): NStart(NNStart), NEnd(NNEnd), NStep(NNStep), MRatio(NMRatio), WeightMax(NWeightMax), NumberOfRuns(NNumberOfRuns)
+    StatisticsGraph(int NNStart, int NNEnd, int NNStep, double NMRatio, int NWeightMax, int NNumberOfRuns, std::default_random_engine& generator, presenthandler& PresentHandler, std::string filename, void (*CallBackGenerate)(Graph&, int, int, std::default_random_engine&, presenthandler&), void(*CallBackFind)(Graph&, CallBackParamsTail&...), void(*CallBackTailHandler)(int N, CallBackParamsTail&...), CallBackParamsTail& ...callbackparamstail): NStart(NNStart), NEnd(NNEnd), NStep(NNStep), MRatio(NMRatio), WeightMax(NWeightMax), NumberOfRuns(NNumberOfRuns)
     {
         printLabel(filename);
 
@@ -52,13 +53,13 @@ public:
             printValue(CurrentSize, timeSeconds, filename);
        } 
     }
-    void printLabel(const char* filename) //пишем подпись оси размера массива в файл
+    void printLabel(std::string filename) //пишем подпись оси размера массива в файл
     {
         std::ofstream fd(filename, std::ios_base::out|std::ios_base::trunc); //для записи очистив
         fd<< "#filename="<< filename<<"; MRatio="<<MRatio<<"; WeightMax="<<WeightMax<<"; NumberOfRuns="<<NumberOfRuns<<std::endl;
         fd.close();
     }
-    void printValue(int CurrentSize, double value, const char* filename) //пишем время выполнения в файл
+    void printValue(int CurrentSize, double value, std::string filename) //пишем время выполнения в файл
     {
         std::ofstream fd(filename, std::ios_base::app); //для записи в конец
 

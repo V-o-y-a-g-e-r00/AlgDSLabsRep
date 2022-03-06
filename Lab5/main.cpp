@@ -15,6 +15,8 @@
 #include "Graph.h"
 #include "StatisticsGraph.inl"
 
+#include "plothandler.h"
+
 
 int main(int, char**) {
     
@@ -26,6 +28,8 @@ int main(int, char**) {
 
     presenthandler PresentHandler; //для отображения шагов
     PresentHandler.Mode=0;
+
+    plothandler PlotHandler;
 
  /*  Graph Graph1(N, false);
     Graph1.IsWithVerticesWeights=false;
@@ -67,6 +71,9 @@ int main(int, char**) {
 
 */
     std::vector<std::vector<int>> MPath, MPathLength;
-    StatisticsGraph(10, 100, 1, 0.2, 100, 1, generator1, PresentHandler, "FloydWarshellOut.txt", GenerateGraph, FloydWarshall, FloydWarshallCallBackParamsTailHandler, MPathLength, MPath);
-//Если в дальнейшем мы захотим, чтобы на графике автоматически было произвольное число линий (т.е. чтение происходило из произвольного числа файлов), то можно поступить так: сделать класс, который будет принимать строку и тут же возвращать её, но при этом сохранять её к себе в массив. Содержимое массива пишем в файл. и скармливаем gnuplot или gawk или bush
+    StatisticsGraph(10, 100, 1, 0.2, 100, 1, generator1, PresentHandler, PlotHandler.addandreturn("FloydWarshellOut.txt"), GenerateGraph, FloydWarshall, FloydWarshallCallBackParamsTailHandler, MPathLength, MPath);
+
+    PlotHandler.tofile("Plotfilelist.txt");
+    system("./PlotScript.bash");
+
 }
