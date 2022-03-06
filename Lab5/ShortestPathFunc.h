@@ -53,7 +53,7 @@ void FloydWarshallCallBackParamsTailHandler(int N, std::vector<std::vector<int>>
 }
 
 //Дейкстра==================================
-void Dijkstra(Graph& Graph1, int SourceVert, std::vector<int>& SortestDist, std::vector<std::vector<int>>& Pathes, presenthandler& PresentHandler)
+void Dijkstra(Graph& Graph1, int SourceVert, std::vector<int>& ShortestDist, std::vector<std::vector<int>>& Pathes, presenthandler& PresentHandler)
 {
     int MAX_WEIGHT=std::numeric_limits<int>::max();
     int NULL_INDEX=std::numeric_limits<int>::max();
@@ -66,6 +66,7 @@ void Dijkstra(Graph& Graph1, int SourceVert, std::vector<int>& SortestDist, std:
     {
         i.Weight=MAX_WEIGHT;
     }
+    Graph1.Vertices.at(SourceVert).Weight=0;
 
     //Нахождение весов всех вершин. Т.е. минимальных путей от начальной вершины до всех остальных вершин.
     do
