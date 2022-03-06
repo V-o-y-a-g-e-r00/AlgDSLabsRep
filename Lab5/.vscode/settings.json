@@ -1,6 +1,11 @@
 {
     "makefile.extensionOutputFolder": "./.vscode",
     "files.associations": {
-        "limits": "cpp"
+        "limits": "cpp",
+        "array": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "initializer_list": "cpp",
+        "string_view": "cpp"
     }
 }

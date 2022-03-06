@@ -34,7 +34,7 @@ int main(int, char**) {
     Graph1.ShowPlot(0, "");
 
     PresentHandler.Mode=1;
-    std::vector<int> ShortestDist;
-    std::vector<std::vector<int>> Pathes;
-    Dijkstra(Graph1, 0, ShortestDist, Pathes, PresentHandler);
+//    std::vector<int> ShortestDist;
+    std::vector<std::vector<int>> Pathes(N);
+    Dijkstra(Graph1, 0, Pathes, PresentHandler);
 }

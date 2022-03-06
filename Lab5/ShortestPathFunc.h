@@ -53,7 +53,7 @@ void FloydWarshallCallBackParamsTailHandler(int N, std::vector<std::vector<int>>
 }
 
 //Дейкстра==================================
-void Dijkstra(Graph& Graph1, int SourceVert, std::vector<int>& ShortestDist, std::vector<std::vector<int>>& Pathes, presenthandler& PresentHandler)
+void Dijkstra(Graph& Graph1, int SourceIndex, std::vector<std::vector<int>>& Pathes, presenthandler& PresentHandler)
 {
     int MAX_WEIGHT=std::numeric_limits<int>::max();
     int NULL_INDEX=std::numeric_limits<int>::max();
@@ -66,7 +66,7 @@ void Dijkstra(Graph& Graph1, int SourceVert, std::vector<int>& ShortestDist, std
     {
         i.Weight=MAX_WEIGHT;
     }
-    Graph1.Vertices.at(SourceVert).Weight=0;
+    Graph1.Vertices.at(SourceIndex).Weight=0;
 
     //Нахождение весов всех вершин. Т.е. минимальных путей от начальной вершины до всех остальных вершин.
     do
@@ -107,6 +107,39 @@ void Dijkstra(Graph& Graph1, int SourceVert, std::vector<int>& ShortestDist, std
         }
     } while (minWeightIndex != NULL_INDEX);
 
+
+    //Нахождение путей от исходной вершины до всех остальных вершин
+    for(int DestIndex=0; DestIndex<Graph1.Vertices.size(); DestIndex++) //ищем путь до каждой вершины из исходной
+    {
+        // Восстановление пути
+        std::vector<int> tempPath; //вектор, в котором путь от исходной вершины до другой вершины хранится задом наперед.
+        int CurrentDestIndex=DestIndex; //CurrentDestIndex -величина, в которой мы будем хранить нашу текущую вершину при нахождении пути.
+        tempPath.push_back(CurrentDestIndex); // начальный элемент - конечная вершина
+    //  int k = 1; // индекс предыдущей вершины
+        int DestWeight = Graph1.Vertices.at(CurrentDestIndex).Weight; // вес конечной вершины
+
+        while (CurrentDestIndex != SourceIndex) // пока не дошли до начальной вершины
+        {
+            for (int i = 0; i<Graph1.Vertices.size(); i++) // просматриваем все вершины
+                if (Graph1.Edges.at(i).at(CurrentDestIndex).Weight != 0)   // если связь есть
+                {
+                    int tempWeight = DestWeight - Graph1.Edges.at(i).at(CurrentDestIndex).Weight; // определяем вес пути из предыдущей вершины
+                    if (tempWeight == Graph1.Vertices.at(i).Weight) // если вес совпал с рассчитанным
+                    {                 // значит из этой вершины и был переход
+                        DestWeight = tempWeight; // сохраняем новый вес
+                        CurrentDestIndex = i;       // сохраняем предыдущую вершину
+                        tempPath.push_back(i); // и записываем ее в массив
+                    }
+                }
+        }
+
+        //переворачиваем и записываем tempPath
+        while(tempPath.size()!=0)
+        {
+            Pathes.at(DestIndex).push_back(tempPath.back());
+            tempPath.pop_back();
+        }
+    }
 }
 
 
