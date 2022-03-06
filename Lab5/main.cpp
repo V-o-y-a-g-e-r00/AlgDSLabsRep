@@ -33,11 +33,11 @@ int main(int, char**) {
     plothandler PlotHandler;
 
     std::vector<std::vector<int>> MPath, MPathLength;
-//    StatisticsGraph(10, 500, 10, 0.5, 100, 1, generator1, PresentHandler0, PlotHandler.addandreturn("FloydWarshellOut.txt"), GenerateGraph, FloydWarshall, FloydWarshallCallBackParamsTailHandler, MPathLength, MPath);
+    StatisticsGraph(5, 50, 5, 0.5, 100, 10, generator1, PresentHandler0, PlotHandler.addandreturn("FloydWarshellOut.txt"), GenerateGraph, FloydWarshall, FloydWarshallCallBackParamsTailHandler, MPathLength, MPath);
     
     int SourceIndex=0;
     std::vector<std::vector<int>> Pathes;
-    StatisticsGraph(100, 200, 100, 0.5, 100, 1, generator2, PresentHandler0, PlotHandler.addandreturn("DijkstraOut.txt"), GenerateGraph, Dijkstra, DijkstraCallBackParamsTailHandler, SourceIndex, Pathes, PresentHandler0);
+    StatisticsGraph(5, 50, 5, 0.5, 100, 10, generator2, PresentHandler0, PlotHandler.addandreturn("DijkstraOut.txt"), GenerateGraph, Dijkstra, DijkstraCallBackParamsTailHandler, SourceIndex, Pathes, PresentHandler0);
 
 //    PlotHandler.tofile("Plotfilelist.txt");
     system("./PlotScript.bash");

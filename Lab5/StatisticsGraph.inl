@@ -63,7 +63,7 @@ public:
     {
         std::ofstream fd(filename, std::ios_base::app); //для записи в конец
 
-        fd<< CurrentSize<< "\t"<<std::fixed <<std::setprecision(3)<<value<<std::endl;
+        fd<< CurrentSize<< "\t"<<std::fixed <<std::setprecision(5)<<value<<std::endl;
        // fd<<std::endl;
         fd.close();
     }
