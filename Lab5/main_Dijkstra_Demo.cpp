@@ -33,8 +33,12 @@ int main(int, char**) {
     GenerateGraph(Graph1, 4, 100, generator1, PresentHandler);
     Graph1.ShowPlot(0, "");
 
-    PresentHandler.Mode=1;
+    PresentHandler.Mode=0;
 //    std::vector<int> ShortestDist;
     std::vector<std::vector<int>> Pathes(N);
     Dijkstra(Graph1, 0, Pathes, PresentHandler);
+
+    Graph1.ShowPlot(false, "");
+    PrintMatrix(Pathes, "Pathes");
+
 }

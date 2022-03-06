@@ -72,7 +72,7 @@ int main(int, char**) {
 */
     std::vector<std::vector<int>> MPath, MPathLength;
     StatisticsGraph(10, 100, 1, 0.2, 100, 1, generator1, PresentHandler, PlotHandler.addandreturn("FloydWarshellOut1.txt"), GenerateGraph, FloydWarshall, FloydWarshallCallBackParamsTailHandler, MPathLength, MPath);
-
+    
 
     PlotHandler.tofile("Plotfilelist.txt");
     system("./PlotScript.bash");
