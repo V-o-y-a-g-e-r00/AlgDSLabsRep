@@ -105,7 +105,7 @@ void GenerateAdjacencyMNumberWithLoops(Graph& Graph1, int m, std::default_random
         }
     }
 }
-void GenerateAdjacencyMNumberNoLoops(Graph& Graph1, int m, std::default_random_engine& generator) //генерируем матрицу смежности. m -число ребер в случайном графе.
+void GenerateAdjacencyMNumberNoLoops(Graph& Graph1, int m, std::default_random_engine& generator) //генерируем матрицу смежности. m -число ребер в случайном графе. Т.е. на главной диагонали выставляются 0.
 {
 
     //настраиваем генератор
@@ -163,13 +163,20 @@ void GenerateWeights(Graph& Graph1, std::default_random_engine& generator, int W
     {
         for(int j=0; j<Graph1.Edges.at(i).size();j++)
         {
-            if(j>=i)
+            if(Graph1.Edges.at(i).at(j).Adjacency==1)
             {
-                Graph1.Edges.at(i).at(j).Weight=distribution(generator);
+                if(j>=i)
+                {
+                    Graph1.Edges.at(i).at(j).Weight=distribution(generator);
+                }
+                else
+                {
+                    Graph1.Edges.at(i).at(j).Weight=Graph1.Edges.at(j).at(i).Weight;
+                }
             }
             else
             {
-                Graph1.Edges.at(i).at(j).Weight=Graph1.Edges.at(j).at(i).Weight;
+                Graph1.Edges.at(i).at(j).Weight=0;
             }
         }
     }

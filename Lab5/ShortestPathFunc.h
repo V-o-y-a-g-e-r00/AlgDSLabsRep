@@ -5,6 +5,7 @@
 #include <limits>
 
 #include "Func.h"
+#include "presenthandler.h"
 
 
 
@@ -50,5 +51,62 @@ void FloydWarshallCallBackParamsTailHandler(int N, std::vector<std::vector<int>>
     MPath.resize(N);
     for(auto& i: MPath) i.resize(N);
 }
+
+//Дейкстра==================================
+void Dijkstra(Graph& Graph1, int SourceVert, std::vector<int>& SortestDist, std::vector<std::vector<int>>& Pathes, presenthandler& PresentHandler)
+{
+    int MAX_WEIGHT=std::numeric_limits<int>::max();
+    int NULL_INDEX=std::numeric_limits<int>::max();
+    int minWeightIndex; //Индекс вершины с минимальным весом
+    int minWeight; //Вес вершины с минимальным весом
+
+    //Подготовка цветов и весов вершин.
+    Graph1.vertsVertices.ResetColors();
+    for(auto& i: Graph1.Vertices)
+    {
+        i.Weight=MAX_WEIGHT;
+    }
+
+    //Нахождение весов всех вершин. Т.е. минимальных путей от начальной вершины до всех остальных вершин.
+    do
+    {
+        /*  Поиск вершины с минимальным весом*/
+        minWeightIndex = NULL_INDEX;
+        minWeight = MAX_WEIGHT;
+        for (int i = 0; i<Graph1.Vertices.size(); i++)
+        { 
+            if ((Graph1.Vertices.at(i).Color == 11) && (Graph1.Vertices.at(i).Weight<minWeight)) //Если вершину ещё не обошли и вес меньше min
+            { // Переприсваиваем значения
+                minWeight = Graph1.Vertices.at(i).Weight;
+                minWeightIndex = i;
+            }
+        }
+
+        /*Обход соседей(вершин) из выбранной вершины*/
+        // Добавляем найденный минимальный вес к текущему весу вершины и сравниваем с текущим минимальным весом вершины
+        if (minWeightIndex != NULL_INDEX) //Если удалось найти непомеченную вершину
+        {
+            for (int i = 0; i<Graph1.Vertices.size(); i++)
+            {
+                if (Graph1.Edges.at(minWeightIndex).at(i).Weight > 0)
+                {
+                    int tempWeight = minWeight + Graph1.Edges.at(minWeightIndex).at(i).Weight;
+                    if (tempWeight < Graph1.Vertices.at(i).Weight)
+                    {
+                        Graph1.Vertices.at(i).Weight = tempWeight;
+                    }
+                }
+            }
+            Graph1.Vertices.at(minWeightIndex).Color=13;
+        }
+        if(PresentHandler.Mode>=1)
+        {
+            Graph1.ShowPlot(PresentHandler.Mode-1, std::string("DijkstraPic").append(PresentHandler.GetFileNumberAndIncrease()));
+            if(PresentHandler.Mode==1) getchar();
+        }
+    } while (minWeightIndex != NULL_INDEX);
+
+}
+
 
 #endif //SHORTESTPATHFUNC_H_INCLUDED

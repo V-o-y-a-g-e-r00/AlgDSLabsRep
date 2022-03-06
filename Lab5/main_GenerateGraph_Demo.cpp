@@ -1,17 +1,10 @@
 #include <iostream>
-//#include <fstream>
-//#include <sstream>
-//#include <string>
-//#include <iomanip> //setprecision
-//#include <random> 
 //#include <filesystem> //для создания директорий
 
 #include "presenthandler.h"
 #include "Func.h"
 #include "ShortestPathFunc.h"
 
-//#include "BaseGraph.h"
-//#include "VisualGraph.h"
 #include "Graph.h"
 #include "StatisticsGraph.inl"
 
@@ -27,11 +20,11 @@ int main(int, char**) {
     int N=5;
 
     presenthandler PresentHandler; //для отображения шагов
-    PresentHandler.Mode=0;
+    PresentHandler.Mode=1;
 
     plothandler PlotHandler;
 
- /*  Graph Graph1(N, false);
+   Graph Graph1(N, false);
     Graph1.IsWithVerticesWeights=false;
     
     //GenerateAdjacencyProb(Graph1, 0.5, generator1, false);
@@ -68,13 +61,5 @@ int main(int, char**) {
     Graph1.PrintEdges();
     PrintMatrix(MPathLength, "MPathLength");
     PrintMatrix(MPath, "MPath");
-
-*/
-    std::vector<std::vector<int>> MPath, MPathLength;
-    StatisticsGraph(10, 100, 1, 0.2, 100, 1, generator1, PresentHandler, PlotHandler.addandreturn("FloydWarshellOut1.txt"), GenerateGraph, FloydWarshall, FloydWarshallCallBackParamsTailHandler, MPathLength, MPath);
-
-
-    PlotHandler.tofile("Plotfilelist.txt");
-    system("./PlotScript.bash");
 
 }

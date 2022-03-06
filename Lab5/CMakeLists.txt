@@ -5,6 +5,7 @@ include(CTest)
 enable_testing()
 
 add_executable(Lab5 main.cpp)
+add_executable(main_GenerateGraph_Demo main_GenerateGraph_Demo.cpp)
 install(PROGRAMS PlotGraph.bash PlotScript.bash DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
