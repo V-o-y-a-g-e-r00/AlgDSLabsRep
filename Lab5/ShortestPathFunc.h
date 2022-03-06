@@ -101,7 +101,7 @@ void Dijkstra(Graph& Graph1, int& SourceIndex, std::vector<std::vector<int>>& Pa
             }
             Graph1.Vertices.at(minWeightIndex).Color=13;
         }
-        if(PresentHandler.Mode>=1)
+        if(PresentHandler.Mode>=1 && minWeightIndex!=NULL_INDEX) //чтобы не выводились 2 повторяющиеся картинки в конце
         {
             Graph1.ShowPlot(PresentHandler.Mode-1, std::string("DijkstraPic").append(PresentHandler.GetFileNumberAndIncrease()));
             if(PresentHandler.Mode==1) getchar();

@@ -31,11 +31,12 @@ int main(int, char**) {
     Graph Graph1(N);
     Graph1.IsWithVerticesWeights=true;
     GenerateGraph(Graph1, 11, 100, generator1, PresentHandler);
-    Graph1.ShowPlot(0, "");
+    Graph1.ShowPlot(1, "Pic");
 
-    PresentHandler.Mode=1;
+    PresentHandler.Mode=2;
     std::vector<std::vector<int>> Pathes;
-    Dijkstra(Graph1, 0, Pathes, PresentHandler);
+    int SourceIndex=0;
+ //   Dijkstra(Graph1, SourceIndex, Pathes, PresentHandler);
 
 //    Graph1.ShowPlot(false, "");
     PrintMatrix(Pathes, "Pathes");
