@@ -35,7 +35,7 @@ set title "Lab5" font "Helvetica Bold, 14"
 set xlabel "N - number of graph vertices"
 set ylabel "Time - average executing time, seconds"
 
-set yrange [0:10]
+set yrange [0:*]
 #set xrange[-pi:pi]
 
 
