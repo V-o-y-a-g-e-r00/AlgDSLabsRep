@@ -1,0 +1,7 @@
+#filename=BellmanFordOut.txt; MRatio=0.5; WeightMax=100; NumberOfRuns=10
+100	0.04041
+200	0.32357
+300	1.08904
+400	2.58689
+500	5.31292
+600	9.93274

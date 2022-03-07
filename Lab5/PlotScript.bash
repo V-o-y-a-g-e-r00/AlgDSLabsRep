@@ -37,7 +37,7 @@ set linestyle 13 lc rgb "#800000" lw 1.25 dashtype 2
 set key below
 
 set title "Lab1" font "Helvetica Bold, 14"
-set xlabel "N - size of array"
+set xlabel "N - number of graph vertices"
 set ylabel "Time - average executing time, seconds"
 
 set yrange [0:*]

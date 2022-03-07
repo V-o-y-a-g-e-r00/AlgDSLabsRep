@@ -153,7 +153,7 @@ void DijkstraCallBackParamsTailHandler(int N, int& SourceIndex, std::vector<std:
     return; //Данная функция ничего не делает
 }
 
-void BellmanFord(Graph& Graph1, int& s, std::vector<int>& x, std::vector<std::vector<int>>& D) //s- индекс исходной вершины, X -массив со значениями кратчайших путей от исходной вершины до вершины i. D -маршрутизация. каждая строка - маршрут до соответствующей вершины. 0 ячейка - число вершин в маршруте, остальные - индексы вершин в маршруте.
+void BellmanFord(Graph& Graph1, int& s, std::vector<int>& x, std::vector<std::vector<int>>& D, presenthandler& PresentHandler) //s- индекс исходной вершины, X -массив со значениями кратчайших путей от исходной вершины до вершины i. D -маршрутизация. каждая строка - маршрут до соответствующей вершины. 0 ячейка - число вершин в маршруте, остальные - индексы вершин в маршруте.
 {
     x.clear(); //Очищаем и устанавливаем размер выходных параметров.
     x.resize(Graph1.Vertices.size());
@@ -201,5 +201,19 @@ void BellmanFord(Graph& Graph1, int& s, std::vector<int>& x, std::vector<std::ve
             }
         }
     }
+
+    if(PresentHandler.Mode>=1)
+    {
+        PrintMatrix(D, "BellmanFord D");
+
+        std::cout <<"x=";
+        for(auto& i: x) std::cout<<i<<"\t";
+        std::cout<<std::endl;
+    }
 }
+void BellmanFordCallBackParamsTailHandler(int N, int& s, std::vector<int>& x, std::vector<std::vector<int>>& D, presenthandler& PresentHandler)
+{
+    return; //Данная функция ничего не делает
+}
+
 #endif //SHORTESTPATHFUNC_H_INCLUDED

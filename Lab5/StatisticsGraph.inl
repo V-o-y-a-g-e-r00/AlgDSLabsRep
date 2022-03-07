@@ -39,6 +39,7 @@ public:
                 std::cout<<"Graph generating started"<<std::endl;
                 CallBackGenerate(Graph1, CurrentM, WeightMax, generator, PresentHandler); //генерируем подходящий граф               
                 std::cout<<"Graph generating ended"<<std::endl;
+                if(PresentHandler.Mode>=1) Graph1.ShowPlot(false, "Pic");
 
                 CallBackTailHandler(CurrentSize, callbackparamstail...); //Управляемся с "лишними" параметрами функции поиска. В частности, изменяем размеры их массивов.
                 clock_t timeStart=clock(); //число тиков с начала выполнения программы
