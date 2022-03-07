@@ -28,18 +28,18 @@ int main(int, char**) {
 
     presenthandler PresentHandler0, PresentHandler1; //для отображения шагов
     PresentHandler0.Mode=0;
-    PresentHandler1.Mode=2;
+    PresentHandler1.Mode=0;
 
     plothandler PlotHandler;
 
     std::vector<std::vector<int>> MPath, MPathLength;
-//    StatisticsGraph(5, 50, 5, 0.5, 100, 10, generator1, PresentHandler0, PlotHandler.addandreturn("FloydWarshellOut.txt"), GenerateGraph, FloydWarshall, FloydWarshallCallBackParamsTailHandler, MPathLength, MPath);
+    StatisticsGraph(5, 50, 5, 0.5, 100, 1, generator1, PresentHandler0, PlotHandler.addandreturn("FloydWarshellOut.txt"), GenerateGraph, FloydWarshall, FloydWarshallCallBackParamsTailHandler, MPathLength, MPath);
     
     int SourceIndex=0;
     std::vector<std::vector<int>> Pathes;
     StatisticsGraph(5, 50, 5, 0.5, 100, 1, generator2, PresentHandler0, PlotHandler.addandreturn("DijkstraOut.txt"), GenerateGraph, Dijkstra, DijkstraCallBackParamsTailHandler, SourceIndex, Pathes, PresentHandler1);
 
-//    PlotHandler.tofile("Plotfilelist.txt");
+    PlotHandler.tofile("Plotfilelist.txt");
     system("./PlotScript.bash");
 
 }

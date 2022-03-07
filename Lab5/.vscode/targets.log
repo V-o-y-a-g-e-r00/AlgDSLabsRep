@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Mar  6 22:17:27 2022
+# Make data base, printed on Mon Mar  7 20:03:37 2022
 
 # Variables
 
@@ -17,7 +17,7 @@ GDK_BACKEND = x11
 # environment
 LC_ALL = C
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-751ca2d3-d511-4219-836d-68292a9b7daa.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-e0bb4c2f-58d4-47c5-a551-fd69d5157959.sock
 # environment
 VSCODE_CWD = /home/user2
 # default
@@ -67,7 +67,7 @@ APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-yVi6EhuTs0o8/agent.783
+SSH_AUTH_SOCK = /tmp/ssh-T1VEhzg3YjNO/agent.728
 # default
 .SHELLFLAGS := -c
 # environment
@@ -85,13 +85,13 @@ MAKEFILE_LIST :=
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 26732
+VSCODE_PID = 1496
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/debianuser2:@/tmp/.ICE-unix/783,unix/debianuser2:/tmp/.ICE-unix/783
+SESSION_MANAGER = local/debianuser2:@/tmp/.ICE-unix/728,unix/debianuser2:/tmp/.ICE-unix/728
 # automatic
 *F = $(notdir $*)
 # environment
@@ -157,7 +157,7 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-SSH_AGENT_PID = 861
+SSH_AGENT_PID = 808
 # environment
 _ = /usr/share/code/code
 # environment
@@ -173,7 +173,7 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 VSCODE_IPC_HOOK = /run/user/1000/vscode-a772ff14-1.63.2-main.sock
 # environment
-XDG_SESSION_ID = 4
+XDG_SESSION_ID = 2
 # default
 .RECIPEPREFIX := 
 # automatic
@@ -197,9 +197,9 @@ GDMSESSION = lightdm-xsession
 
 # Directories
 
-# . (device 2049, inode 662547): 25 files, no impossibilities.
+# . (device 2049, inode 662547): 21 files, no impossibilities.
 
-# 25 files, no impossibilities in 1 directories.
+# 21 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -249,12 +249,12 @@ GNUmakefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 33 / storage = 391 B / avg = 11 B
-# current buf: size = 8162 B / used = 391 B / count = 33 / avg = 11 B
+# strcache buffers: 1 (0) / strings = 29 / storage = 342 B / avg = 11 B
+# current buf: size = 8162 B / used = 342 B / count = 29 / avg = 11 B
 
-# strcache performance: lookups = 36 / hit rate = 8%
+# strcache performance: lookups = 32 / hit rate = 9%
 # hash-table stats:
-# Load=33/8192=0%, Rehash=0, Collisions=0/36=0%
-# Finished Make data base on Sun Mar  6 22:17:27 2022
+# Load=29/8192=0%, Rehash=0, Collisions=0/32=0%
+# Finished Make data base on Mon Mar  7 20:03:37 2022
 
  
