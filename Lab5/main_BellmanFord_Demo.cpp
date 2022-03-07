@@ -1,17 +1,10 @@
 #include <iostream>
-//#include <fstream>
-//#include <sstream>
-//#include <string>
-//#include <iomanip> //setprecision
-//#include <random> 
 //#include <filesystem> //для создания директорий
 
 #include "presenthandler.h"
 #include "Func.h"
 #include "ShortestPathFunc.h"
 
-//#include "BaseGraph.h"
-//#include "VisualGraph.h"
 #include "Graph.h"
 #include "StatisticsGraph.inl"
 
@@ -27,18 +20,22 @@ int main(int, char**) {
     presenthandler PresentHandler; //для отображения шагов
     PresentHandler.Mode=0;
 
-    int N=10;
+    int N=5;
     Graph Graph1(N);
     Graph1.IsWithVerticesWeights=true;
-    GenerateGraph(Graph1, 11, 100, generator1, PresentHandler);
-    Graph1.ShowPlot(1, "Pic");
+    GenerateGraph(Graph1, 4, 100, generator1, PresentHandler);
+    Graph1.ShowPlot(0, "Pic");
 
-    PresentHandler.Mode=2;
-    std::vector<std::vector<int>> Pathes;
-    int SourceIndex=0;
-    Dijkstra(Graph1, SourceIndex, Pathes, PresentHandler);
+    PresentHandler.Mode=1;
+    std::vector<int> x;
+    std::vector<std::vector<int>> D;
+    int s=0;
+    BellmanFord(Graph1, s, x, D);
 
 //    Graph1.ShowPlot(false, "");
-    PrintMatrix(Pathes, "Pathes");
+    PrintMatrix(D, "BellmanFord D");
 
+    std::cout <<"x=";
+    for(auto& i: x) std::cout<<i<<"\t";
+    std::cout<<std::endl;
 }

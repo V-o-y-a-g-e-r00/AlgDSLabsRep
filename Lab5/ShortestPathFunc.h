@@ -153,4 +153,53 @@ void DijkstraCallBackParamsTailHandler(int N, int& SourceIndex, std::vector<std:
     return; //Данная функция ничего не делает
 }
 
+void BellmanFord(Graph& Graph1, int& s, std::vector<int>& x, std::vector<std::vector<int>>& D) //s- индекс исходной вершины, X -массив со значениями кратчайших путей от исходной вершины до вершины i. D -маршрутизация. каждая строка - маршрут до соответствующей вершины. 0 ячейка - число вершин в маршруте, остальные - индексы вершин в маршруте.
+{
+    x.clear(); //Очищаем и устанавливаем размер выходных параметров.
+    x.resize(Graph1.Vertices.size());
+    D.clear();
+    D.resize(Graph1.Vertices.size());
+    for(int i=0; i<Graph1.Edges.size(); i++) //В матрице весов веса, соответствующие отсутствию ребер делаем большими
+    {
+        for(int j=0; j<Graph1.Edges.size(); j++)
+        {
+            if(Graph1.Edges.at(i).at(j).Adjacency==0)
+            {
+                if(i==j)   Graph1.Edges.at(i).at(j).Weight=0;
+                else Graph1.Edges.at(i).at(j).Weight=std::numeric_limits<int>::max();
+            }
+        }
+    }
+
+
+    for(int i=0; i<Graph1.Vertices.size(); i++)
+    {
+        x.at(i)=Graph1.Edges.at(s).at(i).Weight;
+    }
+    for(int i=0; i<Graph1.Vertices.size(); i++) //D[i][0]=2; D[i][1]=s; D[i][2]=i; Кроме D[s][0]=1;
+    {
+        D.at(i).push_back(2);
+        D.at(i).push_back(s);
+        D.at(i).push_back(i);
+    }
+    D.at(s).at(0)=1;
+    D.at(s).pop_back();
+
+    for(int k=0; k<Graph1.Vertices.size()-2; k++) //k -число пересадок на нашем пути. При каждой итерации вычилсяется минимальный путь с не более, чем k пересадками на этом пути. Максимальное число пересадок n-2; (в исходном алгоритме почему-то на одно выполнение больше. Или есть ещё какой-то нюанс, или это просто ошибка.)
+    {
+        for(int i=0; i<Graph1.Vertices.size(); i++) //Пытаемся улучшить путь из s в i.
+        {
+            for(int j=0; j<Graph1.Vertices.size(); j++) //Ищем такую пересадку, чтобы путь был минимальным
+            {
+                if(x.at(i)>(long long int)x.at(j)+(long long int)Graph1.Edges.at(j).at(i).Weight)
+                {
+                    x.at(i)=x.at(j)+Graph1.Edges.at(j).at(i).Weight;
+                    D.at(i)=D.at(j);
+                    D.at(i).at(0)=D.at(j).at(0)+1;
+                    D.at(i).push_back(i); //D[i,D[i,0]]:=i;
+                }
+            }
+        }
+    }
+}
 #endif //SHORTESTPATHFUNC_H_INCLUDED
