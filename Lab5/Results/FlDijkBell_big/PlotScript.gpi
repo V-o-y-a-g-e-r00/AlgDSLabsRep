@@ -12,7 +12,7 @@ set datafile separator '\t'
 #set terminal svg enhanced size 3,2
 #set output 'file.svg'
 
-#Этот способ рабочий. Потом нужно преобразовать к .PNG с помощью команды. and then use imagemagick to convert the vector format to a .png: convert -verbose -density 150 -trim file.pdf -quality 100 -flatten -sharpen 0x1.0 file.png
+#Этот способ рабочий. Потом нужно преобразовать к .PNG с помощью команды. and then use imagemagick to convert the vector format to a .png: convert -verbose -density 300 -trim file.pdf -quality 100 -flatten -sharpen 0x1.0 file.png
 set terminal pdfcairo size 6, 5 #этот неплохо работает. Размер в дюймах
 set output 'file.pdf'
 

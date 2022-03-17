@@ -33,7 +33,7 @@ int main(int, char**) {
     plothandler PlotHandler;
 
     std::vector<std::vector<int>> MPath, MPathLength;
-//    StatisticsGraph(5, 50, 5, 0.5, 100, 10, generator1, PresentHandler0, PlotHandler.addandreturn("FloydWarshellOut.txt"), GenerateGraph, FloydWarshall, FloydWarshallCallBackParamsTailHandler, MPathLength, MPath);
+    StatisticsGraph(600, 700, 100, 0.5, 100, 1, generator1, PresentHandler0, PlotHandler.addandreturn("FloydWarshellOut.txt"), GenerateGraph, FloydWarshall, FloydWarshallCallBackParamsTailHandler, MPathLength, MPath);
     
     int SourceIndex=0;
     std::vector<std::vector<int>> Pathes;
@@ -42,9 +42,9 @@ int main(int, char**) {
     int s=0;
     std::vector<int> x;
     std::vector<std::vector<int>> D;
-    StatisticsGraph(100,600, 100, 0.5, 100, 10, generator3, PresentHandler0, PlotHandler.addandreturn("BellmanFordOut.txt"), GenerateGraph, BellmanFord, BellmanFordCallBackParamsTailHandler, s, x, D, PresentHandler1);
+ //   StatisticsGraph(100,600, 100, 0.5, 100, 10, generator3, PresentHandler0, PlotHandler.addandreturn("BellmanFordOut.txt"), GenerateGraph, BellmanFord, BellmanFordCallBackParamsTailHandler, s, x, D, PresentHandler1);
 
-    PlotHandler.tofile("Plotfilelist.txt");
+//    PlotHandler.tofile("Plotfilelist.txt");
     system("./PlotScript.bash");
 
 }
