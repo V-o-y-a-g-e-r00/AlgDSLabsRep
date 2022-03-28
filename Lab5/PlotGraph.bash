@@ -123,7 +123,7 @@ WeightOffset='0' #на петли не виляет
 #Имена файлов с индексами и координатами точек; с информацией о ребрах; с легендой
 flePnts = 'Vertices.dat'
 fleEdges = 'EdgesForPlot.dat'
-GraphInfo= 'GraphInfo.dat'
+#GraphInfo= 'GraphInfo.dat'
 
 #Отображаемая область xrange
 x1=50
@@ -157,7 +157,7 @@ $loadVerticesWeightsVar
 
 loadWeightsNoLoops = sprintf('< gawk '' FNR==NR{x[\$1]=\$2;y[\$1]=\$3;next;} {if(\$1!=\$2 && \$2!="") printf "%%f\t%%f\t%%s\n", x[\$1]+(x[\$2]-x[\$1])*$WeightPosVar, y[\$1]+(y[\$2]-y[\$1])*$WeightPosVar - %s, \$3} '' %s %s',WeightOffset, flePnts, fleEdges);
   loadWeightsLoops = sprintf('< gawk '' FNR==NR{x[\$1]=\$2;y[\$1]=\$3;next;} {if(\$1==\$2) printf "%%f\t%%f\t%%s\n", (x[\$1]+x[\$2])/2, (y[\$1]+y[\$2])/2 - %s, \$3} '' %s %s',LOOPWEIGHTOFFSET, flePnts, fleEdges);
-loadGraphInfo = sprintf('< gawk '' {n=\$1;m=\$2;} {printf "n=%%d\tm=%%d", n, m} '' %s', GraphInfo);
+#loadGraphInfo = sprintf('< gawk '' {n=\$1;m=\$2;} {printf "n=%%d\tm=%%d", n, m} '' %s', GraphInfo);
 
 #Тут номера столбцов не везде совпадают с номерами столбцов в исходном файле. Т.к. gawk формирует строку, которая воспринимается как файл. И у неё свои столбцы
 

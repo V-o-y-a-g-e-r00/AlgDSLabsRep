@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Mar 17 12:14:33 2022
+# Make data base, printed on Mon Mar 28 14:44:43 2022
 
 # Variables
 
@@ -17,7 +17,7 @@ GDK_BACKEND = x11
 # environment
 LC_ALL = C
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-70182335-22d4-4959-96ef-1d33073c17a4.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-e5f43e75-f9d3-42ee-8033-36fb78639ed1.sock
 # environment
 VSCODE_CWD = /home/user2
 # default
@@ -67,7 +67,7 @@ APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-TQQJIJZI1L5P/agent.741
+SSH_AUTH_SOCK = /tmp/ssh-qpwHsKwPDsEg/agent.745
 # default
 .SHELLFLAGS := -c
 # environment
@@ -85,13 +85,13 @@ MAKEFILE_LIST :=
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 1019
+VSCODE_PID = 1073
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/debianuser2:@/tmp/.ICE-unix/741,unix/debianuser2:/tmp/.ICE-unix/741
+SESSION_MANAGER = local/debianuser2:@/tmp/.ICE-unix/745,unix/debianuser2:/tmp/.ICE-unix/745
 # automatic
 *F = $(notdir $*)
 # environment
@@ -157,7 +157,7 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-SSH_AGENT_PID = 819
+SSH_AGENT_PID = 823
 # environment
 _ = /usr/share/code/code
 # environment
@@ -173,7 +173,7 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 VSCODE_IPC_HOOK = /run/user/1000/vscode-a772ff14-1.63.2-main.sock
 # environment
-XDG_SESSION_ID = 2
+XDG_SESSION_ID = 3
 # default
 .RECIPEPREFIX := 
 # automatic
@@ -255,6 +255,6 @@ GNUmakefile:
 # strcache performance: lookups = 34 / hit rate = 8%
 # hash-table stats:
 # Load=31/8192=0%, Rehash=0, Collisions=0/34=0%
-# Finished Make data base on Thu Mar 17 12:14:33 2022
+# Finished Make data base on Mon Mar 28 14:44:43 2022
 
  

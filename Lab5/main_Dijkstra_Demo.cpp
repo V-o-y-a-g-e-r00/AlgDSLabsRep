@@ -25,15 +25,15 @@ int main(int, char**) {
     std::default_random_engine generator1(seed);
 
     presenthandler PresentHandler; //для отображения шагов
-    PresentHandler.Mode=0;
+    PresentHandler.Mode=1;
 
     int N=10;
     Graph Graph1(N);
     Graph1.IsWithVerticesWeights=true;
     GenerateGraph(Graph1, 11, 100, generator1, PresentHandler);
-    Graph1.ShowPlot(1, "Pic");
+    Graph1.ShowPlot(0, "Pic");
 
-    PresentHandler.Mode=2;
+    PresentHandler.Mode=1;
     std::vector<std::vector<int>> Pathes;
     int SourceIndex=0;
     Dijkstra(Graph1, SourceIndex, Pathes, PresentHandler);
