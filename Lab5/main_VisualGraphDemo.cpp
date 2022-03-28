@@ -5,7 +5,7 @@
 int main(int, char**) {
 
     Graph Graph1(25);
-    Graph1.IsOriented=true;
+ //   Graph1.IsOriented=true;
 //    Graph1.Edges.at(0).at(0).Adjacency=true;
 
     int x[]={11,3,3,12,12,6,   18, 15, 15,      21, 27, 27, 21, 21, 27,  31,31,37,37,31,     41,41,41,47,47};
@@ -60,6 +60,6 @@ int main(int, char**) {
         Graph1.Edges.at(i).at(i+1).Adjacency=true;
     }
 
-    Graph1.ShowPlot(0, "pic", false);
+    Graph1.ShowPlot(1, "GRAPH", false);
     return 0;
 }
