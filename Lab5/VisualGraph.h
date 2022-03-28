@@ -154,9 +154,10 @@ public:
         fd.close();
     }
 
-    void ShowPlot(bool IsSavePictureToFile, std::string PictureName) //PictureName без расширения
+    void ShowPlot(bool IsSavePictureToFile=false, std::string PictureName="pic", bool IsSetVertXYForPlot=true) //PictureName без расширения
     {
-        SetVertXYForPlot();
+        if(IsSetVertXYForPlot) SetVertXYForPlot();
+
         PrintVertices("Vertices.dat");
         SetEdgesForPlot(); //Вывод в файл для рисования графа 
         PrintEdges("Edges.txt"); //вывод информации о ребрах для наглядности. Не используется для рисования графа
