@@ -122,15 +122,35 @@ public:
     {       
         std::ofstream fd(fname);
         fd<<"#i;j;Weight;Color"<<std::endl;
-        for(int i=0; i<Edges.size(); i++)
-            for(int j=i; j<Edges.at(i).size(); j++) //просматриваем только верхний угл. Граф у нас неориентированный! Тут заполняется вектор с ребрами
-            {  
-            //    std::cout<<i<<"\t"<<j<<"\t"<<Edges.at(i).at(j).Weight<<"\t"<<Edges.at(i).at(j).Color<<std::endl;
-                if(Edges.at(i).at(j).Adjacency==1)
-                {   
-                    fd<<i<<"\t"<<j<<"\t"<<Edges.at(i).at(j).Weight<<"\t"<<Edges.at(i).at(j).Color<<std::endl;
+        if(IsOriented)
+        {
+            for(int i=0; i<Edges.size(); i++)
+            {
+                for(int j=0; j<Edges.at(i).size(); j++) //Граф у нас ориентированный! Тут заполняется вектор с ребрами
+                {  
+                //    std::cout<<i<<"\t"<<j<<"\t"<<Edges.at(i).at(j).Weight<<"\t"<<Edges.at(i).at(j).Color<<std::endl;
+                    if(Edges.at(i).at(j).Adjacency==1)
+                    {   
+                        fd<<i<<"\t"<<j<<"\t"<<Edges.at(i).at(j).Weight<<"\t"<<Edges.at(i).at(j).Color<<std::endl;
+                    }
                 }
             }
+        }
+        else
+        {
+            for(int i=0; i<Edges.size(); i++)
+            {
+                for(int j=i; j<Edges.at(i).size(); j++) //просматриваем только верхний угл. Граф у нас неориентированный! Тут заполняется вектор с ребрами
+                {  
+                //    std::cout<<i<<"\t"<<j<<"\t"<<Edges.at(i).at(j).Weight<<"\t"<<Edges.at(i).at(j).Color<<std::endl;
+                    if(Edges.at(i).at(j).Adjacency==1)
+                    {   
+                        fd<<i<<"\t"<<j<<"\t"<<Edges.at(i).at(j).Weight<<"\t"<<Edges.at(i).at(j).Color<<std::endl;
+                    }
+                }
+            }
+        }
+
         fd.close();
     }
 

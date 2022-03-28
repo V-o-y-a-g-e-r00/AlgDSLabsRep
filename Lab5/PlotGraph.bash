@@ -102,7 +102,7 @@ LOOPOFFSET='5'
 LOOPWEIGHTOFFSET='10'
 EdgesLoopRadius=5;
 
-set style line 1 lc rgb '#0000FF' lw 1   #Для ребер
+set style line 1 lc rgb '#000000' lw 1   #Для ребер
 set style line 2 lc rgb "green" lw 1
 set style line 3 lc rgb "blue" lw 1
 set style line 4 lc rgb "red" lw 1
