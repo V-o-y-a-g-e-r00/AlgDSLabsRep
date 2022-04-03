@@ -13,7 +13,7 @@
 #include "Graph.h"
 
 
-void GenerateAdjacencyProb(Graph& Graph1, double probability, std::default_random_engine generator, bool IsWithLoops) //генерируем матрицу смежности. probability -вероятность появления ребра
+void GenerateAdjacencyProb(Graph& Graph1, double probability, std::default_random_engine& generator, bool IsWithLoops) //генерируем матрицу смежности. probability -вероятность появления ребра
 {
     //настраиваем генератор
     std::discrete_distribution<int> distribution {1-probability, probability}; //единички генерируются с вероятностью probability, а нолики с вероятностью 1-probability

@@ -216,4 +216,16 @@ void BellmanFordCallBackParamsTailHandler(int N, int& s, std::vector<int>& x, st
     return; //Данная функция ничего не делает
 }
 
+void AlgFuncExample(Graph& Graph1, int& param1, int& param2, char& param3) //Функция для демонсрации работы класса StatisticGraph
+{
+    //Выполнить алгоритм над графом Graph1
+    return;
+}
+void AlgFuncExampleCallBackParamsTailHandler(int N, int& param1, int& param2, char& param3)
+{
+    //Настраиваем значения param1, param2 и param3 к последующей передачи в функцию AlgFuncExample
+    //В данном случае в этом нет необходимости, поэтому тело функции оставляем пустым
+    return; //Данная функция ничего не делает
+}
+
 #endif //SHORTESTPATHFUNC_H_INCLUDED

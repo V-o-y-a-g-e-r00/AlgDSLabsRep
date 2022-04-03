@@ -63,5 +63,6 @@ int main(int, char**) {
     }
 
     Graph1.ShowPlot(1, "GRAPH", false);
+    
     return 0;
 }

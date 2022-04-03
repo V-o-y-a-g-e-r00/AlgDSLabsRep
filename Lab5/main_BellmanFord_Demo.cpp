@@ -33,7 +33,7 @@ int main(int, char**) {
     PresentHandler.Mode=1;
     BellmanFord(Graph1, s, x, D, PresentHandler);
 
-//    Graph1.ShowPlot(false, "");
+    Graph1.ShowPlot();
  /*   PrintMatrix(D, "BellmanFord D");
 
     std::cout <<"x=";

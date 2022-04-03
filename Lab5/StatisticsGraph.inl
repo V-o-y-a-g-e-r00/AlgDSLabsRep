@@ -10,6 +10,7 @@
 #include <random>
 
 #include "Graph.h"
+#include "presenthandler.h"
 
 class StatisticsGraph
 {
