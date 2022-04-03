@@ -17,10 +17,10 @@ int main(int, char**) {
     int seed=4; //с seed 4 получается 3 итерации в Adjacency при n=5 m=4
     std::default_random_engine generator1(seed);
 
-    int N=5;
+    int N=6;
 
     presenthandler PresentHandler; //для отображения шагов
-    PresentHandler.Mode=1;
+    PresentHandler.Mode=2;
 
     plothandler PlotHandler;
 
@@ -36,7 +36,7 @@ int main(int, char**) {
  //       return -1;
  //   }
 
-    int iteration=0;
+/*    int iteration=0;
     do
     {
         std::cout<<"Generating Adjacency: iteration: "<<iteration<<std::endl;
@@ -50,10 +50,12 @@ int main(int, char**) {
         iteration++;
     }while(!IsConnectedDFS(Graph1, 0, PresentHandler));
     GenerateWeights(Graph1, generator1, 1, 100); //все норм. Если seed принял какое-либо значение, то им определяется количество попыток, которые будут сделаны, чтобы получить Adjacency однозначно, поэтому при данном seed Weight будет также однозначным
+*/
+    GenerateGraph(Graph1, 6, 100, generator1, PresentHandler);
 
-    Graph1.ShowPlot(false, "Pic");
+    Graph1.ShowPlot(1, "Pic");
 
-    std::vector<std::vector<int>> MPath(N), MPathLength(N);
+/*    std::vector<std::vector<int>> MPath(N), MPathLength(N);
     for(auto& i: MPath) i.resize(N);
     for(auto& i: MPathLength) i.resize(N);
 
@@ -61,5 +63,5 @@ int main(int, char**) {
     Graph1.PrintEdges();
     PrintMatrix(MPathLength, "MPathLength");
     PrintMatrix(MPath, "MPath");
-
+*/
 }

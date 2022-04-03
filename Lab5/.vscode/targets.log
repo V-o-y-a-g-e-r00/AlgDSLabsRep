@@ -1,15 +1,14 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target 'all'.  Stop.
- 
+
 # GNU Make 4.3
- 
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Apr  3 17:55:02 2022
+# Make data base, printed on Sun Apr  3 23:35:28 2022
 
 # Variables
 
@@ -18,7 +17,7 @@ GDK_BACKEND = x11
 # environment
 LC_ALL = C
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-c08910a6-f084-42d1-bd74-4b490bbff697.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-827a43d3-b6f4-45fe-81a7-bcfa99051817.sock
 # environment
 VSCODE_CWD = /home/user2
 # default
@@ -68,7 +67,7 @@ APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-AvBK3zVh8ugt/agent.724
+SSH_AUTH_SOCK = /tmp/ssh-kWNImSBhuSjX/agent.724
 # default
 .SHELLFLAGS := -c
 # environment
@@ -86,7 +85,7 @@ MAKEFILE_LIST :=
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 1006
+VSCODE_PID = 1023
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -198,9 +197,9 @@ GDMSESSION = lightdm-xsession
 
 # Directories
 
-# . (device 2049, inode 662547): 25 files, no impossibilities.
+# . (device 2049, inode 662547): 26 files, no impossibilities.
 
-# 25 files, no impossibilities in 1 directories.
+# 26 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -250,12 +249,12 @@ GNUmakefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 33 / storage = 446 B / avg = 13 B
-# current buf: size = 8162 B / used = 446 B / count = 33 / avg = 13 B
+# strcache buffers: 1 (0) / strings = 34 / storage = 482 B / avg = 14 B
+# current buf: size = 8162 B / used = 482 B / count = 34 / avg = 14 B
 
-# strcache performance: lookups = 36 / hit rate = 8%
+# strcache performance: lookups = 37 / hit rate = 8%
 # hash-table stats:
-# Load=33/8192=0%, Rehash=0, Collisions=0/36=0%
-# Finished Make data base on Sun Apr  3 17:55:02 2022
+# Load=34/8192=0%, Rehash=0, Collisions=0/37=0%
+# Finished Make data base on Sun Apr  3 23:35:28 2022
 
  
