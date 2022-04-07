@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Apr  3 23:35:28 2022
+# Make data base, printed on Thu Apr  7 22:09:40 2022
 
 # Variables
 
@@ -17,7 +17,7 @@ GDK_BACKEND = x11
 # environment
 LC_ALL = C
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-827a43d3-b6f4-45fe-81a7-bcfa99051817.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-ea4bd2e7-cb84-4708-9c76-86243f47c620.sock
 # environment
 VSCODE_CWD = /home/user2
 # default
@@ -67,7 +67,7 @@ APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-kWNImSBhuSjX/agent.724
+SSH_AUTH_SOCK = /tmp/ssh-iJCufTz9HUEA/agent.730
 # default
 .SHELLFLAGS := -c
 # environment
@@ -85,13 +85,13 @@ MAKEFILE_LIST :=
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 1023
+VSCODE_PID = 1015
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/debianuser2:@/tmp/.ICE-unix/724,unix/debianuser2:/tmp/.ICE-unix/724
+SESSION_MANAGER = local/debianuser2:@/tmp/.ICE-unix/730,unix/debianuser2:/tmp/.ICE-unix/730
 # automatic
 *F = $(notdir $*)
 # environment
@@ -157,7 +157,7 @@ GTK_MODULES = gail:atk-bridge
 # default
 MAKE_VERSION := 4.3
 # environment
-SSH_AGENT_PID = 804
+SSH_AGENT_PID = 808
 # environment
 _ = /usr/share/code/code
 # environment
@@ -197,9 +197,9 @@ GDMSESSION = lightdm-xsession
 
 # Directories
 
-# . (device 2049, inode 662547): 26 files, no impossibilities.
+# . (device 2049, inode 662547): 29 files, no impossibilities.
 
-# 26 files, no impossibilities in 1 directories.
+# 29 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -249,12 +249,12 @@ GNUmakefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 34 / storage = 482 B / avg = 14 B
-# current buf: size = 8162 B / used = 482 B / count = 34 / avg = 14 B
+# strcache buffers: 1 (0) / strings = 37 / storage = 531 B / avg = 14 B
+# current buf: size = 8162 B / used = 531 B / count = 37 / avg = 14 B
 
-# strcache performance: lookups = 37 / hit rate = 8%
+# strcache performance: lookups = 40 / hit rate = 7%
 # hash-table stats:
-# Load=34/8192=0%, Rehash=0, Collisions=0/37=0%
-# Finished Make data base on Sun Apr  3 23:35:28 2022
+# Load=37/8192=0%, Rehash=0, Collisions=0/40=0%
+# Finished Make data base on Thu Apr  7 22:09:40 2022
 
  

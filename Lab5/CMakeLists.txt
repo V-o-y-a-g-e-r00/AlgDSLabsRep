@@ -11,6 +11,7 @@ add_executable(main_BellmanFord_Demo main_BellmanFord_Demo.cpp)
 add_executable(main_VisualGraphDemo main_VisualGraphDemo.cpp) #Вывод графа в виде слова GRAPH
 add_executable(main_GenerateAdjacency main_GenerateAdjacency.cpp) #Проверка генерации графа
 add_executable(main_StatisticsGraph_SimpleDemo main_StatisticsGraph_SimpleDemo.cpp) #Демонстрация использования StatisticsGraph
+add_executable(main_FromFileDebug main_FromFileDebug.cpp)
 
 install(PROGRAMS PlotGraph.bash PlotScript.bash DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
