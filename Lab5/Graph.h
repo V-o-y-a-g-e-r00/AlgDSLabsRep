@@ -30,6 +30,10 @@ public:
     {
     private:
         std::vector<std::vector<edge>>& refEdges;
+/*        std::istream& getlineCheck() //возвр тип как у std::getline()
+        {
+
+        }*/
     public:
         edges(std::vector<std::vector<edge>>& NrefEdges): refEdges(NrefEdges)
         {
@@ -84,9 +88,12 @@ public:
                 }
                 std::cout<<"str="<<str<<std::endl;
 
-            //    for(int j=0; j<refEdges.size(); j++)
+
+                std::stringstream ss;
+                ss<<str;
+                for(int j=0; j<refEdges.size(); j++)
                 {
-                    
+                    ss>>refEdges.at(i).at(j).Adjacency;
                 }
             }
             fin.close();
