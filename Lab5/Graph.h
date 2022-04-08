@@ -80,6 +80,26 @@ public:
             }
             fin.close();
         }
+        void WeightFromFile(char *filename)
+        {
+            std::ifstream fin(filename);
+            if(!fin.is_open()) //проверка на успешность открытия файла
+            {
+                std::stringstream ss;
+                ss << "Can not open file:"<<filename<<std::endl;
+                throw(ss.str());
+            }
+            for(int i=0; i<refVertices.size(); i++)
+            {
+                std::string str; //Строка из файла
+                if(!getstr(fin, str)) break;
+
+                std::stringstream ss;
+                ss<<str;
+                ss>>refVertices.at(i).Weight;
+            }
+            fin.close();
+        }
     };
     class edges
     {
