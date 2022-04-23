@@ -23,6 +23,7 @@
 
 #define FULLWALL "\u253C" // '-|-'
 #define DOT "." //для случаев, когда нет всех четырех стен
+#define NOHORIZ " "
 
 class maze
 {
@@ -95,7 +96,7 @@ public:
             break;
         case 11:
             ss<<CORBL;
-            std::cout<<"char:CORBL"<<std::endl;
+          //  std::cout<<"char:CORBL"<<std::endl;
             break;
         case 100:
             ss<<HORIZWALL;
@@ -145,7 +146,36 @@ public:
     //    std::cout<<ss.str();
         std::string WallFlags;
 
+        WallFlags.clear();
+        // Тут просто корректируем граничные условия
+        if(HasWall(0,0, 1)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+        WallFlags.insert(0,"0"); // наверх стены не продолжаются
+        WallFlags.insert(0,"0");
+        if(HasWall(0,0, 2)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+        CharFromWallFlags(ss, WallFlags);
+        
 
+        for(int j=0;j<m-1;j++)
+        {
+            if(HasWall(0,0, 1)) ss<<HORIZWALL; else ss<<NOHORIZ;
+            WallFlags.clear();
+            if(HasWall(0,j+1, 1)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+            WallFlags.insert(0,"0"); // наверх стены не продолжаются
+            if(HasWall(0,j, 1)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+            if(HasWall(0,j, 0)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+            CharFromWallFlags(ss, WallFlags);
+        }
+
+        if(HasWall(0,0, 1)) ss<<HORIZWALL; else ss<<NOHORIZ;
+        WallFlags.clear();
+        WallFlags.insert(0,"0"); // вправо и наверх стены не продолжаются
+        WallFlags.insert(0,"0");
+        if(HasWall(0,m-1, 1)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+        if(HasWall(0,m-1, 0)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+        CharFromWallFlags(ss, WallFlags);
+
+        ss<<std::endl;
+        // /////
         for(int i=0; i<n; i++)
         {
             // Тут просто корректируем граничные условия
@@ -157,18 +187,27 @@ public:
             CharFromWallFlags(ss, WallFlags);
           //  std::cout<<"i="<<i<<" WallFlags="<<WallFlags<<" "<< std::stoi(WallFlags)<<" HasWall(i,0, 2)="<<HasWall(i,0, 2)<<CORBL<<std::endl;
             // /////   
-            for(int j=0; j<m; j++)
+            for(int j=0; j<m-1; j++)
             {
-                ss<<HORIZWALL;
+                if(HasWall(i,j, 3)) ss<<HORIZWALL; else ss<<NOHORIZ;
                 WallFlags.clear();
-                if ((i+1<n)&&(j+1<m)) if(HasWall(i+1,j+1, 1)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0"); else WallFlags.insert(0,"1");
+                if(HasWall(i+1,j+1, 1)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
                 if(HasWall(i,j, 0)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
                 if(HasWall(i,j, 3)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
-                if ((i+1<n)&&(j+1<m)) if(HasWall(i+1,j+1, 2)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0"); else WallFlags.insert(0,"1");
+                if(i+1<n) if(HasWall(i+1,j+1, 2)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0"); else WallFlags.insert(0,"0");
 
                 CharFromWallFlags(ss, WallFlags);
                 
             }
+            // Тут просто корректируем граничные условия
+            if(HasWall(i,m-1, 3)) ss<<HORIZWALL; else ss<<NOHORIZ;
+            WallFlags.clear();
+            WallFlags.insert(0,"0"); //справа ячеек нет, и значит стен, уходящих вправо тоже нет
+            if(HasWall(i,m-1, 0)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+            if(HasWall(i,m-1, 3)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+            if(i+1<n) if(HasWall(i+1,m-1, 0)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0"); 
+            CharFromWallFlags(ss, WallFlags);
+            // /////
             ss<<std::endl;
         }
         std::cout<<ss.str();
@@ -221,7 +260,8 @@ int main(int, char**) {
     std::cout << "Hello, world!"<<(-1)%2<<std::endl;
     maze Maze(3,3);
     Maze.SetCellWalls(0,0,0,false);
-    Maze.SetCellWalls(1,0,2,false);
+ //   Maze.SetCellWalls(1,0,2,false);
+    Maze.SetCellWalls(1,1, 1, false);
     Maze.Show();
   //  std::string str = "\u256C\u265E";
 // std::cout << str << std::endl;
