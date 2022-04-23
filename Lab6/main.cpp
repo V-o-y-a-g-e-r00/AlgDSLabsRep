@@ -68,7 +68,7 @@ public:
         if(BaseVector.at(i*2+1+di).at(j*2+1+dj)==WALL) return true;
         else return false;
     }
-    void Show(char* filename=(char*)"cin")
+    std::string Show(char* filename=(char*)"cin")
     {
         std::stringstream ss;
         for(auto& i: BaseVector)
@@ -80,6 +80,7 @@ public:
             ss<<std::endl;
         }
         std::cout<<ss.str();
+        return ss.str();
     }
     void CharFromWallFlags(std::stringstream& ss, std::string& WallFlags) //Вспомогательная функция для получения символа по флагу, т.е. по его описанию.
     {
@@ -138,7 +139,7 @@ public:
             break;
         }
     }
-    void ShowDecorate(char* filename=(char*)"cin")
+    void ShowDecorate(char* filename=(char*)"cout", int Mode=0) //Mode - 0 выводить внутреннее представление лабиринта и его декоративный вариант. 1 - только декоративный.
     {
         std::stringstream ss;
         std::string str;
@@ -210,7 +211,66 @@ public:
             // /////
             ss<<std::endl;
         }
-        std::cout<<ss.str();
+        if(filename==(char*)"cout") //пошел вывод в терминал или файл
+        {
+            switch(Mode)
+            {
+                case 0:
+                {
+                    std::stringstream ss1;
+                    for(auto& i: BaseVector)
+                    {
+                        for(auto& j: i)
+                        {
+                            ss1<<j;
+                        }
+                        ss1<<std::endl;
+                    }
+                    std::cout<<ss1.str();
+                    std::cout<<"------------"<<std::endl;
+                    std::cout<<ss.str();
+                }break;
+                case 1:
+                {
+                    std::cout<<ss.str();
+                }break;
+            }
+        }
+        else
+        {
+            std::ofstream fout(filename);
+            if(!fout.is_open())
+            {
+                std::stringstream ss;
+                ss << "Can not open file:"<<filename<<std::endl;
+                throw(ss.str());
+            }
+            switch(Mode)
+            {
+                case 0:
+                {
+                    std::stringstream ss1;
+                    for(auto& i: BaseVector)
+                    {
+                        for(auto& j: i)
+                        {
+                            ss1<<j;
+                        }
+                        ss1<<std::endl;
+                    }
+                    fout<<ss1.str();
+                    fout<<"------------"<<std::endl;
+                    fout<<ss.str();
+                }break;
+                case 1:
+                {
+                    fout<<ss.str();
+                }break;
+                
+            }
+            fout.close();
+
+        }
     }
 };
 void MazeFromFile(maze& Maze, char* filename)
@@ -253,11 +313,10 @@ void MazeFromFile(maze& Maze, char* filename)
            Maze.BaseVector.at(i).at(j)=str.at(j);
        }
     }
-
+    fin.close();
 
 }
 int main(int, char**) {
-    std::cout << "Hello, world!"<<(-1)%2<<std::endl;
     maze Maze;
     try
     {
@@ -272,9 +331,10 @@ int main(int, char**) {
 //    Maze.SetCellWalls(0,0,0,false);
  //   Maze.SetCellWalls(1,0,2,false);
  //   Maze.SetCellWalls(1,1, 1, false);
-    Maze.Show();
+ //   Maze.Show();
   //  std::string str = "\u256C\u265E";
 // std::cout << str << std::endl;
-    std::cout << "------------" << std::endl;
+ //   std::cout << "------------" << std::endl;
+//    Maze.ShowDecorate((char*)"MazeOut.txt", 0);
     Maze.ShowDecorate();
 }
