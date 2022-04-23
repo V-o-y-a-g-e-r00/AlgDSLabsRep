@@ -258,10 +258,20 @@ void MazeFromFile(maze& Maze, char* filename)
 }
 int main(int, char**) {
     std::cout << "Hello, world!"<<(-1)%2<<std::endl;
-    maze Maze(3,3);
-    Maze.SetCellWalls(0,0,0,false);
+    maze Maze;
+    try
+    {
+         MazeFromFile(Maze, (char*)"Maze.txt");
+    }
+    catch(std::string str)
+    {
+        std::cout << str << std::endl;
+    }
+    
+   
+//    Maze.SetCellWalls(0,0,0,false);
  //   Maze.SetCellWalls(1,0,2,false);
-    Maze.SetCellWalls(1,1, 1, false);
+ //   Maze.SetCellWalls(1,1, 1, false);
     Maze.Show();
   //  std::string str = "\u256C\u265E";
 // std::cout << str << std::endl;
