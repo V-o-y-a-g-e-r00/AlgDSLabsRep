@@ -3,10 +3,12 @@
 #include <fstream>
 #include <sstream>
 
-#define WALL '#'
-#define NOWALL '?'
-#define EMPTYCELL '.'
-#define CORNER '+'
+#include "MazeGenerationAlgs.h"
+
+#define WALL '#' //Стена присутствует
+#define NOWALL '?' //Стена отсутствует (половина строк содержит только информацию о стенах)
+#define EMPTYCELL '.' //Сама ячейка
+#define CORNER '+' //Не несет смысла. Стоит по углам ячеек.
 
 #define HORIZWALL "\u2500" // '-'
 #define VERTWALL "\u2502" // '|'
