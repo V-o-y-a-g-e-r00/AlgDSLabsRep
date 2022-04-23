@@ -99,7 +99,7 @@ public:
             ss<<HORIZWALL;
             break;
         case 10:
-            ss<<VERTWALL;
+            ss<<BOTTOMWALL;
             break;
         case 11:
             ss<<CORBL;
@@ -118,7 +118,7 @@ public:
             ss<<BOTTOMWALL;
             break;
         case 1000:
-            ss<<VERTWALL;
+            ss<<TOPWALL; //если ставить вертикальную черту, то может возникнуть ситуация, когда закроется проход
             break;
         case 1001:
             ss<<CORTL;

@@ -11,7 +11,7 @@ int main(int, char**) {
     std::default_random_engine generator1(seed);
 
     maze Maze(10,10);
-/*    try
+ /*   try
     {
          MazeFromFile(Maze, (char*)"Maze.txt");
     }
@@ -22,7 +22,7 @@ int main(int, char**) {
 */
     
     AldousBroder(Maze, generator1);
-    Maze.ShowDecorate((char*)"cout",1);
+    Maze.ShowDecorate((char*)"cout",0);
  //   Maze.ShowDecorate((char*)"MazeOut.txt");
 
 
