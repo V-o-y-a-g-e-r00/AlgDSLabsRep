@@ -84,28 +84,29 @@ public:
     {
         switch (std::stoi(WallFlags))
         {
-        case 0000:
+        case 0:
             ss<<DOT;
             break;
-        case 0001:
+        case 1:
             ss<<HORIZWALL;
             break;
-        case 0010:
+        case 10:
             ss<<VERTWALL;
             break;
-        case 0011:
+        case 11:
             ss<<CORBL;
+            std::cout<<"char:CORBL"<<std::endl;
             break;
-        case 0100:
+        case 100:
             ss<<HORIZWALL;
             break;
-        case 0101:
+        case 101:
             ss<<HORIZWALL;
             break;
-        case 0110:
+        case 110:
             ss<<CORBR;
             break;
-        case 0111:
+        case 111:
             ss<<BOTTOMWALL;
             break;
         case 1000:
@@ -154,6 +155,7 @@ public:
             WallFlags.insert(0,"0"); //слева ячеек нет, и значит стен, уходящих влево тоже нет
             if(i+1<n) if(HasWall(i+1,0, 2)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0"); 
             CharFromWallFlags(ss, WallFlags);
+          //  std::cout<<"i="<<i<<" WallFlags="<<WallFlags<<" "<< std::stoi(WallFlags)<<" HasWall(i,0, 2)="<<HasWall(i,0, 2)<<CORBL<<std::endl;
             // /////   
             for(int j=0; j<m; j++)
             {
@@ -219,6 +221,7 @@ int main(int, char**) {
     std::cout << "Hello, world!"<<(-1)%2<<std::endl;
     maze Maze(3,3);
     Maze.SetCellWalls(0,0,0,false);
+    Maze.SetCellWalls(1,0,2,false);
     Maze.Show();
   //  std::string str = "\u256C\u265E";
 // std::cout << str << std::endl;
