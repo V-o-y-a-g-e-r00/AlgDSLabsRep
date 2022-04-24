@@ -156,6 +156,8 @@ void Wilson(maze& Maze, std::default_random_engine& generator, presenthandler Pr
         bool IsSatisfying=true; //когда у стены некотрые случайные значения не подходят
         int randcase=0;
         int WanderI, WanderJ; //Текущие i j
+        WanderI=randI;
+        WanderJ=randJ;
         while(Maze.GetCellValue(WanderI, WanderJ)!=UST) //Пока не дойдем до области UST
         {
             randcase=Distrdidj(generator);
@@ -225,8 +227,38 @@ void Wilson(maze& Maze, std::default_random_engine& generator, presenthandler Pr
             }
         }
         //Теперь возвращаемся к ячейке, с которой начали блуждания и строим уже окончательную ветвь по стрелкам.
-
-
+        WanderI=randI;
+        WanderJ=randJ;
+        while(Maze.GetCellValue(WanderI, WanderJ)!=UST) //Пока не дойдем до области UST
+        {
+            switch (Maze.GetCellValue(WanderI, WanderJ)) //Убираем стрелку на символ UST и переходим в ячейку по стрелке. Увеличиваем счетчик ячеек в UST.
+            {
+            case ARROWRIGHT:
+                Maze.SetCellValue(WanderI, WanderJ, UST);
+                Maze.SetCellWalls(WanderI, WanderJ, 0, false);
+                USTCount++;
+                WanderJ++;
+                break;
+            case ARROWUP:
+                Maze.SetCellValue(WanderI, WanderJ, UST);
+                Maze.SetCellWalls(WanderI, WanderJ, 1, false);
+                USTCount++;
+                WanderI--;
+                break;
+            case ARROWLEFT:
+                Maze.SetCellValue(WanderI, WanderJ, UST);
+                Maze.SetCellWalls(WanderI, WanderJ, 2, false);
+                USTCount++;
+                WanderJ--;
+                break;
+            case ARROWDOWN:
+                Maze.SetCellValue(WanderI, WanderJ, UST);
+                Maze.SetCellWalls(WanderI, WanderJ, 3, false);
+                USTCount++;
+                WanderI++;
+                break;
+            }
+        }
     }
 
 }

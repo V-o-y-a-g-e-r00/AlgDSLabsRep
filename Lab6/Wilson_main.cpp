@@ -9,9 +9,7 @@ int main(int, char**) {
     int seed=time(0);
     //int seed=2;
     std::default_random_engine generator1(seed);
-    std::uniform_int_distribution<int> distr(0, 5);
-    distr
-    maze Maze(5000,5000);
+    maze Maze(5,5);
  /*   try
     {
          MazeFromFile(Maze, (char*)"Maze.txt");
@@ -23,9 +21,7 @@ int main(int, char**) {
 */
     presenthandler PrHandler;
     PrHandler.Mode=1;
-    AldousBroder(Maze, generator1, PrHandler);
+    Wilson(Maze, generator1, PrHandler);
  //   Maze.ShowDecorate((char*)"cout",0);
-    Maze.ShowDecorate((char*)"MazeOut.txt");
-
-
+    Maze.ShowDecorate();
 }
