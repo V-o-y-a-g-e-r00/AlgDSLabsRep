@@ -454,34 +454,78 @@ void BinaryTree(maze& Maze, std::default_random_engine& generator, presenthandle
     case 0: // L
         StartI=0;
         StartJ=Maze.m-1;
+        for(int j=Maze.m-1-1; j>=0; j--) //крайние строку и столбец отдельно, чтобы было читабельно
+        {
+            Maze.SetCellWalls(0, j, alpha, false);
+        }
+        for(int i=1; i<Maze.n; i++)
+        {
+            Maze.SetCellWalls(i, Maze.m-1, alpha+1, false);
+        }
+        for(int i=1; i<Maze.n; i++)
+        {
+            for(int j=Maze.m-1-1; j>=0; j--)
+            {
+                Maze.SetCellWalls(i, j, alpha+distr(generator), false);
+            }
+        }
         break;
     case 1: // _|
         StartI=0;
         StartJ=0;
         for(int j=1; j<Maze.m; j++) //крайние строку и столбец отдельно, чтобы было читабельно
         {
-            Maze.SetCellWalls(0, j, 2, false);
+            Maze.SetCellWalls(0, j, alpha+1, false);
         }
-        for(int i=1; i<Maze.m; i++)
+        for(int i=1; i<Maze.n; i++)
         {
-            Maze.SetCellWalls(i, 0, 1, false);
+            Maze.SetCellWalls(i, 0, alpha, false);
         }
         for(int i=1; i<Maze.n; i++)
         {
             for(int j=1; j<Maze.m; j++)
             {
                 Maze.SetCellWalls(i, j, alpha+distr(generator), false);
-                std::cout<<"alpha+distr(generator)"<<alpha+distr(generator)<<std::endl;
             }
         }
         break;
     case 2: // 7
         StartI=Maze.n-1;
         StartJ=0;
+        for(int j=1; j<Maze.m; j++) //крайние строку и столбец отдельно, чтобы было читабельно
+        {
+            Maze.SetCellWalls(Maze.n-1, j, alpha, false);
+        }
+        for(int i=Maze.n-1-1; i>=0; i--)
+        {
+            Maze.SetCellWalls(i, 0, alpha+1, false);
+        }
+        for(int i=Maze.n-1-1; i>=0; i--)
+        {
+            for(int j=1; j<Maze.m; j++)
+            {
+                Maze.SetCellWalls(i, j, alpha+distr(generator), false);
+            }
+        }
         break;
     case 3: // Г
         StartI=Maze.n-1;
         StartJ=Maze.m-1;
+        for(int j=Maze.m-1-1; j>=0; j--) //крайние строку и столбец отдельно, чтобы было читабельно
+        {
+            Maze.SetCellWalls(Maze.n-1, j, alpha+1, false);
+        }
+        for(int i=Maze.n-1-1; i>=0; i--)
+        {
+            Maze.SetCellWalls(i, Maze.m-1, alpha, false);
+        }
+        for(int i=Maze.n-1-1; i>=0; i--)
+        {
+            for(int j=Maze.m-1-1; j>=0; j--)
+            {
+                Maze.SetCellWalls(i, j, alpha+distr(generator), false);
+            }
+        }
         break;
     }
 
