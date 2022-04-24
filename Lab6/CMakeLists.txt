@@ -6,6 +6,7 @@ enable_testing()
 
 add_executable(Lab6 main.cpp)
 add_executable(Wilson Wilson_main.cpp)
+add_executable(maze_debug_main maze_debug_main.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

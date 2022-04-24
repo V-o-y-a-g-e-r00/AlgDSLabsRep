@@ -283,7 +283,202 @@ void Wilson(maze& Maze, std::default_random_engine& generator, presenthandler Pr
 
 }
 
+void WilsonSerial(maze& Maze, std::default_random_engine& generator, presenthandler PrHandler) //более простая модификация, где выбирается первая неотмеченная ячейка вместо случайной.
+{
+    std::uniform_int_distribution<int> InitDistrI(0, Maze.n-1);
+    std::uniform_int_distribution<int> InitDistrJ(0,Maze.m-1);
+    int InitrandI=InitDistrI(generator); //выбираем первую случайную ячейку.
+    int InitrandJ=InitDistrJ(generator);
 
+    int t1=time(0);
+    int t2=time(0);
 
+    Maze.SetCellValue(InitrandI, InitrandJ, UST);
+    int USTCount=1; //число ячеек в UST
+
+    while(USTCount != Maze.n*Maze.m) //Каждая итерация включает в UST новую ветвь.
+    {
+        //Наглядное отображение
+        if(PrHandler.Mode==2)
+        {
+            Maze.ShowDecorate();
+            std::cin.ignore();
+        }
+        //Выбираем первую попавшуюся ячейку, которой ещё нет в UST
+        int randI=0, randJ=0; //координаты искомой ячейки
+        bool IsReached=false;
+        for(int i=0; (i<Maze.n)&&(!IsReached); i++)
+        {
+            for(int j=0; (j<Maze.m)&&(!IsReached); j++)
+            {
+                if(Maze.GetCellValue(i, j)!=UST)
+                {
+                    randI=i;
+                    randJ=j;
+                    IsReached=true;
+                }
+            
+            }
+        }
+        //Теперь блуждаем от этой ячейки, пока не уткнемся в UST
+        std::uniform_int_distribution<int> Distrdidj(0,3);
+        int di=0, dj=0;
+        bool IsSatisfying=true; //когда у стены некотрые случайные значения не подходят
+        int randcase=0;
+        int WanderI, WanderJ; //Текущие i j
+        WanderI=randI;
+        WanderJ=randJ;
+        while(Maze.GetCellValue(WanderI, WanderJ)!=UST) //Пока не дойдем до области UST
+        {
+            //Наглядное отображение
+            if(PrHandler.Mode==1)
+            {
+            t2=time(0);
+            if(t2-t1>=30)
+            {
+                Maze.ShowDecorate((char*)"MazeOut.txt", 1);
+                std::cout<<"presenthandler: file has been rewrited"<<std::endl;
+                t1=t2;
+            }
+            }
+            randcase=Distrdidj(generator);
+            switch (randcase) //выбираем направление движения с учетом внешних стен лабиринта
+            {
+            case 0:
+                if(WanderJ<Maze.m-1)
+                {
+                    di=0;
+                    dj=1;
+                    IsSatisfying=true;
+                }
+                else IsSatisfying=false;
+                break;
+            case 1:
+                if(WanderI>0)
+                {
+                    di=-1;
+                    dj=0;
+                    IsSatisfying=true;
+                }
+                else IsSatisfying=false;
+                break;
+            case 2:
+                if(WanderJ>0)
+                {
+                    di=0;
+                    dj=-1;
+                    IsSatisfying=true;
+                }
+                else IsSatisfying=false;
+                break;
+            case 3:
+                if(WanderI<Maze.n-1)
+                {
+                    di=1;
+                    dj=0;
+                    IsSatisfying=true;
+                }
+                else IsSatisfying=false;
+                break;        
+            
+            default:
+                break;
+            }
+            if(IsSatisfying) //если не уперлись в стену, то ставим стрелку и переходим в соответствии с di dj
+            {
+                switch (randcase)
+                {
+                case 0:
+                    Maze.SetCellValue(WanderI, WanderJ, ARROWRIGHT);
+                    break;
+                case 1:
+                    Maze.SetCellValue(WanderI, WanderJ, ARROWUP);
+                    break;
+                case 2:
+                    Maze.SetCellValue(WanderI, WanderJ, ARROWLEFT);
+                    break;
+                case 3:
+                    Maze.SetCellValue(WanderI, WanderJ, ARROWDOWN);
+                    break;
+                default:
+                    break;
+                }
+                WanderI+=di;
+                WanderJ+=dj;
+            }
+        }
+        //Теперь возвращаемся к ячейке, с которой начали блуждания и строим уже окончательную ветвь по стрелкам.
+        WanderI=randI;
+        WanderJ=randJ;
+        while(Maze.GetCellValue(WanderI, WanderJ)!=UST) //Пока не дойдем до области UST
+        {
+            switch (Maze.GetCellValue(WanderI, WanderJ)) //Убираем стрелку на символ UST и переходим в ячейку по стрелке. Увеличиваем счетчик ячеек в UST.
+            {
+            case ARROWRIGHT:
+                Maze.SetCellValue(WanderI, WanderJ, UST);
+                Maze.SetCellWalls(WanderI, WanderJ, 0, false);
+                USTCount++;
+                WanderJ++;
+                break;
+            case ARROWUP:
+                Maze.SetCellValue(WanderI, WanderJ, UST);
+                Maze.SetCellWalls(WanderI, WanderJ, 1, false);
+                USTCount++;
+                WanderI--;
+                break;
+            case ARROWLEFT:
+                Maze.SetCellValue(WanderI, WanderJ, UST);
+                Maze.SetCellWalls(WanderI, WanderJ, 2, false);
+                USTCount++;
+                WanderJ--;
+                break;
+            case ARROWDOWN:
+                Maze.SetCellValue(WanderI, WanderJ, UST);
+                Maze.SetCellWalls(WanderI, WanderJ, 3, false);
+                USTCount++;
+                WanderI++;
+                break;
+            }
+        }
+    }
+
+}
+
+void BinaryTree(maze& Maze, std::default_random_engine& generator, presenthandler PrHandler, int alpha) //Хорошо бы сделать универсальность без использования условий. Только за счет использования %. Это, скорее всего, можно сделать(нечто подобное получилось сделать в классе maze), но из соображений читабельности и ограниченности времени оставим как есть.
+{
+    int StartI=0;
+    int StartJ=0;
+    switch (alpha%4) //направление вырезания стены. Вторую стену вырезаем против часовой стрелки
+    {
+    case 0: // L
+        StartI=0;
+        StartJ=Maze.m-1;
+        break;
+    case 1: // _|
+        StartI=0;
+        StartJ=0;
+        for(int j=1; j<Maze.m; j++)
+        {
+
+        }
+        for(int i=1; i<Maze.n; i++)
+        {
+            for(int j=1; j<Maze.m; j++)
+            {
+
+            }
+        }
+        break;
+    case 2: // 7
+        StartI=Maze.n-1;
+        StartJ=0;
+        break;
+    case 3: // Г
+        StartI=Maze.n-1;
+        StartJ=Maze.m-1;
+        break;
+    }
+
+}
 
 #endif /* MAZEGENERATIONALGS_H */
