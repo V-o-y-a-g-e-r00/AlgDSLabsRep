@@ -61,7 +61,7 @@ public:
     {
         return BaseVector.at(i*2+1).at(j*2+1);
     }
-    void SetCellWalls(int i, int j, int alpha, bool HasWall)
+    void SetCellWalls(int i, int j, int alpha, bool HasWall) //alpha - угол, под которым находится радиус вектор, указывающий на данную стену из центра ячейки. (как в тригонометрии). Значения от 0 до 3.
     {
         int di=(alpha%2)*((alpha%4)*(alpha%2)-2); //формулы получены из графиков
         int dj=((alpha-1)%2)*(((alpha-1)%4)*((alpha-1)%2)-2);

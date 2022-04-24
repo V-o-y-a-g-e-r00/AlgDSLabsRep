@@ -446,6 +446,7 @@ void WilsonSerial(maze& Maze, std::default_random_engine& generator, presenthand
 
 void BinaryTree(maze& Maze, std::default_random_engine& generator, presenthandler PrHandler, int alpha) //Хорошо бы сделать универсальность без использования условий. Только за счет использования %. Это, скорее всего, можно сделать(нечто подобное получилось сделать в классе maze), но из соображений читабельности и ограниченности времени оставим как есть.
 {
+    std::discrete_distribution<int> distr{0.5, 0.5};
     int StartI=0;
     int StartJ=0;
     switch (alpha%4) //направление вырезания стены. Вторую стену вырезаем против часовой стрелки
@@ -457,15 +458,20 @@ void BinaryTree(maze& Maze, std::default_random_engine& generator, presenthandle
     case 1: // _|
         StartI=0;
         StartJ=0;
-        for(int j=1; j<Maze.m; j++)
+        for(int j=1; j<Maze.m; j++) //крайние строку и столбец отдельно, чтобы было читабельно
         {
-
+            Maze.SetCellWalls(0, j, 2, false);
+        }
+        for(int i=1; i<Maze.m; i++)
+        {
+            Maze.SetCellWalls(i, 0, 1, false);
         }
         for(int i=1; i<Maze.n; i++)
         {
             for(int j=1; j<Maze.m; j++)
             {
-
+                Maze.SetCellWalls(i, j, alpha+distr(generator), false);
+                std::cout<<"alpha+distr(generator)"<<alpha+distr(generator)<<std::endl;
             }
         }
         break;
