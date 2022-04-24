@@ -9,7 +9,7 @@ int main(int, char**) {
     int seed=time(0);
     //int seed=2;
     std::default_random_engine generator1(seed);
-    maze Maze(5,5);
+    maze Maze(100,100);
  /*   try
     {
          MazeFromFile(Maze, (char*)"Maze.txt");
@@ -22,6 +22,6 @@ int main(int, char**) {
     presenthandler PrHandler;
     PrHandler.Mode=1;
     Wilson(Maze, generator1, PrHandler);
- //   Maze.ShowDecorate((char*)"cout",0);
-    Maze.ShowDecorate();
+    Maze.ShowDecorate((char*)"MazeOut.txt",0);
+ //   Maze.ShowDecorate();
 }

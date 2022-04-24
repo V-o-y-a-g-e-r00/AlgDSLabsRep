@@ -124,10 +124,19 @@ void Wilson(maze& Maze, std::default_random_engine& generator, presenthandler Pr
     int InitrandI=InitDistrI(generator); //выбираем первую случайную ячейку.
     int InitrandJ=InitDistrJ(generator);
 
+    int t1=time(0);
+    int t2=time(0);
+
     Maze.SetCellValue(InitrandI, InitrandJ, UST);
     int USTCount=1; //число ячеек в UST
     while(USTCount != Maze.n*Maze.m) //Каждая итерация включает в UST новую ветвь.
     {
+        //Наглядное отображение
+        if(PrHandler.Mode==2)
+        {
+            Maze.ShowDecorate();
+            std::cin.ignore();
+        }
         //Случайным образом выбираем ячейку, которой ещё нет в UST
         std::uniform_int_distribution<int> DistrIter(0, Maze.n*Maze.m-1-USTCount); //Maze.n*Maze.m-1 номер последей ячейки во всем лабиринте при счете с нуля.
         int randIter=DistrIter(generator); //выбираем случайный номер ячейки.
@@ -160,6 +169,17 @@ void Wilson(maze& Maze, std::default_random_engine& generator, presenthandler Pr
         WanderJ=randJ;
         while(Maze.GetCellValue(WanderI, WanderJ)!=UST) //Пока не дойдем до области UST
         {
+            //Наглядное отображение
+            if(PrHandler.Mode==1)
+            {
+            t2=time(0);
+            if(t2-t1>=30)
+            {
+                Maze.ShowDecorate((char*)"MazeOut.txt", 1);
+                std::cout<<"presenthandler: file has been rewrited"<<std::endl;
+                t1=t2;
+            }
+            }
             randcase=Distrdidj(generator);
             switch (randcase) //выбираем направление движения с учетом внешних стен лабиринта
             {
