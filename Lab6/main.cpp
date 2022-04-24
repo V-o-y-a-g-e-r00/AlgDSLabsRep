@@ -6,11 +6,11 @@
 #include "MazeGenerationAlgs.h"
 
 int main(int, char**) {
-   // int seed=time(0);
-    int seed=2;
+    int seed=time(0);
+    //int seed=2;
     std::default_random_engine generator1(seed);
 
-    maze Maze(10,10);
+    maze Maze(5000,5000);
  /*   try
     {
          MazeFromFile(Maze, (char*)"Maze.txt");
@@ -20,10 +20,11 @@ int main(int, char**) {
         std::cout << str << std::endl;
     }
 */
-    
-    AldousBroder(Maze, generator1);
-    Maze.ShowDecorate((char*)"cout",0);
- //   Maze.ShowDecorate((char*)"MazeOut.txt");
+    presenthandler PrHandler;
+    PrHandler.Mode=1;
+    AldousBroder(Maze, generator1, PrHandler);
+ //   Maze.ShowDecorate((char*)"cout",0);
+    Maze.ShowDecorate((char*)"MazeOut.txt");
 
 
 }
