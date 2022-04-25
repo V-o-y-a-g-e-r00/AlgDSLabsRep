@@ -15,10 +15,10 @@ int main(int, char**) {
     std::default_random_engine generator1(seed);
 
     presenthandler PrHandler;
-    PrHandler.Mode=1;
+    PrHandler.Mode=11;
     plothandler PlotHandler;
 
-    int NStart=4, NEnd=10, NStep=1, NumberOfRun=1;
+    int NStart=4, NEnd=6, NStep=1, NumberOfRun=1;
     double MRatio=1;
     StatisticsMaze(NStart, NEnd, NStep, MRatio, NumberOfRun, generator1, PrHandler, PlotHandler.addandreturn("AldousBroderOut.txt"), AldousBroder);
     StatisticsMaze(NStart, NEnd, NStep, MRatio, NumberOfRun, generator1, PrHandler, PlotHandler.addandreturn("WilsonOut.txt"), Wilson);

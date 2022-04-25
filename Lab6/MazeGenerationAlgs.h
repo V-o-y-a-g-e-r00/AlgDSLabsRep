@@ -13,6 +13,8 @@
 #define ARROWLEFT '<'
 #define ARROWRIGHT '>'
 
+//PresentHandler.Mode 0-не влиять; 1-выводить лабиринт в файл каждые 30 секунд; 2-пошаговый вывод лабиринта
+
 void AldousBroder(maze& Maze, std::default_random_engine& generator, presenthandler& PrHandler)
 {
     std::uniform_int_distribution<int> DistrI(0, Maze.n-1);
@@ -31,7 +33,7 @@ void AldousBroder(maze& Maze, std::default_random_engine& generator, presenthand
     while(k!=Maze.n*Maze.m)
     {
         //Maze.ShowDecorate((char*)"cout", 1);
-        if(PrHandler.Mode>=1)
+        if(PrHandler.Mode==1)
         {
         if(t2-t1>=30)
         {

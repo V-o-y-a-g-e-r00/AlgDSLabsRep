@@ -14,6 +14,8 @@
 #include "maze.h"
 #include "presenthandler.h"
 
+//PresentHandler.Mode11 выводить лабиринты в терминал
+
 class StatisticsMaze
 {
 private:
@@ -41,7 +43,7 @@ public:
                 CallBackGenerate(Maze, generator, PresentHandler, callbackparamstail...); //генерируем лабиринт    
                 clock_t timeEnd=clock();           
                 std::cout<<"Maze generating ended"<<std::endl;
-                if(PresentHandler.Mode==1) Maze.ShowDecorate();
+                if(PresentHandler.Mode==11) Maze.ShowDecorate();
 
                 timeSeconds+=double(timeEnd-timeStart)/CLOCKS_PER_SEC; //время работы алгоритма в секундах
                 std::cout<<"CurrentN="<< CurrentN <<"; Iteration "<<k<<" is complete"<<std::endl;

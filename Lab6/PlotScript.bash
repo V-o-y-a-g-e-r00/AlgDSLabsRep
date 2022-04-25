@@ -25,6 +25,13 @@ set datafile separator '\t'
 set linestyle 1 lc rgb "#0000FF" lw 2.5
 set linestyle 2 lc rgb "#00FF00" lw 2.5
 set linestyle 3 lc rgb "#FF0000" lw 2.5
+set linestyle 4 lc rgb "#00FFFF" lw 2.5
+set linestyle 5 lc rgb "#FF00FF" lw 2.5
+set linestyle 6 lc rgb "#FFFF00" lw 2.5
+set linestyle 7 lc rgb "#00000F" lw 2.5
+set linestyle 8 lc rgb "#000F00" lw 2.5
+set linestyle 9 lc rgb "#0F0000" lw 2.5
+set linestyle 10 lc rgb "#0000F0" lw 2.5
 #для линий треда
 set linestyle 11 lc rgb "#000080" lw 1.25 dashtype 2
 set linestyle 12 lc rgb "#008000" lw 1.25 dashtype 2
@@ -37,7 +44,7 @@ set linestyle 13 lc rgb "#800000" lw 1.25 dashtype 2
 set key below
 
 set title "Lab5" font "Helvetica Bold, 14"
-set xlabel "N - number of graph vertices"
+set xlabel "N - maze height, cells"
 set ylabel "Time - average executing time, seconds"
 
 set yrange [0:*]
