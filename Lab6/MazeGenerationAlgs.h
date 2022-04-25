@@ -13,7 +13,7 @@
 #define ARROWLEFT '<'
 #define ARROWRIGHT '>'
 
-void AldousBroder(maze& Maze, std::default_random_engine& generator, presenthandler PrHandler)
+void AldousBroder(maze& Maze, std::default_random_engine& generator, presenthandler& PrHandler)
 {
     std::uniform_int_distribution<int> DistrI(0, Maze.n-1);
     std::uniform_int_distribution<int> DistrJ(0,Maze.m-1);
@@ -117,7 +117,7 @@ void AldousBroder(maze& Maze, std::default_random_engine& generator, presenthand
 //Если бы было 1 ячейка - 1 символ, то это было бы намного сложнее.
 //В общем, с реальным расоходом алгоритмом памяти в O(N^2) мы можем встретиться только в экзотических ситуациях: при жесткой экономии памяти для ячеек(например, по 2(не по 4, а по 2) бита на ячейку. Либо же структура данных, отведенная под лабиринт содержит в себе ещё сторонюю информацию). Или при экзотической геометрии ячеек. 
 //В методичке они очищают информацию о стрелках после каждого блуждания. Мы этого не делаем, поскольку это ни на что не влияет. (единственное, так было бы проще отлаживать: лишние стрелки будут сбивать с толку)
-void Wilson(maze& Maze, std::default_random_engine& generator, presenthandler PrHandler) 
+void Wilson(maze& Maze, std::default_random_engine& generator, presenthandler& PrHandler) 
 {
     std::uniform_int_distribution<int> InitDistrI(0, Maze.n-1);
     std::uniform_int_distribution<int> InitDistrJ(0,Maze.m-1);
@@ -283,7 +283,7 @@ void Wilson(maze& Maze, std::default_random_engine& generator, presenthandler Pr
 
 }
 
-void WilsonSerial(maze& Maze, std::default_random_engine& generator, presenthandler PrHandler) //более простая модификация, где выбирается первая неотмеченная ячейка вместо случайной.
+void WilsonSerial(maze& Maze, std::default_random_engine& generator, presenthandler& PrHandler) //более простая модификация, где выбирается первая неотмеченная ячейка вместо случайной.
 {
     std::uniform_int_distribution<int> InitDistrI(0, Maze.n-1);
     std::uniform_int_distribution<int> InitDistrJ(0,Maze.m-1);
@@ -444,7 +444,7 @@ void WilsonSerial(maze& Maze, std::default_random_engine& generator, presenthand
 
 }
 
-void BinaryTree(maze& Maze, std::default_random_engine& generator, presenthandler PrHandler, int alpha) //Хорошо бы сделать универсальность без использования условий. Только за счет использования %. Это, скорее всего, можно сделать(нечто подобное получилось сделать в классе maze), но из соображений читабельности и ограниченности времени оставим как есть.
+void BinaryTree(maze& Maze, std::default_random_engine& generator, presenthandler& PrHandler, int& alpha) //Хорошо бы сделать универсальность без использования условий. Только за счет использования %. Это, скорее всего, можно сделать(нечто подобное получилось сделать в классе maze), но из соображений читабельности и ограниченности времени оставим как есть.
 {
     std::discrete_distribution<int> distr{0.5, 0.5};
     int StartI=0;

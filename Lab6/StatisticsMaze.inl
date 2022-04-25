@@ -3,12 +3,12 @@
 
 /*
 #include <limits> //для определения максимального числа в типе
-#include <iomanip>      // std::setprecision
 */
 
 #include <string>
 #include <time.h> //для измерения времени
 #include <fstream> //для файлов
+#include <iomanip>      // std::setprecision
 #include <random>
 
 #include "maze.h"
@@ -23,21 +23,9 @@ private:
     double MRatio=1; // M/N отношение ширины к длине 
     int NumberOfRuns=1; //число прогонов для текущих значений N M
 
-
-
-
-
-
-    int CurrentSize=0; //текущее число вершин в графе
-    int CurrentM=0;
-
-    int NStart=0, NEnd=0, NStep=0;
-    double MRatio=0; //Отношение числа ребер к максимально возможному для данного графа (будет округляться до целого числа m)
-    int WeightMax=0; //максимальный вес ребер графа
-    int NumberOfRuns=1; //число прогонов для каждого размера(числа вершин) графа
 public:
     template<typename... CallBackParamsTail> //CallBackGenerate m WeightMax
-    StatisticsMaze(int NNStart, int NNEnd, int NNStep, double NMRatio, int NNumberOfRuns, std::default_random_engine& generator, presenthandler& PresentHandler, std::string filename, void (*CallBackGenerate)(maze&, std::default_random_engine&, presenthandler&, CallBackParamsTail& ), CallBackParamsTail& ...callbackparamstail): NStart(NNStart), NEnd(NNEnd), NStep(NNStep), MRatio(NMRatio), NumberOfRuns(NNumberOfRuns)
+    StatisticsMaze(int NNStart, int NNEnd, int NNStep, double NMRatio, int NNumberOfRuns, std::default_random_engine& generator, presenthandler& PresentHandler, std::string filename, void (*CallBackGenerate)(maze&, std::default_random_engine&, presenthandler&, CallBackParamsTail&... ), CallBackParamsTail& ...callbackparamstail): NStart(NNStart), NEnd(NNEnd), NStep(NNStep), MRatio(NMRatio), NumberOfRuns(NNumberOfRuns)
     {
         printLabel(filename);
         for(CurrentN=NStart; CurrentN<=NEnd; CurrentN+=NStep) //Цикл табуляции по высоте лабиринта N
@@ -45,7 +33,18 @@ public:
             double timeSeconds=0;
             for(int k=0; k<NumberOfRuns; k++) //Число прогонов для данной высоты лабиринта N
             {
+                CurrentM= CurrentN*MRatio;
+                maze Maze(CurrentN, CurrentM);
+                
+                std::cout<<"Maze generating started"<<std::endl;
+                clock_t timeStart=clock(); //число тиков с начала выполнения программы
+                CallBackGenerate(Graph1, CurrentM, WeightMax, generator, PresentHandler, callbackparamstail); //генерируем лабиринт    
+                clock_t timeEnd=clock();           
+                std::cout<<"Maze generating ended"<<std::endl;
+                if(PresentHandler.Mode==1) Maze.ShowDecorate();
 
+                timeSeconds+=double(timeEnd-timeStart)/CLOCKS_PER_SEC; //время работы алгоритма в секундах
+                std::cout<<"CurrentN="<< CurrentN <<"; Iteration "<<k<<" is complete"<<std::endl;
             }
             timeSeconds/=NumberOfRuns;
             printValue(CurrentN, timeSeconds, filename);
@@ -66,12 +65,15 @@ public:
        // fd<<std::endl;
         fd.close();
     }
+};
+/*
+int CurrentSize=0; //текущее число вершин в графе
+    int CurrentM=0;
 
-
-
-
-
-
+    int NStart=0, NEnd=0, NStep=0;
+    double MRatio=0; //Отношение числа ребер к максимально возможному для данного графа (будет округляться до целого числа m)
+    int WeightMax=0; //максимальный вес ребер графа
+    int NumberOfRuns=1; //число прогонов для каждого размера(числа вершин) графа
 
 
 
@@ -120,6 +122,6 @@ public:
         fd<< CurrentSize<< "\t"<<std::fixed <<std::setprecision(5)<<value<<std::endl;
        // fd<<std::endl;
         fd.close();
-    }
-};
+    } */
+
 #endif //STATISTICSMAZE_INL

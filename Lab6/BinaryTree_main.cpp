@@ -9,7 +9,7 @@ int main(int, char**) {
     int seed=time(0);
     //int seed=2;
     std::default_random_engine generator1(seed);
-    maze Maze(20,200);
+    maze Maze(2,200);
  /*   try
     {
          MazeFromFile(Maze, (char*)"Maze.txt");
@@ -21,7 +21,8 @@ int main(int, char**) {
 */
     presenthandler PrHandler;
     PrHandler.Mode=1;
-    BinaryTree(Maze, generator1, PrHandler, 3);
+    int alpha=3;
+    BinaryTree(Maze, generator1, PrHandler, alpha);
  //   Maze.ShowDecorate();
    Maze.ShowDecorate((char*)"BinaryTreeMazeOut.txt",0);
 }

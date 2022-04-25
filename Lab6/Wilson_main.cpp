@@ -9,7 +9,7 @@ int main(int, char**) {
     int seed=time(0);
     //int seed=2;
     std::default_random_engine generator1(seed);
-    maze Maze(50000,20);
+    maze Maze(50,20);
  /*   try
     {
          MazeFromFile(Maze, (char*)"Maze.txt");
