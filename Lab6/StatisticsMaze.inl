@@ -38,7 +38,7 @@ public:
                 
                 std::cout<<"Maze generating started"<<std::endl;
                 clock_t timeStart=clock(); //число тиков с начала выполнения программы
-                CallBackGenerate(Graph1, CurrentM, WeightMax, generator, PresentHandler, callbackparamstail); //генерируем лабиринт    
+                CallBackGenerate(Maze, generator, PresentHandler, callbackparamstail...); //генерируем лабиринт    
                 clock_t timeEnd=clock();           
                 std::cout<<"Maze generating ended"<<std::endl;
                 if(PresentHandler.Mode==1) Maze.ShowDecorate();
