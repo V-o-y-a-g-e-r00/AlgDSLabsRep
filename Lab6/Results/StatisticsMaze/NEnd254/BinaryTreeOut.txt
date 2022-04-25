@@ -1,0 +1,7 @@
+#filename=BinaryTreeOut.txt; MRatio=1; NumberOfRuns=1
+4	0.00001
+54	0.00049
+104	0.00181
+154	0.00404
+204	0.00743
+254	0.01134

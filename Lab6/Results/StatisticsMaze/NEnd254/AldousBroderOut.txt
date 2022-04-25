@@ -1,0 +1,7 @@
+#filename=AldousBroderOut.txt; MRatio=1; NumberOfRuns=1
+4	0.00001
+54	0.00504
+104	0.03271
+154	0.12016
+204	0.11942
+254	0.37708

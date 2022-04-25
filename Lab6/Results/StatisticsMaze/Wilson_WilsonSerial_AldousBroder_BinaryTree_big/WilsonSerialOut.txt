@@ -1,0 +1,7 @@
+#filename=WilsonSerialOut.txt; MRatio=1; NumberOfRuns=1
+4	0.00001
+54	0.05254
+104	0.60131
+154	2.88356
+204	8.80217
+254	21.44958

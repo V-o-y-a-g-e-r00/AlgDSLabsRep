@@ -1,0 +1,7 @@
+#filename=WilsonOut.txt; MRatio=1; NumberOfRuns=1
+4	0.00001
+54	0.04763
+104	0.61332
+154	3.00679
+204	9.08113
+254	22.39989
