@@ -83,7 +83,7 @@ void Lee(maze& Maze, int starti, int startj, int finishi, int finishj, std::vect
     //Проверяем существование пути и восстанавливаем путь.
     if(!IsReachedfinish)
     {
-        std::cout<<"The way between starti="<<starti<<" startj="<<startj<<"and finishi="<<finishi<<" finishj="<<finishj<<" does not exist!"<<std::endl; //you do not know de wey
+        std::cout<<"The way between starti="<<starti<<" startj="<<startj<<" and finishi="<<finishi<<" finishj="<<finishj<<" does not exist!"<<std::endl; //you do not know de wey
         return;
     }
     //пока не дойдем до начала
@@ -103,6 +103,7 @@ void Lee(maze& Maze, int starti, int startj, int finishi, int finishj, std::vect
                     Way.insert(Way.begin(), std::make_pair(Currenti+di, Currentj+dj));
                     Currenti+=di;
                     Currentj+=dj;
+                    break;
                 }
             }
         }
