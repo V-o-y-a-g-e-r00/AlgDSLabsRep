@@ -9,6 +9,7 @@ add_executable(AldousBroder AldousBroder_main.cpp)
 add_executable(Wilson Wilson_main.cpp)
 add_executable(maze_debug_main maze_debug_main.cpp)
 add_executable(BinaryTree BinaryTree_main.cpp)
+add_executable(Lee Lee_main.cpp)
 
 install(PROGRAMS PlotScript.bash DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
