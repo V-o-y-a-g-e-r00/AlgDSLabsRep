@@ -561,4 +561,28 @@ void BinaryTree(maze& Maze, std::default_random_engine& generator, presenthandle
 //где n - сторона квадратного лабиринта.
 
 //Посмотрел, какие бывают алгоритмы для генерирования таких лабиринтов: вставка стен в идеальный лабиринт (вход и выход рядом). С какой-то хитростью - вход и выход в противоположных концах. Ещё можно использовать Context-based Space Filling Curves, что бы это не значило.
+// //////////////////////////////////////
+
+//Алгоритм для проряжения стен лабиринта. Нужен, чтобы мы могли использовать с этим лабиринтом алгоритмы поиска кратчайшего пути. Фактически, если изначальный лабиринт идеальный, то происходит соединение случайных узлов дерева друг с другом, за счет чего оно перестает быть деревом.
+void WallsReduce(maze& Maze, double probability, std::default_random_engine& generator) //probability - вероятность разрушения каждой из стен. 1 - лабиринт без внутренних стен.
+{
+    std::discrete_distribution<int> distr{probability, 1-probability};
+    for(int i=0; i<Maze.n; i++)
+    {
+        for(int j=0; j<Maze.m; j++)
+        {
+            if(!distr(generator)) //Если стену нужно убрать
+                Maze.SetCellWalls(i,j, 0, false, true);
+            if(!distr(generator))
+                Maze.SetCellWalls(i,j, 3, false, true);
+        }
+    }
+}
+
+//просто одна строка кода вместо двух строк кода.
+void WilsonReduced(maze& Maze, std::default_random_engine& generator, presenthandler& PrHandler, double probability)
+{
+    Wilson(Maze, generator, PrHandler);
+    WallsReduce(Maze, probability, generator);
+}
 #endif /* MAZEGENERATIONALGS_H */

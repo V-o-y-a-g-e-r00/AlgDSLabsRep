@@ -61,11 +61,21 @@ public:
     {
         return BaseVector.at(i*2+1).at(j*2+1);
     }
-    void SetCellWalls(int i, int j, int alpha, bool HasWall) //alpha - угол, под которым находится радиус вектор, указывающий на данную стену из центра ячейки. (как в тригонометрии). Значения от 0 до 3.
+    void SetCellWalls(int i, int j, int alpha, bool HasWall, bool Protected=false) //alpha - угол, под которым находится радиус вектор, указывающий на данную стену из центра ячейки. (как в тригонометрии). Значения от 0 до 3. Protected защищать ли стены области. true - не позволять убирать стенки области лабиринта.
     {
         int di=(alpha%2)*((alpha%4)*(alpha%2)-2); //формулы получены из графиков
         int dj=((alpha-1)%2)*(((alpha-1)%4)*((alpha-1)%2)-2);
-        (HasWall)? BaseVector.at(i*2+1+di).at(j*2+1+dj)=WALL : BaseVector.at(i*2+1+di).at(j*2+1+dj)=NOWALL;
+        if(Protected)
+        {
+            if((i+di<n)&&(i+di>=0)&&(j+dj<m)&&(j+dj>=0)) //если смежная по этой стене ячейка находится внутри области лабиринта
+            {
+                (HasWall)? BaseVector.at(i*2+1+di).at(j*2+1+dj)=WALL : BaseVector.at(i*2+1+di).at(j*2+1+dj)=NOWALL;
+            }
+        }
+        else
+        {
+            (HasWall)? BaseVector.at(i*2+1+di).at(j*2+1+dj)=WALL : BaseVector.at(i*2+1+di).at(j*2+1+dj)=NOWALL;
+        }
     }
     bool HasWall(int i, int j, int alpha) //прикол в том, что мы можем узнать, существуют ли стены у ячейки, даже если самой ячейки не существует. Главное, чтобы сами стены сущестововали в лабиринте.
     {
