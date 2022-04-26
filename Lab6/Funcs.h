@@ -8,6 +8,7 @@
 
 #include "maze.h"
 #include "MazeGenerationAlgs.h"
+#include <iomanip>
 
 
 void MazeFromFile(maze& Maze, char* filename)
@@ -53,7 +54,42 @@ void MazeFromFile(maze& Maze, char* filename)
     fin.close();
 
 }
-
-
+template<typename T>
+void PrintMatrix(std::vector<std::vector<T>>& Matrix, const char* MatrixName)
+{
+    typename std::vector<std::vector<T>>::iterator iteri; //два итератора, для итерации по строкам и ячейкам(столбцам) .Без typename вообще не компилируется, хотя казалось бы.
+    typename std::vector<T>::iterator iterj;
+    for(iteri=Matrix.begin(); iteri!=Matrix.end(); iteri++)
+    {
+        std::cout<< MatrixName<<"["<<std::distance(Matrix.begin(), iteri) <<"]=";
+        for(iterj=iteri->begin(); iterj!=iteri->end(); iterj++)
+        {
+            std::cout<< (*iterj)<<"\t";
+        }
+        std::cout<<std::endl;
+    }
+    std::cout<<"----------"<<std::endl;
+}
+//Print будем перегружать для разных случаев
+void Print(std::pair<int,int> Pair);
+template<typename T>
+void PrintVector(std::vector<T>& Vector, const char* VectorName)
+{
+    typename std::vector<T>::iterator iteri=Vector.begin();
+        std::cout<< VectorName<<"=";
+        for(iteri=Vector.begin(); iteri!=Vector.end(); iteri++)
+        {
+            std::cout<<std::setw(3);
+        //    std::cout<< (*iteri)<<"\t";
+        //    std::cout<< (*iteri);
+            Print(*iteri);
+        }
+        std::cout<<std::endl;
+//    std::cout<<"----------"<<std::endl;
+}
+void Print(std::pair<int,int> Pair)
+{
+    std::cout<<"("<<Pair.first<<", "<<Pair.second<<")";
+}
 
 #endif /* FUNCS_H */

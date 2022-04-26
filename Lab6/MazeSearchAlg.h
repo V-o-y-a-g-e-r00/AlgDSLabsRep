@@ -4,9 +4,10 @@
 #include "maze.h"
 #include "presenthandler.h"
 #include <vector>
+#include <utility> //pair
 #include <limits> //будем помечать максимальным возомжным значением непосещенные ячейки.
 //Постараемся реализовать волновой алг и, может быть, его модификацию с двумя волнами. Так же есть идея немного его ускорить без какого-либо влияния на функциональность путем сокращения области поиска ячеек фронта на этапе распространения волны.
-void Lee(maze& Maze, int starti, int startj, int finishi, int finishj, presenthandler& PrHandler)
+void Lee(maze& Maze, int starti, int startj, int finishi, int finishj, std::vector<std::pair<int,int>>& Way, presenthandler& PrHandler)
 {
     std::vector<std::vector<int>> CellDist(Maze.n); //В векторах нулевые значения в стандартных контейнерах будут зануленными. Смотри value-initialization и тому подобное.
     for(int i=0; i<CellDist.size(); i++) //Храним в этой матрице веса во время распространения волны.
@@ -14,9 +15,10 @@ void Lee(maze& Maze, int starti, int startj, int finishi, int finishj, presentha
         CellDist.at(i).resize(Maze.m, std::numeric_limits<int>::max()); //Макс значением int помечаем ещё не пройденные ячейки.
     }
     int CurrentDist=0;
-    CellDist.at(starti).at(startj)=CurrentDist; //не обязательно, у нас и так нули.
-    //Распространяем волну, пока не попадем в точку назначения
     bool IsReachedfinish=false;
+    //Распространяем волну, пока не попадем в точку назначения
+    CellDist.at(starti).at(startj)=CurrentDist;
+    if((starti==finishi)&&(startj==finishj)) IsReachedfinish=true;
     bool IsChanged=true; //Проверяем, продвинулась ли волна хотя бы на одну ячейку. Если нет, то значит, что пути не существует.
 
     int mini=starti, maxi=starti, minj=startj, maxj=startj; //Для сужения области поиска ячеек фронта волны. Больше ни для чего не будем эти переменные использовать
@@ -78,7 +80,33 @@ void Lee(maze& Maze, int starti, int startj, int finishi, int finishj, presentha
             std::cin.ignore();
         }
     }
-    //Восстанавливаем путь.
+    //Проверяем существование пути и восстанавливаем путь.
+    if(!IsReachedfinish)
+    {
+        std::cout<<"The way between starti="<<starti<<" startj="<<startj<<"and finishi="<<finishi<<" finishj="<<finishj<<" does not exist!"<<std::endl; //you do not know de wey
+        return;
+    }
+    //пока не дойдем до начала
+    int Currenti=finishi, Currentj=finishj;
+    Way.clear();
+    Way.insert(Way.begin(),std::make_pair(Currenti, Currentj));
+    while(!((Currenti==starti)&&(Currentj==startj)))
+    {
+        for(int alpha=0; alpha<4;alpha++)
+        {
+            int di=(alpha%2)*((alpha%4)*(alpha%2)-2); //формулы получены из графиков
+            int dj=((alpha-1)%2)*(((alpha-1)%4)*((alpha-1)%2)-2);
+            if(!Maze.HasWall(Currenti,Currentj, alpha)) //Если нет стены
+            {
+                if(CellDist.at(Currenti+di).at(Currentj+dj)==CellDist.at(Currenti).at(Currentj)-1)
+                {
+                    Way.insert(Way.begin(), std::make_pair(Currenti+di, Currentj+dj));
+                    Currenti+=di;
+                    Currentj+=dj;
+                }
+            }
+        }
+    }
 }
 
 
