@@ -336,7 +336,7 @@ void DebugHandler(maze& Maze, std::vector<std::vector<std::pair<char, int>>>& Ce
                 }
             }
         } 
-        Maze.ShowDecorate();
+        Maze.ShowDecorate((char*)"cout", 1, 2, true);
         std::cin.ignore(); 
     }
 }

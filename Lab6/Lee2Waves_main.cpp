@@ -22,7 +22,7 @@ int main(int, char**) {
  //  WilsonReduced(Maze, generator1, PrHandler, 0.3);
    std::vector<std::pair<int,int>> Way;
     std::vector<int> Way1(10, 33);
-   Lee2Waves(Maze, 0, 1, 1, 1, Way, PrHandler);
+   Lee2Waves(Maze, 0, 1, 2, 4, Way, PrHandler);
    PrintVector(Way, "Way");
 //   Maze.ShowDecorate((char*)"cout",0);
  //   Maze.ShowDecorate((char*)"MazeOut.txt");
