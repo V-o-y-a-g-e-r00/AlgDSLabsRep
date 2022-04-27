@@ -199,9 +199,10 @@ void Lee2Waves(maze& Maze, int starti, int startj, int finishi, int finishj, std
     {
         CurrentDist++;
         WaveFrontIteration(Maze, CellDist, CurrentDist, mini1, maxi1, minj1, maxj1, IsReachedfinish, IsChanged, 1, Interseci, Intersecj);
+        std::cout<<"Wave1 CurrDist="<<CurrentDist<<std::endl;
         if((IsReachedfinish)||(!IsChanged)) break; //если достигли пересечения или если волна застряла
         WaveFrontIteration(Maze, CellDist, CurrentDist, mini2, maxi2, minj2, maxj2, IsReachedfinish, IsChanged, 2, Interseci, Intersecj);
-
+        std::cout<<"Wave2 CurrDist="<<CurrentDist<<std::endl;
         if(PrHandler.Mode==1) //Небольшие манипуляции, чтобы помочь отладить это.
         {
             for(int i=0; i<Maze.n; i++)
@@ -233,30 +234,56 @@ void Lee2Waves(maze& Maze, int starti, int startj, int finishi, int finishj, std
     {
         std::cout<<"Intersection cell between waves: Interseci="<<Interseci<<" Intersecj="<<Intersecj<<std::endl;
     }
-    /*
-    //пока не дойдем до начала
-    int Currenti=finishi, Currentj=finishj;
+    //Будем идти от точки пересечения в обе стороны. Вначале дойдем до точки старта, потом до точки финиша.
+    int Currenti=Interseci, Currentj=Intersecj;
     Way.clear();
     Way.insert(Way.begin(),std::make_pair(Currenti, Currentj));
     while(!((Currenti==starti)&&(Currentj==startj)))
     {
-        for(int alpha=0; alpha<4;alpha++)
+        //Ищем соседа с минимальным весом из всех соседей для данной WaveID.
+        int MinNeighbor=0;
+        int minalpha=0; //Альфа, указывающая на минимального соседа.
+        int Cutalpha=0; //Чуть чуть ускорим алг. Помимо поиска первого соседа, из которого могла быть распространена волна, мы ищем соответствующую ему альфу, чтобы вдальнейшем не перебирать варианты, в которых заведомо нет соседей.
+        for(int alpha=0; alpha<4;alpha++) //Ищем первого попавшегося соседа, принадлежащего данной волне.
         {
             int di=(alpha%2)*((alpha%4)*(alpha%2)-2); //формулы получены из графиков
             int dj=((alpha-1)%2)*(((alpha-1)%4)*((alpha-1)%2)-2);
             if(!Maze.HasWall(Currenti,Currentj, alpha)) //Если нет стены
             {
-                if(CellDist.at(Currenti+di).at(Currentj+dj)==CellDist.at(Currenti).at(Currentj)-1)
+                if(CellDist.at(Currenti+di).at(Currentj+dj).first==1) //Если ячейка принадлежит первой волне
                 {
-                    Way.insert(Way.begin(), std::make_pair(Currenti+di, Currentj+dj));
-                    Currenti+=di;
-                    Currentj+=dj;
+                    MinNeighbor=CellDist.at(Currenti+di).at(Currentj+dj).second;
+                    Cutalpha=alpha; //альфа, при которой мы нашли первого встретившегося соседа, принадлежащего данной волне.
+                    minalpha=alpha;
                     break;
                 }
             }
         }
+        std::cout<<"minalpha="<<minalpha<<std::endl;
+        
+        for(int alpha=Cutalpha+1; alpha<4;alpha++) //ищем минимального соседа из всех соседей, принадлежащих данной волне.
+        {
+            int di=(alpha%2)*((alpha%4)*(alpha%2)-2); //формулы получены из графиков
+            int dj=((alpha-1)%2)*(((alpha-1)%4)*((alpha-1)%2)-2);
+            if(!Maze.HasWall(Currenti,Currentj, alpha)) //Если нет стены
+            {
+                if((CellDist.at(Currenti+di).at(Currentj+dj).first==1)&&(CellDist.at(Currenti+di).at(Currentj+dj).second<MinNeighbor))
+                {
+                    MinNeighbor=CellDist.at(Currenti+di).at(Currentj+dj).second;
+                    minalpha=alpha;
+                }
+            }
+        }
+        //Добавляем минимального соседа, принадлежащего данной волне, в путь, и переходим к нему.
+        int di=(minalpha%2)*((minalpha%4)*(minalpha%2)-2); //формулы получены из графиков
+        int dj=((minalpha-1)%2)*(((minalpha-1)%4)*((minalpha-1)%2)-2);
+        Way.insert(Way.begin(), std::make_pair(Currenti+di, Currentj+dj));
+        Currenti+=di;
+        Currentj+=dj;
+
+        PrintVector(Way, "Way");
     }
-*/
+
 }
 
 
