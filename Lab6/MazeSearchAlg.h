@@ -181,6 +181,90 @@ inline void WaveFrontInit(maze& Maze, std::vector<std::vector<std::pair<char, in
     minj=Initj;
     maxj=Initj;
 }
+inline void ReconstructWay(maze& Maze, std::vector<std::vector<std::pair<char, int>>>& CellDist, char WaveID, int Interseci, int Intersecj, int Initi, int Initj, std::vector<std::pair<int, int>>& Way, bool Direction) //Восстановение пути после пересечения волн. WaveID-по какой волне идем; Interseci, Intersecj точка пересечения волн. int Initi, int Initj точка инициации волны; bool Direction - направление построение пути (false - начало пути true - конец пути).
+{
+    int Currenti=Interseci, Currentj=Intersecj;
+    while(!((Currenti==Initi)&&(Currentj==Initj)))
+    {
+        if((Currenti==Interseci)&&(Currentj==Intersecj)) //Такой поиск предыдущей ячейки в пути нужен только для ячейки пересечения. Для остальных ячеек поиск будет аналогичным поиску в немодифицированном алг Ли.
+        {
+            //Ищем соседа с минимальным весом из всех соседей для данной WaveID.
+            int MinNeighbor=0;
+            int minalpha=0; //Альфа, указывающая на минимального соседа.
+            int Cutalpha=0; //Чуть чуть ускорим алг. Помимо поиска первого соседа, из которого могла быть распространена волна, мы ищем соответствующую ему альфу, чтобы вдальнейшем не перебирать варианты, в которых заведомо нет соседей.
+            for(int alpha=0; alpha<4;alpha++) //Ищем первого попавшегося соседа, принадлежащего данной волне.
+            {
+                int di=(alpha%2)*((alpha%4)*(alpha%2)-2); //формулы получены из графиков
+                int dj=((alpha-1)%2)*(((alpha-1)%4)*((alpha-1)%2)-2);
+                if(!Maze.HasWall(Currenti,Currentj, alpha)) //Если нет стены
+                {
+                    if(CellDist.at(Currenti+di).at(Currentj+dj).first==WaveID) //Если ячейка принадлежит волне WaveID
+                    {
+                        MinNeighbor=CellDist.at(Currenti+di).at(Currentj+dj).second;
+                        Cutalpha=alpha; //альфа, при которой мы нашли первого встретившегося соседа, принадлежащего данной волне.
+                        minalpha=alpha;
+                        break;
+                    }
+                }
+            }
+        //    std::cout<<"minalpha="<<minalpha<<std::endl;
+            
+            for(int alpha=Cutalpha+1; alpha<4;alpha++) //ищем минимального соседа из всех соседей, принадлежащих данной волне.
+            {
+                int di=(alpha%2)*((alpha%4)*(alpha%2)-2); //формулы получены из графиков
+                int dj=((alpha-1)%2)*(((alpha-1)%4)*((alpha-1)%2)-2);
+                if(!Maze.HasWall(Currenti,Currentj, alpha)) //Если нет стены
+                {
+                    if((CellDist.at(Currenti+di).at(Currentj+dj).first==WaveID)&&(CellDist.at(Currenti+di).at(Currentj+dj).second<MinNeighbor))
+                    {
+                        MinNeighbor=CellDist.at(Currenti+di).at(Currentj+dj).second;
+                        minalpha=alpha;
+                    }
+                }
+            }
+            //Добавляем минимального соседа, принадлежащего данной волне, в путь, и переходим к нему.
+            int di=(minalpha%2)*((minalpha%4)*(minalpha%2)-2); //формулы получены из графиков
+            int dj=((minalpha-1)%2)*(((minalpha-1)%4)*((minalpha-1)%2)-2);
+
+            if(Direction) //Для конечного участка пути
+            {
+                Way.push_back(std::make_pair(Currenti+di, Currentj+dj));
+            }
+            else //Для начального участка пути
+            {
+                Way.insert(Way.begin(), std::make_pair(Currenti+di, Currentj+dj));
+            }
+            Currenti+=di;
+            Currentj+=dj;
+        }
+        else
+        {
+            for(int alpha=0; alpha<4;alpha++)
+            {
+                int di=(alpha%2)*((alpha%4)*(alpha%2)-2); //формулы получены из графиков
+                int dj=((alpha-1)%2)*(((alpha-1)%4)*((alpha-1)%2)-2);
+                if(!Maze.HasWall(Currenti,Currentj, alpha)) //Если нет стены
+                {
+                    if((CellDist.at(Currenti+di).at(Currentj+dj).first==WaveID)&&(CellDist.at(Currenti+di).at(Currentj+dj).second==CellDist.at(Currenti).at(Currentj).second-1))
+                    {
+                        if(Direction) //Для конечного участка пути
+                        {
+                            Way.push_back(std::make_pair(Currenti+di, Currentj+dj));
+                        }
+                        else //Для начального участка пути
+                        {
+                            Way.insert(Way.begin(), std::make_pair(Currenti+di, Currentj+dj));
+                        }
+                        Currenti+=di;
+                        Currentj+=dj;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+	
 void Lee2Waves(maze& Maze, int starti, int startj, int finishi, int finishj, std::vector<std::pair<int,int>>& Way, presenthandler& PrHandler)
 {
     //Содзаем контейнер, в котором будем индекс волны, прошедшей через ячейки и веса ячеек при движении этой волны. Поле внутри Maze для хранения состояния ячейки не будем использоать в этом алгоритма, дабы избежать путаницы. Оно будет использоваться только для наглядного представления при отладке.
@@ -227,49 +311,10 @@ void Lee2Waves(maze& Maze, int starti, int startj, int finishi, int finishj, std
     int Currenti=Interseci, Currentj=Intersecj;
     Way.clear();
     Way.insert(Way.begin(),std::make_pair(Currenti, Currentj));
-    while(!((Currenti==starti)&&(Currentj==startj)))
-    {
-        //Ищем соседа с минимальным весом из всех соседей для данной WaveID.
-        int MinNeighbor=0;
-        int minalpha=0; //Альфа, указывающая на минимального соседа.
-        int Cutalpha=0; //Чуть чуть ускорим алг. Помимо поиска первого соседа, из которого могла быть распространена волна, мы ищем соответствующую ему альфу, чтобы вдальнейшем не перебирать варианты, в которых заведомо нет соседей.
-        for(int alpha=0; alpha<4;alpha++) //Ищем первого попавшегося соседа, принадлежащего данной волне.
-        {
-            int di=(alpha%2)*((alpha%4)*(alpha%2)-2); //формулы получены из графиков
-            int dj=((alpha-1)%2)*(((alpha-1)%4)*((alpha-1)%2)-2);
-            if(!Maze.HasWall(Currenti,Currentj, alpha)) //Если нет стены
-            {
-                if(CellDist.at(Currenti+di).at(Currentj+dj).first==1) //Если ячейка принадлежит первой волне
-                {
-                    MinNeighbor=CellDist.at(Currenti+di).at(Currentj+dj).second;
-                    Cutalpha=alpha; //альфа, при которой мы нашли первого встретившегося соседа, принадлежащего данной волне.
-                    minalpha=alpha;
-                    break;
-                }
-            }
-        }
-        std::cout<<"minalpha="<<minalpha<<std::endl;
-        
-        for(int alpha=Cutalpha+1; alpha<4;alpha++) //ищем минимального соседа из всех соседей, принадлежащих данной волне.
-        {
-            int di=(alpha%2)*((alpha%4)*(alpha%2)-2); //формулы получены из графиков
-            int dj=((alpha-1)%2)*(((alpha-1)%4)*((alpha-1)%2)-2);
-            if(!Maze.HasWall(Currenti,Currentj, alpha)) //Если нет стены
-            {
-                if((CellDist.at(Currenti+di).at(Currentj+dj).first==1)&&(CellDist.at(Currenti+di).at(Currentj+dj).second<MinNeighbor))
-                {
-                    MinNeighbor=CellDist.at(Currenti+di).at(Currentj+dj).second;
-                    minalpha=alpha;
-                }
-            }
-        }
-        //Добавляем минимального соседа, принадлежащего данной волне, в путь, и переходим к нему.
-        int di=(minalpha%2)*((minalpha%4)*(minalpha%2)-2); //формулы получены из графиков
-        int dj=((minalpha-1)%2)*(((minalpha-1)%4)*((minalpha-1)%2)-2);
-        Way.insert(Way.begin(), std::make_pair(Currenti+di, Currentj+dj));
-        Currenti+=di;
-        Currentj+=dj;
-    }
+    //Восстанавливаем участок пути от стартовой ячейки до ячейки пересечения волн.
+    ReconstructWay(Maze, CellDist, 1, Interseci, Intersecj, starti, startj, Way, false);
+    // Теперь то же самое для конечного участка, т.е. для второй волны. Т.е. восстанавливаем второй кусок пути.
+    ReconstructWay(Maze, CellDist, 2, Interseci, Intersecj, finishi, finishj, Way, true);
 
 }
 
