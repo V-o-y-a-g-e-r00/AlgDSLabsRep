@@ -120,7 +120,7 @@ inline void WaveFrontIteration(maze& Maze, std::vector<std::vector<std::pair<cha
     {
         for(int j=minj; (j<=maxj)&&(!IsReachedfinish); j++)
         {
-            if(CellDist.at(i).at(j).second==CurrentDist-1) //Если данная ячейка - ячейка фронта волны
+            if((CellDist.at(i).at(j).second==CurrentDist-1)&&(CellDist.at(i).at(j).first==WaveID)) //Если данная ячейка - ячейка фронта волны
             {
                 for(int alpha=0; (alpha<4)&&(!IsReachedfinish); alpha++) //Пытаемся распространить волну на соседние ячейки 
                 {
@@ -200,6 +200,25 @@ void Lee2Waves(maze& Maze, int starti, int startj, int finishi, int finishj, std
         CurrentDist++;
         WaveFrontIteration(Maze, CellDist, CurrentDist, mini1, maxi1, minj1, maxj1, IsReachedfinish, IsChanged, 1, Interseci, Intersecj);
         std::cout<<"Wave1 CurrDist="<<CurrentDist<<std::endl;
+        if(PrHandler.Mode==1) //Небольшие манипуляции, чтобы помочь отладить это.
+        {
+            for(int i=0; i<Maze.n; i++)
+            {
+                for(int j=0; j<Maze.m; j++)
+                {
+                    if(CellDist.at(i).at(j).second==std::numeric_limits<int>::max())
+                    {
+                        Maze.SetCellValue(i, j, '~');
+                    }
+                    else
+                    {
+                        Maze.SetCellValue(i, j, (char)CellDist.at(i).at(j).second+48); //Если CellDist будет иметь большие значения, то в char они не влезут. Но для отладки подойдет.
+                    }
+                }
+            }
+            Maze.ShowDecorate();
+            std::cin.ignore();
+        }
         if((IsReachedfinish)||(!IsChanged)) break; //если достигли пересечения или если волна застряла
         WaveFrontIteration(Maze, CellDist, CurrentDist, mini2, maxi2, minj2, maxj2, IsReachedfinish, IsChanged, 2, Interseci, Intersecj);
         std::cout<<"Wave2 CurrDist="<<CurrentDist<<std::endl;
