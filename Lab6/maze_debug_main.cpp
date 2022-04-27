@@ -14,7 +14,7 @@ int main(int, char**) {
     presenthandler PrHandler;
     PrHandler.Mode=0;
 
-    maze Maze(10,10);
+    maze Maze(5,5);
  /*   for(int i=0; i<Maze.n; i++)
     {
         for(int j=0; j<Maze.m; j++)
@@ -34,9 +34,15 @@ int main(int, char**) {
     }
 */
   //  WallsReduce(Maze, 0.5, generator1);
-   WilsonReduced(Maze, generator1, PrHandler, 0.3);
-   Maze.ShowDecorate((char*)"cout",0);
+//   WilsonReduced(Maze, generator1, PrHandler, 0.3);
+    Maze.SetCellWalls(0,0,3, false);
+    Maze.SetCellWalls(0,1,3, false);
+    Maze.SetCellWalls(1,0,3, false);
+    Maze.SetCellWalls(1,1,3, false);
+    Maze.SetCellWalls(1,0,0, false);
+    Maze.ShowDecorate((char*)"cout",0);
  //   Maze.ShowDecorate((char*)"MazeOut.txt");
  //   Wilson(Maze, generator1, PrHandler);
+// std::cout << Maze.HasWall(9, 10, 3) << std::endl;
 
 }

@@ -77,12 +77,20 @@ public:
             (HasWall)? BaseVector.at(i*2+1+di).at(j*2+1+dj)=WALL : BaseVector.at(i*2+1+di).at(j*2+1+dj)=NOWALL;
         }
     }
+    //Если будем обращаться к несуществующим стенам (из несуществующих ячеек), то будем возвращать false, т.е. что такой стены нет. Это позволит пробегать все стены, итерируясь по несуществующим ячейкам
     bool HasWall(int i, int j, int alpha) //прикол в том, что мы можем узнать, существуют ли стены у ячейки, даже если самой ячейки не существует. Главное, чтобы сами стены сущестововали в лабиринте.
     {
         int di=(alpha%2)*((alpha%4)*(alpha%2)-2); //формулы получены из графиков
         int dj=((alpha-1)%2)*(((alpha-1)%4)*((alpha-1)%2)-2);
-        if(BaseVector.at(i*2+1+di).at(j*2+1+dj)==WALL) return true;
-        else return false;
+        if((i*2+1+di>=0) && (i*2+1+di<n*2+1) && (j*2+1+dj>=0) && (j*2+1+dj<m*2+1)) //Лишние условные операторы программе производительности не прибавляют, но так будет легче выводит лабиринт в графическом виде. Другой способ - создание лишних ячеек по углам
+        {
+            if(BaseVector.at(i*2+1+di).at(j*2+1+dj)==WALL) return true;
+            else return false;
+        }
+        else
+        {
+            return false;
+        }
     }
     std::string Show(char* filename=(char*)"cin")
     {
@@ -155,7 +163,8 @@ public:
             break;
         }
     }
-    void ShowDecorate(char* filename=(char*)"cout", int Mode=0) //Mode - 0 выводить внутреннее представление лабиринта и его декоративный вариант. 1 - только декоративный.
+     //Сейчас попробуем переделать это, чтобы scale работал.
+    void ShowDecorateOld(char* filename=(char*)"cout", int Mode=0, int Scale=1, bool IsWithValues=false) //Mode - 0 выводить внутреннее представление лабиринта и его декоративный вариант. 1 - только декоративный. Scale 1 и 2 возможные масштабы лабиринта. bool IsWithValues Для масштаба 2 можно вывести значения в ячейках
     {
         std::stringstream ss;
         std::string str;
@@ -225,6 +234,142 @@ public:
             if(i+1<n) if(HasWall(i+1,m-1, 0)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0"); 
             CharFromWallFlags(ss, WallFlags);
             // /////
+            ss<<std::endl;
+        }
+        if(filename==(char*)"cout") //пошел вывод в терминал или файл
+        {
+            switch(Mode)
+            {
+                case 0:
+                {
+                    std::stringstream ss1;
+                    for(auto& i: BaseVector)
+                    {
+                        for(auto& j: i)
+                        {
+                            ss1<<j;
+                        }
+                        ss1<<std::endl;
+                    }
+                    std::cout<<ss1.str();
+                    std::cout<<"------------"<<std::endl;
+                    std::cout<<ss.str();
+                }break;
+                case 1:
+                {
+                    std::cout<<ss.str();
+                }break;
+            }
+        }
+        else
+        {
+            std::ofstream fout(filename);
+            if(!fout.is_open())
+            {
+                std::stringstream ss;
+                ss << "Can not open file:"<<filename<<std::endl;
+                throw(ss.str());
+            }
+            switch(Mode)
+            {
+                case 0:
+                {
+                    std::stringstream ss1;
+                    for(auto& i: BaseVector)
+                    {
+                        for(auto& j: i)
+                        {
+                            ss1<<j;
+                        }
+                        ss1<<std::endl;
+                    }
+                    fout<<ss1.str();
+                    fout<<"------------"<<std::endl;
+                    fout<<ss.str();
+                }break;
+                case 1:
+                {
+                    fout<<ss.str();
+                }break;
+                
+            }
+            fout.close();
+
+        }
+    }
+    
+    void ShowDecorate(char* filename=(char*)"cout", int Mode=0, int Scale=1, bool IsWithValues=false) //Mode - 0 выводить внутреннее представление лабиринта и его декоративный вариант. 1 - только декоративный. Scale 1 и 2 возможные масштабы лабиринта. bool IsWithValues Для масштаба 2 можно вывести значения в ячейках
+    {
+        std::stringstream ss;
+        std::string str;
+    //    ss<<HORIZWALL<<VERTWALL<<CORTL<<CORTW<<CORBL<<CORBR<<TOPWALL<<BOTTOMWALL<<LWALL<<RWALL<<FULLWALL<< std::endl; //проверка отображения символов.
+    //    std::cout<<ss.str();
+        std::string WallFlags;
+
+    /*    WallFlags.clear();
+        // Тут просто корректируем граничные условия
+        if(HasWall(0,0, 1)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+        WallFlags.insert(0,"0"); // наверх стены не продолжаются
+        WallFlags.insert(0,"0");
+        if(HasWall(0,0, 2)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+        CharFromWallFlags(ss, WallFlags);
+        
+
+        for(int j=0;j<m-1;j++)
+        {
+            if(HasWall(0,0, 1)) ss<<HORIZWALL; else ss<<NOHORIZ;
+            WallFlags.clear();
+            if(HasWall(0,j+1, 1)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+            WallFlags.insert(0,"0"); // наверх стены не продолжаются
+            if(HasWall(0,j, 1)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+            if(HasWall(0,j, 0)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+            CharFromWallFlags(ss, WallFlags);
+        }
+
+        if(HasWall(0,0, 1)) ss<<HORIZWALL; else ss<<NOHORIZ;
+        WallFlags.clear();
+        WallFlags.insert(0,"0"); // вправо и наверх стены не продолжаются
+        WallFlags.insert(0,"0");
+        if(HasWall(0,m-1, 1)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+        if(HasWall(0,m-1, 0)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+        CharFromWallFlags(ss, WallFlags);
+
+        ss<<std::endl;
+        // ///// */
+        for(int i=0; i<n+1; i++)
+        {
+        /*    // Тут просто корректируем граничные условия
+            WallFlags.clear();
+            if(HasWall(i,0, 3)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+            if(HasWall(i,0, 2)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+            WallFlags.insert(0,"0"); //слева ячеек нет, и значит стен, уходящих влево тоже нет
+            if(i+1<n) if(HasWall(i+1,0, 2)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0"); 
+            CharFromWallFlags(ss, WallFlags);
+          //  std::cout<<"i="<<i<<" WallFlags="<<WallFlags<<" "<< std::stoi(WallFlags)<<" HasWall(i,0, 2)="<<HasWall(i,0, 2)<<CORBL<<std::endl;
+            // /////   */
+            for(int j=0; j<m+1; j++)
+            {
+                WallFlags.clear();
+                //рисуем левый вехний угл ячейки
+                if(HasWall(i,j, 1)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+                if(HasWall(i-1,j-1, 0)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+                if(HasWall(i-1,j-1, 3)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+                if(HasWall(i,j, 2)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+                CharFromWallFlags(ss, WallFlags);
+
+                //рисуем верхнюю стену ячейки
+                if(HasWall(i,j, 1)) ss<<HORIZWALL; else ss<<NOHORIZ;
+            }
+            /*
+            // Тут просто корректируем граничные условия
+            if(HasWall(i,m-1, 3)) ss<<HORIZWALL; else ss<<NOHORIZ;
+            WallFlags.clear();
+            WallFlags.insert(0,"0"); //справа ячеек нет, и значит стен, уходящих вправо тоже нет
+            if(HasWall(i,m-1, 0)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+            if(HasWall(i,m-1, 3)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0");
+            if(i+1<n) if(HasWall(i+1,m-1, 0)) WallFlags.insert(0,"1"); else WallFlags.insert(0,"0"); 
+            CharFromWallFlags(ss, WallFlags);
+            // ///// */
             ss<<std::endl;
         }
         if(filename==(char*)"cout") //пошел вывод в терминал или файл
