@@ -46,18 +46,22 @@ int main(int, char**) {
     Wilson(Maze, generator1, PrHandler);
     Maze.ResetValues();
     std::stringstream ss;
-    ss<<"123";
-    char ch;
+    std::string str("maze  by me");
+    char ch='N';
     int i=0, j=0;
-    while((ss>>ch)&& i<Maze.n && j<Maze.m)
+/*    for(int k=0; (k<str.size())&& i<Maze.n && j<Maze.m; k++)
     {
-        Maze.SetCellValue(i,j, ch);
+        ch=str.c_str()[k];
+    //    str.erase();
+    //   str.pop_back(); 
+        if (ch!=' ') Maze.SetCellValue(i,j, ch);
         j++;
         i+=j/Maze.m;
         j=j%Maze.m;
 
     }
+    */
+   Maze.SetValuesByStr(str);
     Maze.ShowDecorate((char*)"cout",0, 2, true);
-// std::cout << Maze.HasWall(9, 10, 3) << std::endl;
-
+ //   std::cout << ch<<std::endl;
 }
