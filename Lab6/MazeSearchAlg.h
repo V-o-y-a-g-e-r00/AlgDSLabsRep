@@ -6,6 +6,9 @@
 #include <vector>
 #include <utility> //pair
 #include <limits> //будем помечать максимальным возможным значением непосещенные ячейки.
+
+void DebugHandler(maze& Maze, std::vector<std::vector<std::pair<char, int>>>& CellDist, presenthandler& PrHandler); //Небольшие манипуляции, чтобы помочь отладить это.
+
 //Постараемся реализовать волновой алг и, может быть, его модификацию с двумя волнами. Так же есть идея немного его ускорить без какого-либо влияния на функциональность путем сокращения области поиска ячеек фронта на этапе распространения волны.
 void Lee(maze& Maze, int starti, int startj, int finishi, int finishj, std::vector<std::pair<int,int>>& Way, presenthandler& PrHandler)
 {
@@ -200,47 +203,14 @@ void Lee2Waves(maze& Maze, int starti, int startj, int finishi, int finishj, std
         CurrentDist++;
         WaveFrontIteration(Maze, CellDist, CurrentDist, mini1, maxi1, minj1, maxj1, IsReachedfinish, IsChanged, 1, Interseci, Intersecj);
         std::cout<<"Wave1 CurrDist="<<CurrentDist<<std::endl;
-        if(PrHandler.Mode==1) //Небольшие манипуляции, чтобы помочь отладить это.
+        if((IsReachedfinish)||(!IsChanged)) 
         {
-            for(int i=0; i<Maze.n; i++)
-            {
-                for(int j=0; j<Maze.m; j++)
-                {
-                    if(CellDist.at(i).at(j).second==std::numeric_limits<int>::max())
-                    {
-                        Maze.SetCellValue(i, j, '~');
-                    }
-                    else
-                    {
-                        Maze.SetCellValue(i, j, (char)CellDist.at(i).at(j).second+48); //Если CellDist будет иметь большие значения, то в char они не влезут. Но для отладки подойдет.
-                    }
-                }
-            }
-            Maze.ShowDecorate();
-            std::cin.ignore();
+            DebugHandler(Maze, CellDist, PrHandler);
+            break; //если достигли пересечения или если волна застряла
         }
-        if((IsReachedfinish)||(!IsChanged)) break; //если достигли пересечения или если волна застряла
         WaveFrontIteration(Maze, CellDist, CurrentDist, mini2, maxi2, minj2, maxj2, IsReachedfinish, IsChanged, 2, Interseci, Intersecj);
         std::cout<<"Wave2 CurrDist="<<CurrentDist<<std::endl;
-        if(PrHandler.Mode==1) //Небольшие манипуляции, чтобы помочь отладить это.
-        {
-            for(int i=0; i<Maze.n; i++)
-            {
-                for(int j=0; j<Maze.m; j++)
-                {
-                    if(CellDist.at(i).at(j).second==std::numeric_limits<int>::max())
-                    {
-                        Maze.SetCellValue(i, j, '~');
-                    }
-                    else
-                    {
-                        Maze.SetCellValue(i, j, (char)CellDist.at(i).at(j).second+48); //Если CellDist будет иметь большие значения, то в char они не влезут. Но для отладки подойдет.
-                    }
-                }
-            }
-            Maze.ShowDecorate();
-            std::cin.ignore();
-        }
+        DebugHandler(Maze, CellDist, PrHandler);
     }
 
     //Проверяем существование пути и восстанавливаем путь.
@@ -299,12 +269,32 @@ void Lee2Waves(maze& Maze, int starti, int startj, int finishi, int finishj, std
         Way.insert(Way.begin(), std::make_pair(Currenti+di, Currentj+dj));
         Currenti+=di;
         Currentj+=dj;
-
-        PrintVector(Way, "Way");
     }
 
 }
 
+void DebugHandler(maze& Maze, std::vector<std::vector<std::pair<char, int>>>& CellDist, presenthandler& PrHandler) //Небольшие манипуляции, чтобы помочь отладить это.
+{
+    if(PrHandler.Mode==1) //Небольшие манипуляции, чтобы помочь отладить это.
+    {
+        for(int i=0; i<Maze.n; i++)
+        {
+            for(int j=0; j<Maze.m; j++)
+            {
+                if(CellDist.at(i).at(j).second==std::numeric_limits<int>::max())
+                {
+                    Maze.SetCellValue(i, j, '~');
+                }
+                else
+                {
+                    Maze.SetCellValue(i, j, (char)CellDist.at(i).at(j).second+48); //Если CellDist будет иметь большие значения, то в char они не влезут. Но для отладки подойдет.
+                }
+            }
+        } 
+        Maze.ShowDecorate();
+        std::cin.ignore(); 
+    }
+}
 
 
 #endif /* MAZESEARCHALG_H */
