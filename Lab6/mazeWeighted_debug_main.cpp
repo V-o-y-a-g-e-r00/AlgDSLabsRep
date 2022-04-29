@@ -8,15 +8,16 @@
 #include "presenthandler.h"
 
 int main(int, char**) {
- //   int seed=time(0);
-    int seed=2;
+    int seed=time(0);
+  //  int seed=2;
     std::default_random_engine generator1(seed);
     presenthandler PrHandler;
     PrHandler.Mode=0;
 
-    mazeWeighted MazeWeighted(10,10);
+    mazeWeighted MazeWeighted(20,20);
 //    WeightCircule(MazeWeighted, 5, 5, 5, 2);
-    for(int k=0; k<10; k++) RandomCircules(MazeWeighted, generator1, 1, 2, 0.5, 2, 1);
+ //   for(int k=0; k<10; k++)
+    RandomCircules(MazeWeighted, generator1, 1, 2, 0.03, 2, 0.5);
 
     MazeWeighted.WeightsToValues();
     MazeWeighted.ShowDecorate((char*)"cout",1, 2, true);

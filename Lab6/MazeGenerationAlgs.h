@@ -613,8 +613,22 @@ void RandomCircules(mazeWeighted& MazeWeighted, std::default_random_engine& gene
         {
             if(Radius<0) Radius=0;
             return Radius;
-        }};
-    WeightCircule(MazeWeighted, 5, 5, PositiveRadius(distrRadius(generator)), 1);
+        }
+    };
+    for(int k=minWeight; k<=maxWeight; k++)
+    {
+        for(int i=0; i<MazeWeighted.Weights.size(); i++)
+        {
+            for(int j=0; j<MazeWeighted.Weights.at(i).size(); j++)
+            {
+                if(distrAppearance(generator))
+                {
+                    WeightCircule(MazeWeighted, i, j, PositiveRadius(distrRadius(generator)), k);
+                }
+            }
+        }
+    }
+//    WeightCircule(MazeWeighted, 5, 5, PositiveRadius(distrRadius(generator)), 1);
 
 
 
