@@ -6,6 +6,7 @@ project(Lab6 VERSION 0.1.0)
 
 #Разработка класса лабиринта
 add_executable(maze_debug_main maze_debug_main.cpp)
+add_executable(mazeWeighted_debug_main mazeWeighted_debug_main.cpp)
 #Алг генерации лабиринтов
 add_executable(AldousBroder AldousBroder_main.cpp)
 add_executable(Wilson Wilson_main.cpp)

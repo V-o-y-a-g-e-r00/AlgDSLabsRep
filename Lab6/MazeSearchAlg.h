@@ -341,5 +341,10 @@ void DebugHandler(maze& Maze, std::vector<std::vector<std::pair<char, int>>>& Ce
     }
 }
 
+//
+//void AStar(maze& Maze, std::vector<std::vector<int>> MazeWeights, )
+//{
+
+//}
 
 #endif /* MAZESEARCHALG_H */

@@ -432,6 +432,30 @@ public:
     }
 };
 
+class mazeWeighted : public maze
+{
+public:
+    std::vector<std::vector<int>> Weights;
+    mazeWeighted()=default;
+    mazeWeighted(int Nn, int Nm): maze(Nn, Nm)
+    {
+        Weights.resize(Nn); 
+        for(auto& i : Weights)
+        {
+            i.resize(Nm); //Должны быть нулевые значения. Это связано с реализацией вектора.
+        }
+    }
+    void WeightsToValues() //Копирует веса в значения ячеек для удобного представления.
+    {
+        for(int i=0;i<Weights.size(); i++)
+        {
+            for (int j=0;j<Weights.at(i).size(); j++)
+            {
+                SetCellValue(i, j, Weights.at(i).at(j)+48);
+            }
+        }
+    }
+};
 
 
 #endif /* MAZE_H */
