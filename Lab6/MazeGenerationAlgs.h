@@ -603,12 +603,10 @@ inline void WeightCircule(mazeWeighted& MazeWeighted, int Oi, int Oj, int Radius
 }
 //Генерация весов ячеек для лабиринта с весами
 //Генерация меня сильно озадачила. Вначале я хотел сделать, чтобы генерация зависела от размеров лабиринта, но сейчас мне это не кажется хорошей идеей.
-void RandomCircules(mazeWeighted& MazeWeighted, std::default_random_engine& generator, int minWeight, int maxWeight, double probability, double RadiusRatio, double stddevRatio) //Генерируем круги. probability вероятность, что из данной ячейки будет построен круг с текущим весом. RadiusRatio - отношение радиуса генерируемых кругов к максимальному измерению лабиринта. Т.е. при RadiusRatio=1 матожидание радиуса будет равно половине максимального измерения лабиринта. при 0-нулю. stddevRatio чем меньше, тем меньше отклонение от матожидания
+void RandomCircules(mazeWeighted& MazeWeighted, std::default_random_engine& generator, int minWeight, int maxWeight, double probability, int meanRadius, double stddevRadiusRatio) //Генерируем круги. probability вероятность, что из данной ячейки будет построен круг с текущим весом. RadiusRatio - отношение радиуса генерируемых кругов к максимальному измерению лабиринта. Т.е. при RadiusRatio=1 матожидание радиуса будет равно половине максимального измерения лабиринта. при 0-нулю. stddevRatio чем меньше, тем меньше отклонение от матожидания
 {
-    std::uniform_int_distribution<int> distr();
-    int mean=std::max(MazeWeighted.n, MazeWeighted.m)/2*RadiusRatio; //мат ожидание
-    int stddev=mean*stddevRatio; //
-    std::normal_distribution<double> distrRadius(mean, stddev); //для генерации радиусов кругов
+//    std::uniform_int_distribution<int> distr();
+    std::normal_distribution<double> distrRadius(meanRadius, stddevRadiusRatio*meanRadius); //для генерации радиусов кругов
     std::discrete_distribution<int> distrAppearance{1-probability, probability}; //для принятия решения о генерации круга в ячейке
 
     auto PositiveRadius{[](int Radius)->int

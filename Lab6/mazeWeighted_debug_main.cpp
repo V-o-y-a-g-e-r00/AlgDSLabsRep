@@ -16,7 +16,7 @@ int main(int, char**) {
 
     mazeWeighted MazeWeighted(10,10);
 //    WeightCircule(MazeWeighted, 5, 5, 5, 2);
-    for(int k=0; k<10; k++) RandomCircules(MazeWeighted, generator1, 1, 2, 0.5, 1, 0.2);
+    for(int k=0; k<10; k++) RandomCircules(MazeWeighted, generator1, 1, 2, 0.5, 2, 1);
 
     MazeWeighted.WeightsToValues();
     MazeWeighted.ShowDecorate((char*)"cout",1, 2, true);
