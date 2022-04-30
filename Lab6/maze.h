@@ -114,6 +114,16 @@ public:
             return false;
         }
     }
+    int GetNeighborI(int i, int alpha)
+    {
+        int di=(alpha%2)*((alpha%4)*(alpha%2)-2); //формулы получены из графиков
+        return i+di;
+    }
+    int GetNeighborJ(int j, int alpha)
+    {
+        int dj=((alpha-1)%2)*(((alpha-1)%4)*((alpha-1)%2)-2);
+        return j+dj;
+    }
     std::string Show(char* filename=(char*)"cin")
     {
         std::stringstream ss;
@@ -437,12 +447,12 @@ class mazeWeighted : public maze
 public:
     std::vector<std::vector<int>> Weights;
     mazeWeighted()=default;
-    mazeWeighted(int Nn, int Nm): maze(Nn, Nm)
+    mazeWeighted(int Nn, int Nm, int FillWeight=0): maze(Nn, Nm) //FillWeight заливка всего поля этим весом
     {
         Weights.resize(Nn); 
         for(auto& i : Weights)
         {
-            i.resize(Nm); //Должны быть нулевые значения. Это связано с реализацией вектора.
+            i.resize(Nm, FillWeight); //Должны быть нулевые значения (если без второго аргумента). Это связано с реализацией вектора.
         }
     }
     void WeightsToValues() //Копирует веса в значения ячеек для удобного представления.

@@ -72,6 +72,7 @@ void PrintMatrix(std::vector<std::vector<T>>& Matrix, const char* MatrixName)
 }
 //Print будем перегружать для разных случаев
 void Print(std::pair<int,int> Pair);
+void Print(std::pair<int, std::pair<int, int>> Item);
 template<typename T>
 void PrintVector(std::vector<T>& Vector, const char* VectorName)
 {
@@ -91,5 +92,8 @@ void Print(std::pair<int,int> Pair)
 {
     std::cout<<"("<<Pair.first<<", "<<Pair.second<<")";
 }
-
+void Print(std::pair<int, std::pair<int, int>> Item)
+{
+    std::cout<<"("<<Item.first<<", ("<<Item.second.first<<", "<<Item.second.second<<"))";
+}
 #endif /* FUNCS_H */
