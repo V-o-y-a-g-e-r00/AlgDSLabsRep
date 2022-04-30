@@ -344,6 +344,22 @@ void DebugHandler(maze& Maze, std::vector<std::vector<std::pair<char, int>>>& Ce
     }
 }
 
+//Для алг АStar Dijkstra
+inline void DijkstraReconstructWay(mazeWeighted& MazeWeighted, std::vector<std::vector<std::pair<char, int>>>& PathCoordWeights, int finishi, int finishj, int starti, int startj, std::vector<std::pair<int, int>>& Path) //Восстановение пути.
+{
+    int Currenti=finishi, Currentj=finishj;
+    Path.insert(Path.begin(), std::make_pair(Currenti, Currentj));
+
+    while(!((Currenti==starti)&&(Currentj==startj)))
+    {
+     //   std::cout<<"Currenti="<<Currenti<<" Currentj="<<Currentj<<std::endl;
+        int tempCurrenti=MazeWeighted.GetNeighborI(Currenti, PathCoordWeights.at(Currenti).at(Currentj).first+2); //Идем в противоположную сторону, из которой пришли
+        Currentj=MazeWeighted.GetNeighborJ(Currentj, PathCoordWeights.at(Currenti).at(Currentj).first+2);
+        Currenti=tempCurrenti;
+
+        Path.insert(Path.begin(), std::make_pair(Currenti, Currentj));
+    }
+}
 //
 void Dijkstra(mazeWeighted& MazeWeighted, int starti, int startj, int finishi, int finishj, std::vector<std::pair<int, int>>& Path, presenthandler& PrHandler)
 {
@@ -438,8 +454,21 @@ void Dijkstra(mazeWeighted& MazeWeighted, int starti, int startj, int finishi, i
         std::cout<<"The path from ("<<starti<<", "<<startj<< ") to ("<<finishi<<", "<<finishj<< ") does not exist!"<<std::endl;
         return;
     }
-    std::cout<<"The finish cell is reached!"<<std::endl;
+    if(PrHandler.Mode==1)
+    {
+        std::cout<<"The finish cell is reached!"<<std::endl;
 
+        for(int i=0; i<MazeWeighted.n; i++)
+        {
+            for(int j=0; j<MazeWeighted.m; j++)
+            {
+                if(PathCoordWeights.at(i).at(j).first>=0 &&PathCoordWeights.at(i).at(j).first<=9) MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first+48);
+                else MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first);
+            }
+        }
+        MazeWeighted.ShowDecorate((char*)"cout", 1, 2, true);
+    }
+    DijkstraReconstructWay(MazeWeighted, PathCoordWeights, finishi, finishj, starti, startj, Path);
 
 
 

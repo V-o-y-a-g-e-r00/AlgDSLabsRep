@@ -13,7 +13,7 @@ int main(int, char**) {
     int seed=4;
     std::default_random_engine generator1(seed);
     presenthandler PrHandler;
-    PrHandler.Mode=0;
+    PrHandler.Mode=1;
 
     mazeWeighted MazeWeighted(5,5, 1);
     WilsonReduced(MazeWeighted, generator1, PrHandler, 0.3);
@@ -24,6 +24,6 @@ int main(int, char**) {
 
   std::vector<std::pair<int,int>> Path;
   Dijkstra(MazeWeighted, 0, 0, 0, 1, Path, PrHandler);
-
+  PrintVector(Path, "Path");
 
 }
