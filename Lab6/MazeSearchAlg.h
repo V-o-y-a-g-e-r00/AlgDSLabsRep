@@ -7,6 +7,8 @@
 #include <utility> //pair
 #include <limits> //будем помечать максимальным возможным значением непосещенные ячейки.
 
+#include <queue>
+
 void DebugHandler(maze& Maze, std::vector<std::vector<std::pair<char, int>>>& CellDist, presenthandler& PrHandler); //Небольшие манипуляции, чтобы помочь отладить это.
 
 //Постараемся реализовать волновой алг и, может быть, его модификацию с двумя волнами. Так же есть идея немного его ускорить без какого-либо влияния на функциональность путем сокращения области поиска ячеек фронта на этапе распространения волны.
@@ -342,9 +344,17 @@ void DebugHandler(maze& Maze, std::vector<std::vector<std::pair<char, int>>>& Ce
 }
 
 //
-//void AStar(maze& Maze, std::vector<std::vector<int>> MazeWeights, )
-//{
+void AStar(mazeWeighted& MazeWeighted, std::vector<std::pair<int, int>>& Path)
+{
+    std::vector<std::vector<std::pair<char, int>>> PathCoordWeights(MazeWeighted.n); //Путевые координаты и веса пути у ячеек
+    for(auto& i:PathCoordWeights)
+    {
+        i.resize(MazeWeighted.m);
+        for(auto& j:i) j.first='~'; //Будем так помечать непосещенные ячейки
+    }
 
-//}
+    std::priority_queue<std::pair<int, std::pair<int, int>>, std::vector<std::pair<int, std::pair<int, int>>>, std::greater<std::pair<int, std::pair<int, int>>>> PriorQueue; //пара- приоритет(вес пути); координаты ячейки
+    PriorQueue;
+}
 
 #endif /* MAZESEARCHALG_H */

@@ -8,8 +8,8 @@
 #include "presenthandler.h"
 
 int main(int, char**) {
-    int seed=time(0);
-  //  int seed=2;
+  //  int seed=time(0);
+    int seed=1;
     std::default_random_engine generator1(seed);
     presenthandler PrHandler;
     PrHandler.Mode=0;

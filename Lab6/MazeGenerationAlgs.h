@@ -599,7 +599,7 @@ inline void WeightCircule(mazeWeighted& MazeWeighted, int Oi, int Oj, int Radius
             }
         }
     }
-    std::cout<<"Radius="<<Radius<<std::endl;
+//    std::cout<<"Radius="<<Radius<<std::endl;
 }
 //Генерация весов ячеек для лабиринта с весами
 //Генерация меня сильно озадачила. Вначале я хотел сделать, чтобы генерация зависела от размеров лабиринта, но сейчас мне это не кажется хорошей идеей.
