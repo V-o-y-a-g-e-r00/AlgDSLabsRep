@@ -23,7 +23,7 @@ int main(int, char**) {
     MazeWeighted.ShowDecorate((char*)"cout",1, 2, true);
 
   std::vector<std::pair<int,int>> Path;
-  Dijkstra(MazeWeighted, 0, 0, 0, 1, Path, PrHandler);
+  Dijkstra(MazeWeighted, 0, 0, 4, 4, Path, PrHandler);
   PrintVector(Path, "Path");
 
 }

@@ -24,7 +24,7 @@ int main(int, char**) {
     std::vector<int> Way1(10, 33);
    Lee(Maze, 2, 2, 3, 2, Way, PrHandler);
    PrintVector(Way, "Way");
-//   Maze.ShowDecorate((char*)"cout",0);
+   //   Maze.ShowDecorate((char*)"cout",0);
  //   Maze.ShowDecorate((char*)"MazeOut.txt");
  //   Wilson(Maze, generator1, PrHandler);
 

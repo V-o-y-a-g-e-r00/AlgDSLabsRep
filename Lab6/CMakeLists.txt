@@ -16,7 +16,8 @@ add_executable(StatisticsMaze StatisticsMaze_main.cpp)
 #Алг поиска пути в лабиринте
 add_executable(Lee Lee_main.cpp)
 add_executable(Lee2Waves Lee2Waves_main.cpp)
-
+#Алг поиска пути в лабиринте, основанные на поиске на графах с ребрами с различными весами.
+add_executable(Dijkstra Dijkstra_main.cpp)
 add_executable(AStar AStar_main.cpp)
 
 install(PROGRAMS PlotScript.bash DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

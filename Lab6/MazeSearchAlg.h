@@ -8,7 +8,9 @@
 #include <limits> //будем помечать максимальным возможным значением непосещенные ячейки.
 
 #include <queue>
+#include "Funcs.h"
 #define NOTVISITED '~'
+
 
 void DebugHandler(maze& Maze, std::vector<std::vector<std::pair<char, int>>>& CellDist, presenthandler& PrHandler); //Небольшие манипуляции, чтобы помочь отладить это.
 
@@ -401,16 +403,22 @@ void Dijkstra(mazeWeighted& MazeWeighted, int starti, int startj, int finishi, i
 
     //Каждая итерация - просмотр одного элемента из очереди.
     bool IsFinishReached=false; //Достигли ли финишной ячейки
+    if(PrHandler.Mode==1)
+    {
+        std::cout<<"PriorQueue all items:"<<std::endl;
+    }
     while(!PriorQueue.empty())
     {
         //Извлекаем наиближайший элемент из очереди. (т.е. элемент, вес пути которого минимален из всех элементов в очереди)
         std::pair<int, std::pair<int, int>> CellFromQueue; //Для элемента, извлеченного из очереди
         CellFromQueue=PriorQueue.top();
         
+        if(PrHandler.Mode==1)
+        {
         std::cout<<"PriorQueue.top()=";
         Print(PriorQueue.top());
         std::cout<<std::endl;
-        
+        }
         PriorQueue.pop();
 
         //Если извлеченным элементом оказалась финишная ячейка, то прекращаем дальнейший обход ячеек (т.е. если это произошло, то значит в других ячейках веса путей не меньше, чем в финишной, а значит, с меньшим весом путь до финишной ячейки уже никак не может быть (случай с отрицательными весами ребер исходного графа мы здесь не рассматриваем))
@@ -448,6 +456,61 @@ void Dijkstra(mazeWeighted& MazeWeighted, int starti, int startj, int finishi, i
             }
         }
     }
+
+    if(PrHandler.Mode==1)
+    {
+        //Вывод изначальных весов ячеек.
+        MazeWeighted.WeightsToValues();
+        std::cout<<"Weights:"<<std::endl;
+        MazeWeighted.ShowDecorate((char*)"cout",1, 2, true);
+        
+        //Наглядное представление путевых весов
+        for(int i=0; i<MazeWeighted.n; i++) 
+        {
+            for(int j=0; j<MazeWeighted.m; j++)
+            {
+                MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).second%10+48);
+            //    if(PathCoordWeights.at(i).at(j).first>=0 &&PathCoordWeights.at(i).at(j).first<=9) MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first+48);
+            //    else MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first);
+            }
+        }
+        std::cout<<"PathWeights % 10:"<<std::endl;
+        MazeWeighted.ShowDecorate((char*)"cout", 1, 2, true);
+    
+        //Наглядное представление путевых координат
+        for(int i=0; i<MazeWeighted.n; i++) 
+        {
+            for(int j=0; j<MazeWeighted.m; j++)
+            {
+            //    if(PathCoordWeights.at(i).at(j).first>=0 &&PathCoordWeights.at(i).at(j).first<=9) MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first+48);
+            //    else MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first);
+                switch (PathCoordWeights.at(i).at(j).first)
+                {
+                case 0:
+                    MazeWeighted.SetCellValue(i, j, '>');
+                    break;
+                case 1:
+                    MazeWeighted.SetCellValue(i, j, '^');
+                    break;
+                case 2:
+                    MazeWeighted.SetCellValue(i, j, '<');
+                    break;
+                case 3:
+                    MazeWeighted.SetCellValue(i, j, 'v');
+                    break;
+                case 4:
+                    MazeWeighted.SetCellValue(i, j, 's');
+                    break;
+                default:
+                    MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first);
+                    break;
+                }
+            }
+        }
+        std::cout<<"PathCoordinates:"<<std::endl;
+        MazeWeighted.ShowDecorate((char*)"cout", 1, 2, true);
+    }
+
     //Проверяем, достигли ли мы финишной ячейки
     if(!IsFinishReached)
     {
@@ -457,16 +520,6 @@ void Dijkstra(mazeWeighted& MazeWeighted, int starti, int startj, int finishi, i
     if(PrHandler.Mode==1)
     {
         std::cout<<"The finish cell is reached!"<<std::endl;
-
-        for(int i=0; i<MazeWeighted.n; i++)
-        {
-            for(int j=0; j<MazeWeighted.m; j++)
-            {
-                if(PathCoordWeights.at(i).at(j).first>=0 &&PathCoordWeights.at(i).at(j).first<=9) MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first+48);
-                else MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first);
-            }
-        }
-        MazeWeighted.ShowDecorate((char*)"cout", 1, 2, true);
     }
     DijkstraReconstructWay(MazeWeighted, PathCoordWeights, finishi, finishj, starti, startj, Path);
 
