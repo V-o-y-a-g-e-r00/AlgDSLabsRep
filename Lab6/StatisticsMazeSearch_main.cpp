@@ -26,14 +26,18 @@ int main(int, char**) {
 
     StatisticsMazeSearch StatisticsMazeSearch1, StatisticsMazeSearch2, StatisticsMazeSearch3, StatisticsMazeSearch4;
     std::thread thread1(&StatisticsMazeSearch::StatisticsMazeSearchFunc<mazeWeighted>, std::ref(StatisticsMazeSearch1), NStart, NEnd, NStep, MRatio, NumberOfRun, std::ref(generator1), std::ref(PrHandler), PlotHandler.addandreturn("DijkstraOut.txt"), Dijkstra);
-    std::thread thread2(&StatisticsMazeSearch::StatisticsMazeSearchFunc<mazeWeighted>, std::ref(StatisticsMazeSearch2), NStart, NEnd, NStep, MRatio, NumberOfRun, std::ref(generator2), std::ref(PrHandler), PlotHandler.addandreturn("AStarOut.txt"), AStar);
-    std::thread thread3(&StatisticsMazeSearch::StatisticsMazeSearchFunc<maze>, std::ref(StatisticsMazeSearch3), NStart, NEnd, NStep, MRatio, NumberOfRun, std::ref(generator3), std::ref(PrHandler), PlotHandler.addandreturn("LeeOut.txt"), Lee);
-    std::thread thread4(&StatisticsMazeSearch::StatisticsMazeSearchFunc<maze>, std::ref(StatisticsMazeSearch4), NStart, NEnd, NStep, MRatio, NumberOfRun, std::ref(generator4), std::ref(PrHandler), PlotHandler.addandreturn("Lee2WavesOut.txt"), Lee2Waves);
-    
     thread1.join();
+    std::thread thread2(&StatisticsMazeSearch::StatisticsMazeSearchFunc<mazeWeighted>, std::ref(StatisticsMazeSearch2), NStart, NEnd, NStep, MRatio, NumberOfRun, std::ref(generator2), std::ref(PrHandler), PlotHandler.addandreturn("AStarOut.txt"), AStar);
     thread2.join();
+    std::thread thread3(&StatisticsMazeSearch::StatisticsMazeSearchFunc<maze>, std::ref(StatisticsMazeSearch3), NStart, NEnd, NStep, MRatio, NumberOfRun, std::ref(generator3), std::ref(PrHandler), PlotHandler.addandreturn("LeeOut.txt"), Lee);
     thread3.join();
+    std::thread thread4(&StatisticsMazeSearch::StatisticsMazeSearchFunc<maze>, std::ref(StatisticsMazeSearch4), NStart, NEnd, NStep, MRatio, NumberOfRun, std::ref(generator4), std::ref(PrHandler), PlotHandler.addandreturn("Lee2WavesOut.txt"), Lee2Waves);
     thread4.join();
+
+ //   thread1.join();
+ //   thread2.join();
+ //   thread3.join();
+ //   thread4.join();
 
     PlotHandler.tofile("Plotfilelist.txt");
     system("./PlotScript.bash");
