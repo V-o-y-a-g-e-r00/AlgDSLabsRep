@@ -1,0 +1,55 @@
+user2@debianuser2:~/AlgDSLabsRep/Lab6/build$ /home/user2/AlgDSLabsRep/Lab6/build/StatisticsMazeSearch_main 
+Maze generation started
+Maze generation ended
+┌───────────────┐   
+│ 1   1   1   1 │
+├────   .   ────┤   
+│ 6   1   1   2 │
+│   ┌────   ┌───┤   
+│ 6 │ 6   2 │ 2 │
+│   ├────   ┴   │   
+│ 6 │ 6   6   2 │
+└───┴───────────┘   
+start=(2, 2) finish=(3, 1)
+Maze search started
+Maze search ended
+Path=  (2, 2)  (3, 2)  (3, 1)
+CurrentN=4; Iteration 0 is completed
+Maze generation started
+Maze generation ended
+┌───┬───────────────┐   
+│ 4 │ 1  10  10  10 │
+│   └────   ┬   .   │   
+│ 2   8   8 │10   5 │
+│   ┌────   ├───────┤   
+│ 2 │ 6   8 │ 3   2 │
+│   ┴   ┬   ┴   ┬   │   
+│ 1   5 │ 1   2 │ 1 │
+├────   ┴   .   ┴   │   
+│ 4   1   1   1   1 │
+└───────────────────┘   
+start=(4, 0) finish=(4, 0)
+Maze search started
+Maze search ended
+Path=  (4, 0)
+CurrentN=5; Iteration 0 is completed
+Maze generation started
+Maze generation ended
+┌───┬───────────┬───────┐   
+│10 │ 6   5   6 │ 6   6 │
+│   ┴   .   .   ┴   ┌───┤   
+│ 6   6   6   5   6 │ 4 │
+├───┬────   .   .   ┴   │   
+│ 9 │ 6  10   1   4   4 │
+│   ┴   ┬   .   ────────┤   
+│ 1  10 │10  10   1   4 │
+│   .   ├────────   ────┤   
+│ 1   1 │10   2   1   1 │
+│   ┬   ┴   ─────   ┬   │   
+│ 1 │ 7   9   7   1 │ 1 │
+└───┴───────────────┴───┘   
+start=(3, 2) finish=(3, 3)
+Maze search started
+Maze search ended
+Path=  (3, 2)  (3, 3)
+CurrentN=6; Iteration 0 is completed
