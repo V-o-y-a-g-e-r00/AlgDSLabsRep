@@ -15,7 +15,7 @@ int main(int, char**) {
     std::default_random_engine generator1(seed);
 
     presenthandler PrHandler;
-    PrHandler.Mode=0; //11 выводить генерируемые лабиринты
+    PrHandler.Mode=11; //11 выводить генерируемые лабиринты
     plothandler PlotHandler;
 
     int NStart=4, NEnd=50, NStep=5, NumberOfRun=100;

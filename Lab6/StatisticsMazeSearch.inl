@@ -34,8 +34,9 @@ public:
 
     }
 
- //   template<typename... CallBackParamsTail> //CallBackGenerate m WeightMax    
-    void StatisticsMazeSearchFunc(int NNStart, int NNEnd, int NNStep, double NMRatio, int NNumberOfRuns, std::default_random_engine& generator, presenthandler& PresentHandler, std::string filename, void (*CallBackSearch)(mazeWeighted&, int starti, int startj, int finishi, int finishj, std::vector<std::pair<int,int>>& Path, presenthandler& PrHandler))
+ //   template<typename... CallBackParamsTail> //CallBackGenerate m WeightMax
+    template <typename T>    
+    void StatisticsMazeSearchFunc(int NNStart, int NNEnd, int NNStep, double NMRatio, int NNumberOfRuns, std::default_random_engine& generator, presenthandler& PresentHandler, std::string filename, void (*CallBackSearch)(T&, int starti, int startj, int finishi, int finishj, std::vector<std::pair<int,int>>& Path, presenthandler& PrHandler))
     {
         NStart=NNStart; NEnd=NNEnd; NStep=NNStep; MRatio=NMRatio; NumberOfRuns=NNumberOfRuns;
         printLabel(filename);

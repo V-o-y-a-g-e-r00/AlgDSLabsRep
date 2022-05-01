@@ -292,14 +292,14 @@ void Lee2Waves(maze& Maze, int starti, int startj, int finishi, int finishj, std
     {
         CurrentDist++;
         WaveFrontIteration(Maze, CellDist, CurrentDist, mini1, maxi1, minj1, maxj1, IsReachedfinish, IsChanged, 1, Interseci, Intersecj);
-        std::cout<<"Wave1 CurrDist="<<CurrentDist<<std::endl;
+        if(PrHandler.Mode==1) std::cout<<"Wave1 CurrDist="<<CurrentDist<<std::endl;
         if((IsReachedfinish)||(!IsChanged)) 
         {
             DebugHandler(Maze, CellDist, PrHandler);
             break; //если достигли пересечения или если волна застряла
         }
         WaveFrontIteration(Maze, CellDist, CurrentDist, mini2, maxi2, minj2, maxj2, IsReachedfinish, IsChanged, 2, Interseci, Intersecj);
-        std::cout<<"Wave2 CurrDist="<<CurrentDist<<std::endl;
+        if(PrHandler.Mode==1) std::cout<<"Wave2 CurrDist="<<CurrentDist<<std::endl;
         DebugHandler(Maze, CellDist, PrHandler);
     }
 
@@ -311,7 +311,7 @@ void Lee2Waves(maze& Maze, int starti, int startj, int finishi, int finishj, std
     }
     else
     {
-        std::cout<<"Intersection cell between waves: Interseci="<<Interseci<<" Intersecj="<<Intersecj<<std::endl;
+        if(PrHandler.Mode==1) std::cout<<"Intersection cell between waves: Interseci="<<Interseci<<" Intersecj="<<Intersecj<<std::endl;
     }
     //Будем идти от точки пересечения в обе стороны. Вначале дойдем до точки старта, потом до точки финиша.
     int Currenti=Interseci, Currentj=Intersecj;

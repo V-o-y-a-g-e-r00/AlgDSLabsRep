@@ -1,0 +1,70 @@
+Maze generation started
+Maze generation ended
+┌───────┬───────┐   
+│ 1   3 │ 1   1 │
+├────   ├────   │   
+│ 3   3 │ 3   4 │
+│   ┬   │   .   │   
+│ 1 │ 3 │ 1   1 │
+│   ┴   └────   │   
+│ 1   3   1   1 │
+└───────────────┘   
+start=(2, 2) finish=(0, 2)
+Maze search started
+Wave1 CurrDist=1
+Wave2 CurrDist=1
+Wave1 CurrDist=2
+Wave2 CurrDist=2
+Intersection cell between waves: Interseci=1 Intersecj=3
+Maze search ended
+Path=  (2, 2)  (1, 2)  (1, 3)  (0, 3)  (0, 2)
+CurrentN=4; Iteration 0 is completed
+Maze generation started
+Maze generation ended
+┌───────────────────┐   
+│10   8   1   5   5 │
+│   .   .   .   ┬   │   
+│ 9   1   1   7 │ 5 │
+│   .   ────┬───┘   │   
+│ 1   9   1 │ 3  10 │
+├────   .   ├────   │   
+│ 9   9   9 │ 5   5 │
+│   ─────   │   .   │   
+│ 1   9   1 │ 3   5 │
+└───────────┴───────┘   
+start=(3, 4) finish=(4, 4)
+Maze search started
+Wave1 CurrDist=1
+Intersection cell between waves: Interseci=4 Intersecj=4
+Maze search ended
+Path=  (3, 4)  (4, 4)
+CurrentN=5; Iteration 0 is completed
+Maze generation started
+Maze generation ended
+┌───┬───────────────────┐   
+│10 │ 4  10   5   5   1 │
+│   ├────   ┬   ┌────   │   
+│ 4 │ 1   1 │ 5 │ 1   1 │
+│   ┴   ┌───┴───┴────   │   
+│ 5   9 │ 1   3   1   6 │
+│   .   ┴   ┬   .   .   │   
+│ 8  10   3 │ 3   3   1 │
+│   ────────┘   .   .   │   
+│ 2   1   9   3   1   1 │
+│   ─────   .   ─────   │   
+│ 2   2   1   1   1   1 │
+└───────────────────────┘   
+start=(0, 4) finish=(4, 0)
+Maze search started
+Wave1 CurrDist=1
+Wave2 CurrDist=1
+Wave1 CurrDist=2
+Wave2 CurrDist=2
+Wave1 CurrDist=3
+Wave2 CurrDist=3
+Wave1 CurrDist=4
+Wave2 CurrDist=4
+Intersection cell between waves: Interseci=1 Intersecj=1
+Maze search ended
+Path=  (0, 4)  (0, 3)  (0, 2)  (1, 2)  (1, 1)  (2, 1)  (2, 0)  (3, 0)  (4, 0)
+CurrentN=6; Iteration 0 is completed
