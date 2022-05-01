@@ -460,12 +460,12 @@ void Dijkstra(mazeWeighted& MazeWeighted, int starti, int startj, int finishi, i
     if(PrHandler.Mode==1)
     {
         //Вывод изначальных весов ячеек.
-        MazeWeighted.WeightsToValues();
+    //    MazeWeighted.WeightsToValues();
         std::cout<<"Weights:"<<std::endl;
-        MazeWeighted.ShowDecorate((char*)"cout",1, 2, true);
+        MazeWeighted.ShowDecorate((char*)"cout",1, 2, true, MazeWeighted.Weights);
         
         //Наглядное представление путевых весов
-        for(int i=0; i<MazeWeighted.n; i++) 
+       /* for(int i=0; i<MazeWeighted.n; i++) 
         {
             for(int j=0; j<MazeWeighted.m; j++)
             {
@@ -473,9 +473,9 @@ void Dijkstra(mazeWeighted& MazeWeighted, int starti, int startj, int finishi, i
             //    if(PathCoordWeights.at(i).at(j).first>=0 &&PathCoordWeights.at(i).at(j).first<=9) MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first+48);
             //    else MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first);
             }
-        }
-        std::cout<<"PathWeights % 10:"<<std::endl;
-        MazeWeighted.ShowDecorate((char*)"cout", 1, 2, true);
+        }*/
+        std::cout<<"PathWeights % 1000:"<<std::endl;
+        MazeWeighted.ShowDecorate((char*)"cout", 1, 2, true, PathCoordWeights, 2);
     
         //Наглядное представление путевых координат
         for(int i=0; i<MazeWeighted.n; i++) 

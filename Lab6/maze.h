@@ -6,6 +6,9 @@
 #include <fstream>
 #include <sstream>
 
+#include <type_traits> //Будем сравнивать типы в шаблонном методе
+#include <cassert>
+
 #define WALL '#' //Стена присутствует
 #define NOWALL '?' //Стена отсутствует (половина строк содержит только информацию о стенах)
 #define EMPTYCELL '.' //Сама ячейка
@@ -330,7 +333,59 @@ public:
         }
     }
     
-    void ShowDecorate(char* filename=(char*)"cout", int Mode=0, int Scale=1, bool IsWithValues=false) //Mode - 0 выводить внутреннее представление лабиринта и его декоративный вариант. 1 - только декоративный. Scale 1 и 2 возможные масштабы лабиринта. bool IsWithValues Для масштаба 2 можно вывести значения в ячейках
+
+    char GetCellValueFromStruct(int i, int j, const std::string& str, int member) //перегрузки. 
+    {
+        //
+        if(str==std::string("GetCellValue"))
+            return GetCellValue(i, j);
+        assert(false);
+        return -1;
+    }
+    int GetCellValueFromStruct(int i, int j, std::vector<std::vector<int>>& Weights, int member)
+    {
+        return Weights.at(i).at(j);
+    }
+    int GetCellValueFromStruct(int i, int j, std::vector<std::vector<std::pair<char, int>>> PathCoordWeights, int member) //member - какой член выбрать в PathCoordWeights
+    {
+        switch (member)
+        {
+        case 1:
+            return PathCoordWeights.at(i).at(j).first;
+            break;
+        case 2:
+            return PathCoordWeights.at(i).at(j).second % 1000;
+            break;
+        default:
+            break;
+        }
+        assert(false);
+        return -1;
+    }
+    template<typename T>
+    std::string StrFromInt(T value)
+    {
+        std::stringstream ss1, ss2;
+        ss1<<value;
+        switch (ss1.str().length())
+        {
+        case 1:
+            ss2<<NOHORIZ<<ss1.str()<<NOHORIZ;  
+            break;
+        case 2:
+            ss2<<ss1.str()<<NOHORIZ;  
+            break;
+        case 3:
+            ss2<<ss1.str();  
+            break;        
+        default:
+            ss2<<NOHORIZ<<'?'<<NOHORIZ;
+            break;
+        }
+        return ss2.str();
+    }
+    template <typename T=const std::string> //константные ссылки могут быть привязаны к временным объектам, причем время жизни объекта расширяется до времени жизни константной ссылки
+    void ShowDecorate(char* filename=(char*)"cout", int Mode=0, int Scale=1, bool IsWithValues=false, T& Values=std::string("GetCellValue"), int member=0) //Mode - 0 выводить внутреннее представление лабиринта и его декоративный вариант. 1 - только декоративный. Scale 1 и 2 возможные масштабы лабиринта. bool IsWithValues Для масштаба 2 можно вывести значения в ячейках
     {
         std::stringstream ss;
         std::string str;
@@ -370,8 +425,13 @@ public:
                 for(int j=0; j<m; j++)
                 {
                     if(HasWall(i,j, 2)) ss<<VERTWALL; else ss<<NOHORIZ;
-                    if(IsWithValues) ss<<NOHORIZ<<GetCellValue(i, j)<<NOHORIZ;
-                    else ss<<NOHORIZ<<NOHORIZ<<NOHORIZ;
+                //    if(IsWithValues) ss<<NOHORIZ<<GetCellValue(i, j)<<NOHORIZ;
+                if(IsWithValues)
+                {
+                    ss<<StrFromInt(GetCellValueFromStruct(i,j, Values, member));
+                //    std::cout<<"GetCellValueFromStruct(i,j, Values)="<<GetCellValueFromStruct(i,j, Values)<<std::endl;
+                }
+                else ss<<NOHORIZ<<NOHORIZ<<NOHORIZ;
                 }
                 //Граничные условия
                 if(HasWall(i, m, 2)) ss<<VERTWALL; else ss<<NOHORIZ;
