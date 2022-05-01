@@ -21,7 +21,7 @@ int main(int, char**) {
     PrHandler.Mode=0; //11 выводить генерируемые лабиринты
     plothandler PlotHandler;
 
-    int NStart=4, NEnd=120, NStep=10, NumberOfRun=10;
+    int NStart=4, NEnd=500, NStep=10, NumberOfRun=10;
     double MRatio=1;
 
     StatisticsMazeSearch StatisticsMazeSearch1, StatisticsMazeSearch2, StatisticsMazeSearch3, StatisticsMazeSearch4;

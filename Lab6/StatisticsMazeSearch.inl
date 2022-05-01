@@ -52,7 +52,10 @@ public:
                 
                 //Генерируем лабиринт без недостижимых областей с циклами. У ячеек устанавливаем веса от 1 до 10.
                 std::cout<<"Maze generation started"<<std::endl;
-                WilsonReduced(MazeWeighted, generator, PresentHandler, 0.3);
+            //    WilsonReduced(MazeWeighted, generator, PresentHandler, 0.3);
+                int alpha=0;
+                BinaryTree(MazeWeighted, generator, PresentHandler, alpha);
+                WallsReduce(MazeWeighted, 0.3, generator);
                 RandomCircules(MazeWeighted, generator, 2, 10, 0.05, 1, 0.5); //1, 3, 0.03, 2, 0.5
                 std::cout<<"Maze generation ended"<<std::endl;
                 if(PresentHandler.Mode==11) MazeWeighted.ShowDecorate((char*)"cout", 1, 2, true, MazeWeighted.Weights);
