@@ -9,6 +9,7 @@
 
 #include <queue>
 #include "Funcs.h"
+#include <cmath>
 #define NOTVISITED '~'
 
 
@@ -522,9 +523,171 @@ void Dijkstra(mazeWeighted& MazeWeighted, int starti, int startj, int finishi, i
         std::cout<<"The finish cell is reached!"<<std::endl;
     }
     DijkstraReconstructWay(MazeWeighted, PathCoordWeights, finishi, finishj, starti, startj, Path);
+}
+//Эвристическая функция для алг A*
+int HeuristicAStar(int Currenti, int Currentj, int finishi, int finishj)
+{
+    return abs(finishi-Currenti)+abs(finishj-Currentj);
+}
+void AStar(mazeWeighted& MazeWeighted, int starti, int startj, int finishi, int finishj, std::vector<std::pair<int, int>>& Path, presenthandler& PrHandler)
+{
+    std::vector<std::vector<std::pair<char, int>>> PathCoordWeights(MazeWeighted.n); //Путевые координаты и веса пути у ячеек
+    for(auto& i:PathCoordWeights)
+    {
+        i.resize(MazeWeighted.m, std::make_pair(NOTVISITED, 0)); //NOTVISITED Будем так помечать непосещенные ячейки
+    //    for(auto& j:i) j.first=NOTVISITED; 
+    }
 
+    //Очередь с приоритетом. Хранит ячейки, которые нужно посетить. В качестве приоритета будем брать расстояние от ячейки старта + эвристика, зависящая от расстояния(на плоскости) до финишной ячейки
+    std::priority_queue<std::pair<int, std::pair<int, int>>, std::vector<std::pair<int, std::pair<int, int>>>, std::greater<std::pair<int, std::pair<int, int>>>> PriorQueue; //пара- приоритет(вес пути); координаты ячейки
+    
+/*  //Тестируем очередь с приоритетами
+    std::vector<std::pair<int, std::pair<int, int>>> testVector;
+    std::pair<int, std::pair<int, int>> testItem1, testItem2;
+    
+    testItem1.first=3;
+    testItem1.second.first=1;
+    testItem1.second.second=2;
+    PriorQueue.emplace(testItem1);
 
+    testItem1.first=0;
+    testItem1.second.first=4;
+    testItem1.second.second=5;
+    PriorQueue.emplace(testItem1);
+    while(!PriorQueue.empty())
+    {
+        testVector.push_back(PriorQueue.top());
+        PriorQueue.pop();
+    }
+    PrintVector(testVector, "testVector");
+*/
+    //Устанавливаем атрибуты стартовой ячейки
+    PathCoordWeights.at(starti).at(startj).first=4; //Путевые координаты пусть будут такими 0-3 значения alpha, если смотреть из ячейки, из которой мы пришли. 4 - отстуствие координат(только для исходной ячейки). NOTVISITED='~' ячейка не была посещена.
+    PathCoordWeights.at(starti).at(startj).second=0; //Вес пути
+    //Записываем в очередь стартовую ячейку
+    PriorQueue.push(std::make_pair(PathCoordWeights.at(starti).at(startj).second+HeuristicAStar(starti, startj, finishi, finishj), std::make_pair(starti, startj)));
 
+    //Каждая итерация - просмотр одного элемента из очереди.
+    bool IsFinishReached=false; //Достигли ли финишной ячейки
+    if(PrHandler.Mode==1)
+    {
+        std::cout<<"PriorQueue all items:"<<std::endl;
+    }
+    while(!PriorQueue.empty())
+    {
+        //Извлекаем наиближайший элемент из очереди. (т.е. элемент, вес пути=вес дейкстры+эвирстика  которого минимален из всех элементов в очереди)
+        std::pair<int, std::pair<int, int>> CellFromQueue; //Для элемента, извлеченного из очереди
+        CellFromQueue=PriorQueue.top();
+        
+        if(PrHandler.Mode==1)
+        {
+        std::cout<<"PriorQueue.top()=";
+        Print(PriorQueue.top());
+        std::cout<<std::endl;
+        }
+        PriorQueue.pop();
+
+        //Если извлеченным элементом оказалась финишная ячейка, то прекращаем дальнейший обход ячеек (т.е. если это произошло, то значит в других ячейках веса путей не меньше, чем в финишной, а значит, с меньшим весом путь до финишной ячейки уже никак не может быть (случай с отрицательными весами ребер исходного графа мы здесь не рассматриваем))
+        if(CellFromQueue.second==std::make_pair(finishi,finishj))
+        {
+            IsFinishReached=true;
+            break;
+        }
+
+        //Просматриваем всех соседов извлеченной ячейки.
+        for(int alpha=0; alpha<4; alpha++)
+        {
+            int NeighborI=MazeWeighted.GetNeighborI(CellFromQueue.second.first, alpha);
+            int NeighborJ=MazeWeighted.GetNeighborJ(CellFromQueue.second.second, alpha);
+         //   std::cout<<"NeighborI="<<NeighborI<<"NeighborJ"<<NeighborJ<<std::endl;
+            if(!MazeWeighted.HasWall(CellFromQueue.second.first, CellFromQueue.second.second, alpha) ) //Если у текущая ячейка не отделена от соседней стеной
+            {
+                if(PathCoordWeights.at(NeighborI).at(NeighborJ).first==NOTVISITED) //Если этот сосед не был посещен ни разу
+                {
+                    PathCoordWeights.at(NeighborI).at(NeighborJ).first=alpha; //устанавливаем путевые координаты
+                    PathCoordWeights.at(NeighborI).at(NeighborJ).second=PathCoordWeights.at(CellFromQueue.second.first).at(CellFromQueue.second.second).second + MazeWeighted.Weights.at(NeighborI).at(NeighborJ); //Вес пути в соседней ячейке равен весу пути в текущей ячейке+вес исходный в соседней ячейке
+                    PriorQueue.emplace(std::make_pair(PathCoordWeights.at(NeighborI).at(NeighborJ).second+HeuristicAStar(NeighborI, NeighborJ, finishi, finishj), std::make_pair(NeighborI, NeighborJ))); //Помещаем в очередь (вес_он_же_приоритет, (i, j))
+                }
+                else //Если сосед уже был посещен
+                {
+                    int NewPathWeight=PathCoordWeights.at(CellFromQueue.second.first).at(CellFromQueue.second.second).second + MazeWeighted.Weights.at(NeighborI).at(NeighborJ);
+                    if(NewPathWeight<PathCoordWeights.at(NeighborI).at(NeighborJ).second) //Если вес пути оказался меньше, чем уже найденный
+                    {
+                        //Делаем то же самое
+                        PathCoordWeights.at(NeighborI).at(NeighborJ).first=alpha; //устанавливаем путевые координаты
+                        PathCoordWeights.at(NeighborI).at(NeighborJ).second=NewPathWeight; //Вес пути в соседней ячейке равен весу пути в текущей ячейке+вес исходный в соседней ячейке
+                        PriorQueue.emplace(std::make_pair(PathCoordWeights.at(NeighborI).at(NeighborJ).second+HeuristicAStar(NeighborI, NeighborJ, finishi, finishj), std::make_pair(NeighborI, NeighborJ))); //Помещаем в очередь (вес_он_же_приоритет, (i, j))
+                    }
+                }
+            }
+        }
+    }
+
+    if(PrHandler.Mode==1)
+    {
+        //Вывод изначальных весов ячеек.
+    //    MazeWeighted.WeightsToValues();
+        std::cout<<"Weights:"<<std::endl;
+        MazeWeighted.ShowDecorate((char*)"cout",1, 2, true, MazeWeighted.Weights);
+        
+        //Наглядное представление путевых весов
+       /* for(int i=0; i<MazeWeighted.n; i++) 
+        {
+            for(int j=0; j<MazeWeighted.m; j++)
+            {
+                MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).second%10+48);
+            //    if(PathCoordWeights.at(i).at(j).first>=0 &&PathCoordWeights.at(i).at(j).first<=9) MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first+48);
+            //    else MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first);
+            }
+        }*/
+        std::cout<<"PathWeights % 1000:"<<std::endl;
+        MazeWeighted.ShowDecorate((char*)"cout", 1, 2, true, PathCoordWeights, 2);
+    
+        //Наглядное представление путевых координат
+        for(int i=0; i<MazeWeighted.n; i++) 
+        {
+            for(int j=0; j<MazeWeighted.m; j++)
+            {
+            //    if(PathCoordWeights.at(i).at(j).first>=0 &&PathCoordWeights.at(i).at(j).first<=9) MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first+48);
+            //    else MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first);
+                switch (PathCoordWeights.at(i).at(j).first)
+                {
+                case 0:
+                    MazeWeighted.SetCellValue(i, j, '>');
+                    break;
+                case 1:
+                    MazeWeighted.SetCellValue(i, j, '^');
+                    break;
+                case 2:
+                    MazeWeighted.SetCellValue(i, j, '<');
+                    break;
+                case 3:
+                    MazeWeighted.SetCellValue(i, j, 'v');
+                    break;
+                case 4:
+                    MazeWeighted.SetCellValue(i, j, 's');
+                    break;
+                default:
+                    MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first);
+                    break;
+                }
+            }
+        }
+        std::cout<<"PathCoordinates:"<<std::endl;
+        MazeWeighted.ShowDecorate((char*)"cout", 1, 2, true);
+    }
+
+    //Проверяем, достигли ли мы финишной ячейки
+    if(!IsFinishReached)
+    {
+        std::cout<<"The path from ("<<starti<<", "<<startj<< ") to ("<<finishi<<", "<<finishj<< ") does not exist!"<<std::endl;
+        return;
+    }
+    if(PrHandler.Mode==1)
+    {
+        std::cout<<"The finish cell is reached!"<<std::endl;
+    }
+    DijkstraReconstructWay(MazeWeighted, PathCoordWeights, finishi, finishj, starti, startj, Path);
 }
 
 #endif /* MAZESEARCHALG_H */
