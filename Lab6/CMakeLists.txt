@@ -4,6 +4,8 @@ project(Lab6 VERSION 0.1.0)
 #include(CTest)
 #enable_testing()
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+
 #Разработка класса лабиринта
 add_executable(maze_debug_main maze_debug_main.cpp)
 add_executable(mazeWeighted_debug_main mazeWeighted_debug_main.cpp)

@@ -26,9 +26,18 @@ private:
     int NumberOfRuns=1; //число прогонов для текущих значений N M
 
 public:
-    template<typename... CallBackParamsTail> //CallBackGenerate m WeightMax
-    StatisticsMazeSearch(int NNStart, int NNEnd, int NNStep, double NMRatio, int NNumberOfRuns, std::default_random_engine& generator, presenthandler& PresentHandler, std::string filename, void (*CallBackSearch)(mazeWeighted&, int starti, int startj, int finishi, int finishj, std::vector<std::pair<int,int>>& Path, presenthandler& PrHandler)): NStart(NNStart), NEnd(NNEnd), NStep(NNStep), MRatio(NMRatio), NumberOfRuns(NNumberOfRuns)
+    StatisticsMazeSearch()=default;
+
+ //   template<typename... CallBackParamsTail> //CallBackGenerate m WeightMax
+    void StatisticsMazeSearchFunc1()
     {
+
+    }
+
+ //   template<typename... CallBackParamsTail> //CallBackGenerate m WeightMax    
+    void StatisticsMazeSearchFunc(int NNStart, int NNEnd, int NNStep, double NMRatio, int NNumberOfRuns, std::default_random_engine& generator, presenthandler& PresentHandler, std::string filename, void (*CallBackSearch)(mazeWeighted&, int starti, int startj, int finishi, int finishj, std::vector<std::pair<int,int>>& Path, presenthandler& PrHandler))
+    {
+        NStart=NNStart; NEnd=NNEnd; NStep=NNStep; MRatio=NMRatio; NumberOfRuns=NNumberOfRuns;
         printLabel(filename);
         for(CurrentN=NStart; CurrentN<=NEnd; CurrentN+=NStep) //Цикл табуляции по высоте лабиринта N
         {
