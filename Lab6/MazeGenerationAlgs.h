@@ -146,7 +146,7 @@ void Wilson(maze& Maze, std::default_random_engine& generator, presenthandler& P
         //Случайным образом выбираем ячейку, которой ещё нет в UST
         std::uniform_int_distribution<int> DistrIter(0, Maze.n*Maze.m-1-USTCount); //Maze.n*Maze.m-1 номер последей ячейки во всем лабиринте при счете с нуля.
         int randIter=DistrIter(generator); //выбираем случайный номер ячейки.
-        int k=0;
+        int k=0; //счетчик ячеек, которых пока нет в UST
         int randI=0, randJ=0; //координаты искомой ячейки
         bool IsReached=false;
         for(int i=0; (i<Maze.n)&& (!IsReached); i++)
