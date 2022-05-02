@@ -1,0 +1,6 @@
+#filename=LeeOut.txt; MRatio=1; NumberOfRuns=500
+4	0.00001
+29	0.00028
+54	0.00127
+79	0.00341
+104	0.00684

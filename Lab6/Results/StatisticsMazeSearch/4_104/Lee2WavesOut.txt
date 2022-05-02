@@ -1,0 +1,6 @@
+#filename=Lee2WavesOut.txt; MRatio=1; NumberOfRuns=500
+4	0.00001
+29	0.00018
+54	0.00068
+79	0.00169
+104	0.00323

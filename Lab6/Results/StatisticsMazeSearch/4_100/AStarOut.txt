@@ -1,0 +1,5 @@
+#filename=AStarOut.txt; MRatio=1; NumberOfRuns=500
+4	0.00001
+29	0.00045
+54	0.00158
+79	0.00341
