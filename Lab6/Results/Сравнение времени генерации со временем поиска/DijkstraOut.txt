@@ -1,0 +1,6 @@
+#filename=DijkstraOut.txt; MRatio=1; NumberOfRuns=500
+4	0.00001
+129	0.01110
+254	0.04190
+379	0.09722
+504	0.17387

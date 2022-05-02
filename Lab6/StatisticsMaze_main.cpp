@@ -20,9 +20,9 @@ int main(int, char**) {
 
     int NStart=4, NEnd=50, NStep=5, NumberOfRun=100;
     double MRatio=1;
-    StatisticsMaze(NStart, NEnd, NStep, MRatio, NumberOfRun, generator1, PrHandler, PlotHandler.addandreturn("WilsonOut.txt"), Wilson); //200x200 около 9 секунд генерируются
-    StatisticsMaze(NStart, NEnd, NStep, MRatio, NumberOfRun, generator1, PrHandler, PlotHandler.addandreturn("WilsonSerialOut.txt"), WilsonSerial);
-    StatisticsMaze(NStart, NEnd, NStep, MRatio, NumberOfRun, generator1, PrHandler, PlotHandler.addandreturn("AldousBroderOut.txt"), AldousBroder);
+ //   StatisticsMaze(NStart, NEnd, NStep, MRatio, NumberOfRun, generator1, PrHandler, PlotHandler.addandreturn("WilsonOut.txt"), Wilson); //200x200 около 9 секунд генерируются
+ //   StatisticsMaze(NStart, NEnd, NStep, MRatio, NumberOfRun, generator1, PrHandler, PlotHandler.addandreturn("WilsonSerialOut.txt"), WilsonSerial);
+//    StatisticsMaze(NStart, NEnd, NStep, MRatio, NumberOfRun, generator1, PrHandler, PlotHandler.addandreturn("AldousBroderOut.txt"), AldousBroder);
     int alpha=0; //угол, куда смотрит вырез стены
     StatisticsMaze(NStart, NEnd, NStep, MRatio, NumberOfRun, generator1, PrHandler, PlotHandler.addandreturn("BinaryTreeOut.txt"), BinaryTree, alpha);
     

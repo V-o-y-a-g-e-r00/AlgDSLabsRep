@@ -14,8 +14,8 @@ set datafile separator '\t'
 
 #Этот способ рабочий. Потом нужно преобразовать к .PNG с помощью команды. and then use imagemagick to convert the vector format to a .png:
 #convert -verbose -density 300 -trim file.pdf -quality 100 -flatten -sharpen 0x1.0 file.png
-#set terminal pdfcairo size 6, 5 #этот неплохо работает. Размер в дюймах
-#set output 'file.pdf'
+set terminal pdfcairo size 6, 5 #этот неплохо работает. Размер в дюймах
+set output 'file.pdf'
 
 #для графиков данных
 set linestyle 1 lc rgb "#0000FF" lw 2.5
@@ -44,7 +44,7 @@ set xlabel "N - maze height, cells"
 set ylabel "Time - average executing time, seconds"
 
 set yrange [0:*]
-#set xrange[-pi:pi]
+set xrange[0:504]
 
 
 #plot sin(x) title "sinux"  lc rgb "red", cos(x)  title "cosinus" lc rgb "green"

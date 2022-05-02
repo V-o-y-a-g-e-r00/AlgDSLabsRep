@@ -12,19 +12,20 @@ set datafile separator '\t'
 #set terminal svg enhanced size 3,2
 #set output 'file.svg'
 
-#Этот способ рабочий. Потом нужно преобразовать к .PNG с помощью команды. and then use imagemagick to convert the vector format to a .png: convert -verbose -density 300 -trim file.pdf -quality 100 -flatten -sharpen 0x1.0 file.png
+#Этот способ рабочий. Потом нужно преобразовать к .PNG с помощью команды. and then use imagemagick to convert the vector format to a .png:
+#convert -verbose -density 300 -trim file.pdf -quality 100 -flatten -sharpen 0x1.0 file.png
 set terminal pdfcairo size 6, 5 #этот неплохо работает. Размер в дюймах
 set output 'file.pdf'
 
 #для графиков данных
-set linestyle 1 lc rgb "#0000FF" lw 2.5
-set linestyle 2 lc rgb "#00FF00" lw 2.5
-set linestyle 3 lc rgb "#FF0000" lw 2.5
-set linestyle 4 lc rgb "#00FFFF" lw 2.5
-set linestyle 5 lc rgb "#FF00FF" lw 2.5
-set linestyle 6 lc rgb "#FFFF00" lw 2.5
-set linestyle 7 lc rgb "#00000F" lw 2.5
-set linestyle 8 lc rgb "#000F00" lw 2.5
+set linestyle 1 lc rgb "#f19a9b" lw 2.5
+set linestyle 2 lc rgb "#d54d88" lw 2.5
+set linestyle 3 lc rgb "#74c476" lw 2.5
+set linestyle 4 lc rgb "#238b45" lw 2.5
+set linestyle 5 lc rgb "#FF0000" lw 2.5
+set linestyle 6 lc rgb "#2ce2ff" lw 2.5
+set linestyle 7 lc rgb "#0f81c0" lw 2.5
+set linestyle 8 lc rgb "#06104f" lw 2.5
 set linestyle 9 lc rgb "#0F0000" lw 2.5
 set linestyle 10 lc rgb "#0000F0" lw 2.5
 #для линий треда
@@ -42,8 +43,8 @@ set title "Lab6" font "Helvetica Bold, 14"
 set xlabel "N - maze height, cells"
 set ylabel "Time - average executing time, seconds"
 
-set yrange [0:*]
-#set xrange[-pi:pi]
+set yrange [0:1]
+set xrange[0:504]
 
 
 #plot sin(x) title "sinux"  lc rgb "red", cos(x)  title "cosinus" lc rgb "green"
@@ -64,8 +65,8 @@ set yrange [0:*]
 
 #listsize=5
 
-array filelist1[5]
-filelist="DijkstraOut.txt AStarOut.txt LeeOut.txt Lee2WavesOut.txt "
+array filelist1[8]
+filelist="DijkstraOut.txt AStarOut.txt LeeOut.txt Lee2WavesOut.txt WilsonOut.txt WilsonSerialOut.txt AldousBroderOut.txt BinaryTreeOut.txt"
 i=1
 do for [file in filelist] {
 #filelist(t)="FloydWarshellOut.txt"
