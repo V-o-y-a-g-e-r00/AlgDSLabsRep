@@ -10,7 +10,7 @@ int main(int, char**) {
     //int seed=2;
     std::default_random_engine generator1(seed);
 
-    maze Maze(100,100);
+    maze Maze(3,3);
  /*   try
     {
          MazeFromFile(Maze, (char*)"Maze.txt");
@@ -21,10 +21,10 @@ int main(int, char**) {
     }
 */
     presenthandler PrHandler;
-    PrHandler.Mode=1;
+    PrHandler.Mode=2;
     AldousBroder(Maze, generator1, PrHandler);
- //   Maze.ShowDecorate((char*)"cout",0);
-    Maze.ShowDecorate((char*)"MazeOut.txt");
+    Maze.ShowDecorate((char*)"cout", 1, 2, true);
+//    Maze.ShowDecorate((char*)"MazeOut.txt");
  //   Wilson(Maze, generator1, PrHandler);
 
 }

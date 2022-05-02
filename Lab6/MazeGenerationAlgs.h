@@ -18,7 +18,7 @@
 void AldousBroder(maze& Maze, std::default_random_engine& generator, presenthandler& PrHandler)
 {
     std::uniform_int_distribution<int> DistrI(0, Maze.n-1);
-    std::uniform_int_distribution<int> DistrJ(0,Maze.m-1);
+    std::uniform_int_distribution<int> DistrJ(0, Maze.m-1);
     std::uniform_int_distribution<int> Distrdidj(0,3);
     int randI=DistrI(generator);
     int randJ=DistrJ(generator);
@@ -40,6 +40,10 @@ void AldousBroder(maze& Maze, std::default_random_engine& generator, presenthand
             Maze.ShowDecorate((char*)"MazeOut.txt", 1);
             t1=t2;
         }
+        }
+        if(PrHandler.Mode==2)
+        {
+            Maze.ShowDecorate((char*)"cout", 1, 2, true);
         }
         randcase=Distrdidj(generator);
         switch (randcase)
