@@ -85,7 +85,7 @@ void Lee(maze& Maze, int starti, int startj, int finishi, int finishj, std::vect
                     }
                 }
             }
-            Maze.ShowDecorate();
+            Maze.ShowDecorate((char*)"cout", 1, 2, true);
             std::cin.ignore();
         }
     }
@@ -442,6 +442,45 @@ void Dijkstra(mazeWeighted& MazeWeighted, int starti, int startj, int finishi, i
                     PathCoordWeights.at(NeighborI).at(NeighborJ).first=alpha; //устанавливаем путевые координаты
                     PathCoordWeights.at(NeighborI).at(NeighborJ).second=PathCoordWeights.at(CellFromQueue.second.first).at(CellFromQueue.second.second).second + MazeWeighted.Weights.at(NeighborI).at(NeighborJ); //Вес пути в соседней ячейке равен весу пути в текущей ячейке+вес исходный в соседней ячейке
                     PriorQueue.emplace(std::make_pair(PathCoordWeights.at(NeighborI).at(NeighborJ).second, std::make_pair(NeighborI, NeighborJ))); //Помещаем в очередь (вес_он_же_приоритет, (i, j))
+                
+                    if(PrHandler.Mode==2)
+                    {
+                        std::cout<<"PathWeights % 1000:"<<std::endl;
+                        MazeWeighted.ShowDecorate((char*)"cout", 1, 2, true, PathCoordWeights, 2);
+                        //Наглядное представление путевых координат
+                        for(int i=0; i<MazeWeighted.n; i++) 
+                        {
+                            for(int j=0; j<MazeWeighted.m; j++)
+                            {
+                            //    if(PathCoordWeights.at(i).at(j).first>=0 &&PathCoordWeights.at(i).at(j).first<=9) MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first+48);
+                            //    else MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first);
+                                switch (PathCoordWeights.at(i).at(j).first)
+                                {
+                                case 0:
+                                    MazeWeighted.SetCellValue(i, j, '>');
+                                    break;
+                                case 1:
+                                    MazeWeighted.SetCellValue(i, j, '^');
+                                    break;
+                                case 2:
+                                    MazeWeighted.SetCellValue(i, j, '<');
+                                    break;
+                                case 3:
+                                    MazeWeighted.SetCellValue(i, j, 'v');
+                                    break;
+                                case 4:
+                                    MazeWeighted.SetCellValue(i, j, 's');
+                                    break;
+                                default:
+                                    MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first);
+                                    break;
+                                }
+                            }
+                        }
+                        std::cout<<"PathCoordinates:"<<std::endl;
+                        MazeWeighted.ShowDecorate((char*)"cout", 1, 2, true);
+                        std::cin.ignore();
+                    }
                 }
                 else //Если сосед уже был посещен
                 {
@@ -452,6 +491,44 @@ void Dijkstra(mazeWeighted& MazeWeighted, int starti, int startj, int finishi, i
                         PathCoordWeights.at(NeighborI).at(NeighborJ).first=alpha; //устанавливаем путевые координаты
                         PathCoordWeights.at(NeighborI).at(NeighborJ).second=PathCoordWeights.at(CellFromQueue.second.first).at(CellFromQueue.second.second).second + MazeWeighted.Weights.at(NeighborI).at(NeighborJ); //Вес пути в соседней ячейке равен весу пути в текущей ячейке+вес исходный в соседней ячейке
                         PriorQueue.emplace(std::make_pair(PathCoordWeights.at(NeighborI).at(NeighborJ).second, std::make_pair(NeighborI, NeighborJ))); //Помещаем в очередь (вес_он_же_приоритет, (i, j))
+                        if(PrHandler.Mode==2)
+                        {
+                            std::cout<<"PathWeights % 1000:"<<std::endl;
+                            MazeWeighted.ShowDecorate((char*)"cout", 1, 2, true, PathCoordWeights, 2);
+                            //Наглядное представление путевых координат
+                            for(int i=0; i<MazeWeighted.n; i++) 
+                            {
+                                for(int j=0; j<MazeWeighted.m; j++)
+                                {
+                                //    if(PathCoordWeights.at(i).at(j).first>=0 &&PathCoordWeights.at(i).at(j).first<=9) MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first+48);
+                                //    else MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first);
+                                    switch (PathCoordWeights.at(i).at(j).first)
+                                    {
+                                    case 0:
+                                        MazeWeighted.SetCellValue(i, j, '>');
+                                        break;
+                                    case 1:
+                                        MazeWeighted.SetCellValue(i, j, '^');
+                                        break;
+                                    case 2:
+                                        MazeWeighted.SetCellValue(i, j, '<');
+                                        break;
+                                    case 3:
+                                        MazeWeighted.SetCellValue(i, j, 'v');
+                                        break;
+                                    case 4:
+                                        MazeWeighted.SetCellValue(i, j, 's');
+                                        break;
+                                    default:
+                                        MazeWeighted.SetCellValue(i, j, PathCoordWeights.at(i).at(j).first);
+                                        break;
+                                    }
+                                }
+                            }
+                            std::cout<<"PathCoordinates:"<<std::endl;
+                            MazeWeighted.ShowDecorate((char*)"cout", 1, 2, true);
+                            std::cin.ignore();
+                        }
                     }
                 }
             }

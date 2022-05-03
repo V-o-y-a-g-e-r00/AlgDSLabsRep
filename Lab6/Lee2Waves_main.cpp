@@ -16,10 +16,10 @@ int main(int, char**) {
     presenthandler PrHandler;
     PrHandler.Mode=1;
 
-    maze Maze(5,6);
+    maze Maze(4,5);
 //   MazeFromFile(Maze, (char*)"Maze.txt");
-    WallsReduce(Maze, 0.5, generator1);
- //  WilsonReduced(Maze, generator1, PrHandler, 0.3);
+//    WallsReduce(Maze, 0.5, generator1);
+   WilsonReduced(Maze, generator1, PrHandler, 0.3);
    std::vector<std::pair<int,int>> Way;
     std::vector<int> Way1(10, 33);
    Lee2Waves(Maze, 0, 1, 2, 4, Way, PrHandler);

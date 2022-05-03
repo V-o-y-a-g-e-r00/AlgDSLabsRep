@@ -463,16 +463,19 @@ void BinaryTree(maze& Maze, std::default_random_engine& generator, presenthandle
         for(int j=Maze.m-1-1; j>=0; j--) //крайние строку и столбец отдельно, чтобы было читабельно
         {
             Maze.SetCellWalls(0, j, alpha, false);
+            if(PrHandler.Mode==2) Maze.ShowDecorate();
         }
         for(int i=1; i<Maze.n; i++)
         {
             Maze.SetCellWalls(i, Maze.m-1, alpha+1, false);
+            if(PrHandler.Mode==2) Maze.ShowDecorate();
         }
         for(int i=1; i<Maze.n; i++)
         {
             for(int j=Maze.m-1-1; j>=0; j--)
             {
                 Maze.SetCellWalls(i, j, alpha+distr(generator), false);
+                if(PrHandler.Mode==2) Maze.ShowDecorate();
             }
         }
         break;
@@ -607,7 +610,7 @@ inline void WeightCircule(mazeWeighted& MazeWeighted, int Oi, int Oj, int Radius
 }
 //Генерация весов ячеек для лабиринта с весами
 //Генерация меня сильно озадачила. Вначале я хотел сделать, чтобы генерация зависела от размеров лабиринта, но сейчас мне это не кажется хорошей идеей.
-void RandomCircules(mazeWeighted& MazeWeighted, std::default_random_engine& generator, int minWeight, int maxWeight, double probability, int meanRadius, double stddevRadiusRatio) //Генерируем круги. probability вероятность, что из данной ячейки будет построен круг с текущим весом. RadiusRatio - отношение радиуса генерируемых кругов к максимальному измерению лабиринта. Т.е. при RadiusRatio=1 матожидание радиуса будет равно половине максимального измерения лабиринта. при 0-нулю. stddevRatio чем меньше, тем меньше отклонение от матожидания
+void RandomCircules(mazeWeighted& MazeWeighted, std::default_random_engine& generator, int minWeight, int maxWeight, double probability, int meanRadius, double stddevRadiusRatio) //Генерируем круги. probability вероятность, что из данной ячейки будет построен круг с текущим весом. meanRadius - матожидание радиуса. stddevRatio чем меньше, тем меньше отклонение от матожидания
 {
 //    std::uniform_int_distribution<int> distr();
     std::normal_distribution<double> distrRadius(meanRadius, stddevRadiusRatio*meanRadius); //для генерации радиусов кругов

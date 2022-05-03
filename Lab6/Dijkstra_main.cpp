@@ -13,9 +13,9 @@ int main(int, char**) {
     int seed=2;
     std::default_random_engine generator1(seed);
     presenthandler PrHandler;
-    PrHandler.Mode=1;
+    PrHandler.Mode=2;
   
-    mazeWeighted MazeWeighted(10,10, 1);
+    mazeWeighted MazeWeighted(5,5, 1);
     //Генерация лабиринта
     WilsonReduced(MazeWeighted, generator1, PrHandler, 0.3);
     RandomCircules(MazeWeighted, generator1, 2, 9, 0.05, 1, 0.5); //1, 3, 0.03, 2, 0.5

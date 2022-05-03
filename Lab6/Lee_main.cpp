@@ -16,13 +16,13 @@ int main(int, char**) {
     presenthandler PrHandler;
     PrHandler.Mode=1;
 
-    maze Maze(6,5);
+    maze Maze(3,3);
  
-    WallsReduce(Maze, 0.5, generator1);
-//   WilsonReduced(Maze, generator1, PrHandler, 0.3);
+//    WallsReduce(Maze, 0.5, generator1);
+   WilsonReduced(Maze, generator1, PrHandler, 0.3);
    std::vector<std::pair<int,int>> Way;
     std::vector<int> Way1(10, 33);
-   Lee(Maze, 2, 2, 3, 2, Way, PrHandler);
+   Lee(Maze, 0, 1, 1, 1, Way, PrHandler);
    PrintVector(Way, "Way");
    //   Maze.ShowDecorate((char*)"cout",0);
  //   Maze.ShowDecorate((char*)"MazeOut.txt");
