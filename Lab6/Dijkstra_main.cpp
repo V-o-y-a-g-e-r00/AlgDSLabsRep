@@ -13,7 +13,7 @@ int main(int, char**) {
     int seed=2;
     std::default_random_engine generator1(seed);
     presenthandler PrHandler;
-    PrHandler.Mode=2;
+    PrHandler.Mode=1;
   
     mazeWeighted MazeWeighted(5,5, 1);
     //Генерация лабиринта
