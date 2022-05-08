@@ -114,4 +114,71 @@ void PrintFile(char* filename)
     }
 }
 
+//Функция ввода целых чисел из потока, основанная на cin. Целые числа могут быть окружены whitespace -ами, но строка из череды чисел будет отклонена.
+int ValidInput(char * name=(char*)"")
+{
+    std::string str;
+    bool IsGood=false;
+    while(!IsGood)
+    {
+        //Вводим используя стандартный поток ввода. (мерзкая штука)
+        std::cin.clear(); //Очищаем флаги
+        std::cin.ignore(std::cin.rdbuf()->in_avail()-1); //Пропускаем все символы в буфере. in_avail() возвращает число символов+1 . В EOF мы здесь упереться не можем, между прочим (только если Ctrl+D нажмем).
+
+        std::cout<<"Введите "<<name<<":";
+        std::cin>>str;
+    //    std::cout<<"str="<<str<<std::endl;
+
+        IsGood=true;
+        //Проверяем на недопустимые симоволы
+        if(str.find_first_not_of("0123456789")!=std::string::npos)
+        {
+            IsGood=false;
+        }
+        //Проверяем на лишние символы в потоке
+            
+    //    std::cout<<"before isspace"<<std::endl;
+        while(std::isspace(std::cin.peek()) && std::cin.rdbuf()->in_avail()-1!=0) std::cin.ignore(1); //отбрасываем whitespace -ы
+    //    std::cout<<"after isspace"<<std::endl;
+        if(std::cin.rdbuf()->in_avail()-1!=0)
+        {
+            IsGood=false;
+        }
+        if(!IsGood) std::cout<<"Ввод неверный! ";
+    }
+    return std::stoi(str);
+}
+class Config
+{
+public:
+    class Alg
+    {
+        int starti, startj, finishi, finishj;
+    };
+//Ввод-вывод    
+    int seed;
+    std::string filenameFileIn;
+    std::string filenameFileOut;
+    int ModeFile;
+    int ScaleFile;
+    bool IsWithValuesFile;
+//В терминал
+    int filenameOutTerm;
+    int ScaleTerm;
+    bool IsWithValuesTerm;
+//Генерация
+    int PrHandlerMode;
+    int n;
+    int m;
+    int alpha;
+//Поиск
+    Alg Lee, Lee2Waves, Dijkstra, AStar;
+
+    Config()=default;
+    void Read(char* filename)
+    {
+
+    }
+};
+
 #endif /* FUNCS_H */

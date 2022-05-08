@@ -10,34 +10,70 @@
 
 int main(int, char**) {
 
-std::cin.sync_with_stdio(false); //Синхронизируем с вводом stdio. Без этого не работает in_avail()
+std::cin.sync_with_stdio(false); //Синхронизируем с вводом stdio. Без этого не работает in_avail() Важно вызвать эту функцию до первого чтения или ввода. Иначе последсвия будут непредсказуемыми.
 
-std::string str;
-bool IsGood=false;
-while(!IsGood)
+PrintFile((char *)"Welcome.txt");
+PrintFile((char *)"Menu.txt");
+
+
+
+bool IsQuited=false;
+int Choice=0;
+while(!IsQuited)
 {
-    //Вводим используя стандартный поток ввода. (мерзкая штука)
-    std::cin.clear(); //Очищаем флаги
-    std::cin.ignore(std::cin.rdbuf()->in_avail()-1); //Пропускаем все символы в буфере
-
-    std::cout<<"Ввод:"<<std::endl;
-    std::cin>>str;
-    std::cout<<"str="<<str<<std::endl;
-
-    IsGood=true;
-    //Проверяем на недопустимые симоволы
-    if(str.find_first_not_of("0123456789")!=std::string::npos)
+    int Choice=ValidInput((char*)"пункт меню");
+    std::cout<<"Выбран пункт меню="<<Choice<<std::endl;
+    switch (Choice)
     {
-        IsGood=false;
-    }
-    //Проверяем на лишние символы в потоке
+    case 1:
         
-//    std::cout<<"before isspace"<<std::endl;
-    while(std::isspace(std::cin.peek()) && std::cin.rdbuf()->in_avail()-1!=0) std::cin.ignore(1); //отбрасываем whitespace -ы
-//    std::cout<<"after isspace"<<std::endl;
-    if(std::cin.rdbuf()->in_avail()-1!=0)
-    {
-        IsGood=false;
+        break;
+    case 2:
+        
+        break;
+    case 3:
+        
+        break;
+    case 4:
+        
+        break;
+
+    case 5:
+        
+        break;
+    case 6:
+        
+        break;
+    case 7:
+        
+        break;
+    case 8:
+        
+        break;
+    case 9:
+        
+        break;
+    case 10:
+        
+        break;
+    case 11:
+        
+        break;
+    case 12:
+        
+        break;
+    case 13:
+        IsQuited=true;
+        break;
+    case 14:
+        PrintFile((char*)"Help.txt");
+        break;
+    case 15:
+        PrintFile((char*)"Menu.txt");
+        break;
+    default:
+        std::cout<<"Нет такого пункта меню"<<std::endl;
+        break;
     }
 }
 

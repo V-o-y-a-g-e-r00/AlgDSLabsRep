@@ -1,15 +1,15 @@
 #Текущая конфигурация программы
-#seed=
-time
+#seed=  -1 время
+-1
 #===Ввод-вывод=====
 #1	Ввод лабиринта из файла
 #filename=
 MazeIn.txt
 #2	Вывод лабиринта в файл
-#filename=;Mode=;Scale=;InWithValues=
+#filename=;Mode=;Scale=;IsWithValues=
 MazeOut.txt;0;1;0
 #3	Вывод лабиринта в терминал
-#Mode=;Scale=;InWithValues=
+#Mode=;Scale=;IsWithValues=
 0;1;0
 #===Генерация===
 #PrHandler.Mode=
