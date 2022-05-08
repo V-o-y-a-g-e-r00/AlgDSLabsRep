@@ -25,7 +25,10 @@ add_executable(AStar AStar_main.cpp)
 #Сбор статистики с генерации лабиринтов
 add_executable(StatisticsMazeSearch_main StatisticsMazeSearch_main.cpp)
 
-install(PROGRAMS PlotScript.bash DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+#cli программа с меню
+add_executable(cli cli_main.cpp)
+
+install(PROGRAMS PlotScript.bash Welcome.txt Menu.txt Help.txt Config.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

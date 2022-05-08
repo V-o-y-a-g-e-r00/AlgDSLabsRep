@@ -96,4 +96,22 @@ void Print(std::pair<int, std::pair<int, int>> Item)
 {
     std::cout<<"("<<Item.first<<", ("<<Item.second.first<<", "<<Item.second.second<<"))";
 }
+
+//
+void PrintFile(char* filename)
+{
+    std::ifstream fin(filename);
+    if(!fin.is_open()) //проверка на успешность открытия файла
+    {
+        std::stringstream ss;
+        ss << "Can not open file:"<<filename<<std::endl;
+        throw(ss.str());
+    }
+    std::string str;
+    while(std::getline(fin, str))
+    {
+        std::cout<<str<<std::endl;
+    }
+}
+
 #endif /* FUNCS_H */
