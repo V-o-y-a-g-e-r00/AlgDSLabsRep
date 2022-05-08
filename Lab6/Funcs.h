@@ -175,8 +175,63 @@ public:
     Alg Lee, Lee2Waves, Dijkstra, AStar;
 
     Config()=default;
+    bool getstr(std::ifstream& fin, std::string& str) //Пытается прочесть строку, пропустив комментарии и пустые строки. Если это невозомжно, то возвращает false, при этом возвращает в строке что удалось прочесть.
+    {
+        bool IsSatisf=false; //fasle строку нужно пропустить. Т.е. не пускать её в данные.
+        do{
+            
+            if(std::getline(fin, str)) //чтение прошло успешно //getline возвращает указатель потока. Указатель потока при перегрузке в bool в "хорошем" состоянии перегружается в true в "плохом" в false. Т.е. если чтение было удачным, то вернется true
+            {
+                if(str=="")
+                {
+                    std::cout<<"getstr: Unexpected empty string in file. Do you sure about your array size in file? The data will be read anyway"<<std::endl;
+                    IsSatisf=false;
+                }
+                else if(str.at(0)=='#')
+                {
+                    IsSatisf=false;
+                }
+                else IsSatisf=true;
+            }
+    //    std::cout<<"fin.good()="<<fin.good()<<"!IsSatisf="<<!IsSatisf<<std::endl;
+        }while(fin.good() && !IsSatisf);
+        if(!fin.good()&&!IsSatisf)
+        {
+            if(fin.eof())
+            {
+                std::cout<<"getstr: Unexpected end of file. Do you sure about your array size in file? The data will be read anyway"<<std::endl;
+            }
+            else
+            {
+                std::cout<<"getstr: Unexpected error"<<std::endl;
+            }
+            return false; //выходим из итеративного цикла
+        }
+        std::cout<<"str="<<str<<std::endl;
+        return true;
+    }
+    std::string divstr(std::string& str)
+    {
+
+    }
     void Read(char* filename)
     {
+        //Открываем файл
+        std::ifstream fin(filename);
+        if(!fin.is_open()) //проверка на успешность открытия файла
+        {
+            std::stringstream ss;
+            ss << "Can not open file:"<<filename<<std::endl;
+            throw(ss.str());
+        }
+        //Читаем построчно с учетом комментариев
+        std::string str, str1, str2;
+        std::stringstream ss;
+        
+        if(!getstr(fin, str)) return;
+        ss<<str;
+        std::getline(ss, str1, ';');
+        std::cout<<"str1="<<str1<<std::endl;
 
     }
 };
