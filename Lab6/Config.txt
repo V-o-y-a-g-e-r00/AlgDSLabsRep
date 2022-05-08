@@ -1,41 +1,48 @@
 #Текущая конфигурация программы
-#seed=  -1 время
--1
+seed=-1
 #===Ввод-вывод=====
 #1	Ввод лабиринта из файла
-#filename=
-MazeIn.txt
+filenameFin=MazeIn.txt
 #2	Вывод лабиринта в файл
-#filename=;Mode=;Scale=;IsWithValues=
-MazeOut.txt;0;1;0
+filenameFout=MazeOut.txt
+ModeF=0
+ScaleF=1
+IsWithValuesF=0
 #3	Вывод лабиринта в терминал
-#Mode=;Scale=;IsWithValues=
-0;1;0
+ModeT=0
+ScaleT=1
+IsWithValuesT=0
 #===Генерация===
-#PrHandler.Mode=
-1
+PrHandlerMode=1
 #4	Сброс/Создание нового лабиринта
-#n=;m=
-5;5
+n=5
+m=5
 #5	Уилсон
 #6	Уилсон (модификация с последовательным выбором ячеек)
 #7	Олдос-Бродер
 #8	Бинарное дерево
-#alpha=
-0
+alpha=0
 #===Поиск===
 #9	Ли
-#starti=;startj=;finishi=;finishj=;
-0;0;4;4;
+Leestarti=0
+Leestartj=0
+Leefinishi=4
+Leefinishj=4
 #10	Ли (модификация с двумя волнами)
-#starti=;startj=;finishi=;finishj=;
-0;0;4;4;
+Lee2starti=0
+Lee2startj=0
+Lee2finishi=4
+Lee2finishj=4
 #11	Дейкстра
-#starti=;startj=;finishi=;finishj=;
-0;0;4;4;
+Dijstarti=0
+Dijstartj=0
+Dijfinishi=4
+Dijfinishj=4
 #12	AStar
-#starti=;startj=;finishi=;finishj=;
-0;0;4;4;
+AStarstarti=0
+AStarstartj=0
+AStarfinishi=4
+AStarfinishj=4
 #===Выход===
 #13
 #===Справка===

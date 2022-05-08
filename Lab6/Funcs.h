@@ -73,19 +73,21 @@ void PrintMatrix(std::vector<std::vector<T>>& Matrix, const char* MatrixName)
 //Print будем перегружать для разных случаев
 void Print(std::pair<int,int> Pair);
 void Print(std::pair<int, std::pair<int, int>> Item);
+void Print(std::pair<std::string, int> Item);
+void Print(std::pair<std::string, std::string> Item);
 template<typename T>
 void PrintVector(std::vector<T>& Vector, const char* VectorName)
 {
     typename std::vector<T>::iterator iteri=Vector.begin();
-        std::cout<< VectorName<<"=";
+        std::cout<< VectorName<<"="<<std::endl;
         for(iteri=Vector.begin(); iteri!=Vector.end(); iteri++)
         {
-            std::cout<<std::setw(3);
+      //      std::cout<<std::setw(3);
         //    std::cout<< (*iteri)<<"\t";
         //    std::cout<< (*iteri);
             Print(*iteri);
         }
-        std::cout<<std::endl;
+    //    std::cout<<std::endl;
 //    std::cout<<"----------"<<std::endl;
 }
 void Print(std::pair<int,int> Pair)
@@ -95,6 +97,14 @@ void Print(std::pair<int,int> Pair)
 void Print(std::pair<int, std::pair<int, int>> Item)
 {
     std::cout<<"("<<Item.first<<", ("<<Item.second.first<<", "<<Item.second.second<<"))";
+}
+void Print(std::pair<std::string, int> Item)
+{
+    std::cout<<Item.first<<"="<<Item.second<<std::endl;
+}
+void Print(std::pair<std::string, std::string> Item)
+{
+    std::cout<<Item.first<<"="<<Item.second<<std::endl;
 }
 
 //
@@ -151,29 +161,8 @@ int ValidInput(char * name=(char*)"")
 class Config
 {
 public:
-    class Alg
-    {
-        int starti, startj, finishi, finishj;
-    };
-//Ввод-вывод    
-    int seed;
-    std::string filenameFileIn;
-    std::string filenameFileOut;
-    int ModeFile;
-    int ScaleFile;
-    bool IsWithValuesFile;
-//В терминал
-    int ModeTerm;
-    int filenameTermOut;
-    int ScaleTerm;
-    bool IsWithValuesTerm;
-//Генерация
-    int PrHandlerMode;
-    int n;
-    int m;
-    int alpha;
-//Поиск
-    Alg Lee, Lee2Waves, Dijkstra, AStar;
+    std::vector<std::pair<std::string, int>> intBase;
+    std::vector<std::pair<std::string, std::string>> strBase;
 
     Config()=default;
     bool getstr(std::ifstream& fin, std::string& str) //Пытается прочесть строку, пропустив комментарии и пустые строки. Если это невозомжно, то возвращает false, при этом возвращает в строке что удалось прочесть.
@@ -200,7 +189,7 @@ public:
         {
             if(fin.eof())
             {
-                std::cout<<"getstr: Unexpected end of file. Do you sure about your array size in file? The data will be read anyway"<<std::endl;
+            //    std::cout<<"getstr: Unexpected end of file. Do you sure about your array size in file? The data will be read anyway"<<std::endl; //Полезно, если мы заранее знаем число строк, но что-то пошло не так
             }
             else
             {
@@ -208,7 +197,7 @@ public:
             }
             return false; //выходим из итеративного цикла
         }
-        std::cout<<"str="<<str<<std::endl;
+    //    std::cout<<"str="<<str<<std::endl;
         return true;
     }
  /*   template<typename ...args>
@@ -237,70 +226,29 @@ public:
             throw(ss.str());
         }
         //Читаем построчно с учетом комментариев
-        std::string str, substr;
+        std::string str, Var, Val;
         std::stringstream ss, ss2;
         
-        if(!getstr(fin, str)) return;
-        ss.clear();
-        ss<<str;
-        std::getline(ss, substr, ';');
-        seed=std::stoi(substr);
-//        std::cout<<"substr="<<substr<<std::endl;
-
-        if(!getstr(fin, str)) return;
-        ss.clear();
-        ss<<str;
-        std::getline(ss, filenameFileIn, ';');
-        
-        //Вывод лабиринта в файл
-        if(!getstr(fin, str)) return;
-        ss.clear();
-        ss<<str;
-        std::getline(ss, filenameFileIn, ';');
-        std::getline(ss, substr, ';');
-        ModeFile=std::stoi(substr);
-        std::getline(ss, substr, ';');
-        ScaleFile=std::stoi(substr);
-        std::getline(ss, substr, ';');
-        IsWithValuesFile=std::stoi(substr);
-        //Вывод лабиринта в терминал
-        if(!getstr(fin, str)) return;
-        ss.clear();
-        ss<<str;
-        std::getline(ss, substr, ';');
-        ModeTerm=std::stoi(substr);
-        std::getline(ss, substr, ';');
-        ScaleTerm=std::stoi(substr);
-        std::getline(ss, substr, ';');
-        IsWithValuesTerm=std::stoi(substr);
-        //Генерация
+        while(getstr(fin, str))
+        {
+            ss.clear();
+            ss<<str;
+            std::getline(ss, Var, '=');
+            std::getline(ss, Val, '=');
+            if(Val.find_first_not_of("0123456789-.")!=std::string::npos) //Если нашли не числовой символ
+            {
+                strBase.push_back(std::make_pair(Var,Val));
+            }
+            else
+            {
+                intBase.push_back(std::make_pair(Var,std::stoi(Val)));
+            }
+        }
     }
     void Print()
     {
-        //Ввод-вывод
-        std::cout<<"seed="<<seed<<std::endl;
-        std::cout<<"filenameFileIn="<<filenameFileIn<<std::endl;
-        std::cout<<"filenameFileOut="<<filenameFileOut<<std::endl;
-        std::cout<<"ModeFile="<<ModeFile<<std::endl;
-        std::cout<<"ScaleFile="<<ScaleFile<<std::endl;
-        std::cout<<"IsWithValuesFile="<<IsWithValuesFile<<std::endl;
-        //В терминал
-        std::cout<<"ModeTerm="<<ModeTerm<<std::endl;
-        std::cout<<"filenameTermOut="<<filenameTermOut<<std::endl;
-        std::cout<<"ScaleTerm="<<ScaleTerm<<std::endl;
-        std::cout<<"IsWithValuesTerm="<<IsWithValuesTerm<<std::endl;
-
-        int ModeTerm;
-        int filenameTermOut;
-        int ScaleTerm;
-        bool IsWithValuesTerm;
-    //Генерация
-        int PrHandlerMode;
-        int n;
-        int m;
-        int alpha;
-    //Поиск
-        Alg Lee, Lee2Waves, Dijkstra, AStar;
+        PrintVector(intBase, (char*) "intBase");
+        PrintVector(strBase, (char*) "strBase");
     }
 };
 

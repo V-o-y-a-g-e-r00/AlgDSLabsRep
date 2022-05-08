@@ -12,6 +12,7 @@ int main(int, char**) {
 
 Config cg;
 cg.Read((char*)"Config.txt");
+cg.Print();
 
 return 0;
 }
