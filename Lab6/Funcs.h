@@ -163,7 +163,8 @@ public:
     int ScaleFile;
     bool IsWithValuesFile;
 //В терминал
-    int filenameOutTerm;
+    int ModeTerm;
+    int filenameTermOut;
     int ScaleTerm;
     bool IsWithValuesTerm;
 //Генерация
@@ -210,10 +211,21 @@ public:
         std::cout<<"str="<<str<<std::endl;
         return true;
     }
-    std::string divstr(std::string& str)
+ /*   template<typename ...args>
+    void divstr(std::string& str, args&... Args)
+    {
+        const std::size_t count = sizeof...(args);
+        for(auto& p: {Args...})
+        {
+            p=5;
+            std::cout << p << std::endl;
+        }
+    }
+*/
+/*    void getstrItem(std::ifstream fin)
     {
 
-    }
+    }*/
     void Read(char* filename)
     {
         //Открываем файл
@@ -225,14 +237,70 @@ public:
             throw(ss.str());
         }
         //Читаем построчно с учетом комментариев
-        std::string str, str1, str2;
-        std::stringstream ss;
+        std::string str, substr;
+        std::stringstream ss, ss2;
         
         if(!getstr(fin, str)) return;
+        ss.clear();
         ss<<str;
-        std::getline(ss, str1, ';');
-        std::cout<<"str1="<<str1<<std::endl;
+        std::getline(ss, substr, ';');
+        seed=std::stoi(substr);
+//        std::cout<<"substr="<<substr<<std::endl;
 
+        if(!getstr(fin, str)) return;
+        ss.clear();
+        ss<<str;
+        std::getline(ss, filenameFileIn, ';');
+        
+        //Вывод лабиринта в файл
+        if(!getstr(fin, str)) return;
+        ss.clear();
+        ss<<str;
+        std::getline(ss, filenameFileIn, ';');
+        std::getline(ss, substr, ';');
+        ModeFile=std::stoi(substr);
+        std::getline(ss, substr, ';');
+        ScaleFile=std::stoi(substr);
+        std::getline(ss, substr, ';');
+        IsWithValuesFile=std::stoi(substr);
+        //Вывод лабиринта в терминал
+        if(!getstr(fin, str)) return;
+        ss.clear();
+        ss<<str;
+        std::getline(ss, substr, ';');
+        ModeTerm=std::stoi(substr);
+        std::getline(ss, substr, ';');
+        ScaleTerm=std::stoi(substr);
+        std::getline(ss, substr, ';');
+        IsWithValuesTerm=std::stoi(substr);
+        //Генерация
+    }
+    void Print()
+    {
+        //Ввод-вывод
+        std::cout<<"seed="<<seed<<std::endl;
+        std::cout<<"filenameFileIn="<<filenameFileIn<<std::endl;
+        std::cout<<"filenameFileOut="<<filenameFileOut<<std::endl;
+        std::cout<<"ModeFile="<<ModeFile<<std::endl;
+        std::cout<<"ScaleFile="<<ScaleFile<<std::endl;
+        std::cout<<"IsWithValuesFile="<<IsWithValuesFile<<std::endl;
+        //В терминал
+        std::cout<<"ModeTerm="<<ModeTerm<<std::endl;
+        std::cout<<"filenameTermOut="<<filenameTermOut<<std::endl;
+        std::cout<<"ScaleTerm="<<ScaleTerm<<std::endl;
+        std::cout<<"IsWithValuesTerm="<<IsWithValuesTerm<<std::endl;
+
+        int ModeTerm;
+        int filenameTermOut;
+        int ScaleTerm;
+        bool IsWithValuesTerm;
+    //Генерация
+        int PrHandlerMode;
+        int n;
+        int m;
+        int alpha;
+    //Поиск
+        Alg Lee, Lee2Waves, Dijkstra, AStar;
     }
 };
 

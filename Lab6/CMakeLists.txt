@@ -27,6 +27,7 @@ add_executable(StatisticsMazeSearch_main StatisticsMazeSearch_main.cpp)
 
 #cli программа с меню
 add_executable(cli cli_main.cpp)
+add_executable(cli_debug cli_debug_main.cpp)
 
 install(PROGRAMS PlotScript.bash Welcome.txt Menu.txt Help.txt Config.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
