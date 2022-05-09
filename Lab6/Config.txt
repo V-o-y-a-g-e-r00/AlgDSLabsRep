@@ -12,6 +12,7 @@ IsWithValuesF=0
 ModeT=0
 ScaleT=1
 IsWithValuesT=0
+IsWeightsOverlapped=0
 #===Генерация===
 PrHandlerMode=1
 #4	Сброс/Создание нового лабиринта

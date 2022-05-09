@@ -272,7 +272,7 @@ public:
             std::getline(ss, Var, '=');
             std::getline(ss, Val, '=');
           //  if(Val.find_first_not_of("0123456789-.")!=std::string::npos) //Если нашли не числовой символ
-            if(Val.length()!=0)
+            if(Var.length()!=0 && Val.length()!=0)
             {
                 if(Val.length()>=2 && Val.at(0)=='\"' && Val.at(Val.length()-1)=='\"') //Если значение в кавычках
                 {

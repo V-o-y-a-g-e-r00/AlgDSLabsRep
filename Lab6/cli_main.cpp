@@ -36,7 +36,7 @@ catch(const std::string e)
 int initn, initm;
 cg.GetVal(std::string("n"), initn);
 cg.GetVal(std::string("m"), initm);
-mazeWeighted MazeWeighted(initn, initm);
+mazeWeighted MazeWeighted(initn, initm, 1);
 
 //Инициализируем генератор случайных чисел
 int seed;
@@ -110,11 +110,15 @@ while(!IsQuited)
         MazeWeighted.ShowDecorate((char*)strVal.c_str(), ModeF, ScaleF, (bool)IsWithValuesF);
         break;
     case 3: //Вывод лабиринта в терминал
-        int ModeT, ScaleT, IsWithValuesT;
+        int ModeT, ScaleT, IsWithValuesT, IsWeightsOverlapped;
         cg.GetVal(std::string("ModeT"), ModeT);
         cg.GetVal(std::string("ScaleT"), ScaleT);
         cg.GetVal(std::string("IsWithValuesT"), IsWithValuesT);
-        MazeWeighted.ShowDecorate((char*)"cout", ModeT, ScaleT, (bool)IsWithValuesT);
+        cg.GetVal(std::string("IsWeightsOverlapped"), IsWeightsOverlapped);
+
+        if(!IsWeightsOverlapped) MazeWeighted.ShowDecorate((char*)"cout", ModeT, ScaleT, (bool)IsWithValuesT);
+        else MazeWeighted.ShowDecorate((char*)"cout", ModeT, ScaleT, (bool)IsWithValuesT, MazeWeighted.Weights);
+
         std::cout<<"n="<<MazeWeighted.n<<" m="<<MazeWeighted.m<<std::endl;
         break;
     case 4: //Сброс/Создание нового лабиринта
@@ -152,7 +156,16 @@ while(!IsQuited)
         WallsReduce(MazeWeighted, ReduceProb, generator);
         break;
     case 10: //Генерация весов с помощью кругов
+        int CircminWeight, CircmaxWeight, CircmeanRadius;
+        double CircProb, Circstddev;
+        cg.GetVal("CircminWeight", CircminWeight);
+        cg.GetVal("CircmaxWeight", CircmaxWeight);
+        cg.GetVal("CircmeanRadius", CircmeanRadius);
 
+        cg.GetVal("CircProb", CircProb);
+        cg.GetVal("Circstddev", Circstddev);
+
+        RandomCircules(MazeWeighted, generator, CircminWeight, CircmaxWeight, CircProb, CircmeanRadius, Circstddev);
         break;
     case 11: //Ли
         int Leestarti, Leestartj, Leefinishi, Leefinishj;
