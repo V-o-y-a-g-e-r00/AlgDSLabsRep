@@ -122,6 +122,7 @@ while(!IsQuited)
 
     case 5: //Уилсон
         std::cout<<"seed="<<seed<<std::endl;
+        std::cout<<"PrHandler.Mode="<<PrHandler.Mode<<std::endl;
         Wilson(MazeWeighted, generator, PrHandler);
         break;
     case 6: //Уилсон (модификация с последовательным выбором ячеек)

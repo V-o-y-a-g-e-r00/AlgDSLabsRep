@@ -20,7 +20,7 @@ int main(int, char**) {
     }
 */
     presenthandler PrHandler;
-    PrHandler.Mode=1;
+    PrHandler.Mode=2;
     Wilson(Maze, generator1, PrHandler);
 //    WilsonSerial(Maze, generator1, PrHandler);
 //    Maze.ShowDecorate((char*)"MazeOut.txt",0);

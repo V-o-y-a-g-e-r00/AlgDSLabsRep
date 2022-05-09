@@ -286,6 +286,12 @@ void Wilson(maze& Maze, std::default_random_engine& generator, presenthandler& P
             }
         }
     }
+    //Наглядное отображение
+    if(PrHandler.Mode==2)
+    {
+        Maze.ShowDecorate();
+        std::cin.ignore();
+    }
 
 }
 
