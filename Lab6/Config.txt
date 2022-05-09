@@ -2,9 +2,9 @@
 seed=-1
 #===Ввод-вывод=====
 #1	Ввод лабиринта из файла
-filenameFin=MazeIn.txt
+filenameFin="MazeIn.txt"
 #2	Вывод лабиринта в файл
-filenameFout=MazeOut.txt
+filenameFout="MazeOut.txt"
 ModeF=0
 ScaleF=1
 IsWithValuesF=0

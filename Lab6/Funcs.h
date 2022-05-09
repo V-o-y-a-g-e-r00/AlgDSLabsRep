@@ -6,6 +6,8 @@
 #include <fstream>
 #include <string>
 
+#include <algorithm> //find_first_of
+
 #include "maze.h"
 #include "MazeGenerationAlgs.h"
 #include <iomanip>
@@ -79,7 +81,7 @@ template<typename T>
 void PrintVector(std::vector<T>& Vector, const char* VectorName)
 {
     typename std::vector<T>::iterator iteri=Vector.begin();
-        std::cout<< VectorName<<"="<<std::endl;
+        std::cout<< VectorName<<":"<<std::endl;
         for(iteri=Vector.begin(); iteri!=Vector.end(); iteri++)
         {
       //      std::cout<<std::setw(3);
@@ -235,13 +237,27 @@ public:
             ss<<str;
             std::getline(ss, Var, '=');
             std::getline(ss, Val, '=');
-            if(Val.find_first_not_of("0123456789-.")!=std::string::npos) //Если нашли не числовой символ
+          //  if(Val.find_first_not_of("0123456789-.")!=std::string::npos) //Если нашли не числовой символ
+            if(Val.length()!=0)
             {
-                strBase.push_back(std::make_pair(Var,Val));
+                if(Val.length()>=2 && Val.at(0)=='\"' && Val.at(Val.length()-1)=='\"') //Если значение в кавычках
+                {
+                    strBase.push_back(std::make_pair(Var,Val.substr(1, Val.length()-2))); //Строка без кавычек
+                }
+                else if(Val.find_first_not_of("0123456789-.")==std::string::npos) //Если нет недопустимых символов
+                    {
+                        intBase.push_back(std::make_pair(Var,std::stoi(Val)));
+                    }
+                    else
+                    {
+                        std::stringstream ss;
+                        ss<<"Config.Read: Val="<<Val<<" is invalid!"<<std::endl; //Допустима или строка в кавычках или число
+                        throw(ss.str());
+                    }
             }
             else
             {
-                intBase.push_back(std::make_pair(Var,std::stoi(Val)));
+                throw(std::string("Config.Read: Val is empty!\n"));
             }
         }
     }
@@ -249,6 +265,32 @@ public:
     {
         PrintVector(intBase, (char*) "intBase");
         PrintVector(strBase, (char*) "strBase");
+    }
+    bool GetVal(std::string strVar, int& intVar) //Ищет str в intBase. Если находит, то помещает значение в n и возвращает true, если нет, то возвращает false
+    {
+        std::vector<std::pair<std::string, int>>::iterator Iter=std::find_if(intBase.begin(), intBase.end(), [&strVar](std::pair<std::string, int> Item){if(strVar==Item.first) return true; else return false;});
+        if(Iter!=intBase.end())
+        {
+            intVar=Iter->second;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    bool GetVal(std::string strVar, std::string& strVal) //Ищет str в strBase. Если находит, то помещает значение в n и возвращает true, если нет, то возвращает false
+    {
+        std::vector<std::pair<std::string, std::string>>::iterator Iter=std::find_if(strBase.begin(), strBase.end(), [&strVar](std::pair<std::string, std::string> Item){if(strVar==Item.first) return true; else return false;});
+        if(Iter!=strBase.end())
+        {
+            strVal=Iter->second;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 };
 
