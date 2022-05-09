@@ -11,7 +11,7 @@
 int main(int, char**) {
     std::cin.sync_with_stdio(false);
     char buffer[3]={'\0'};
-
+/*
     int i;
     std::cin>>i;
     std::cout<<"in_avail()="<<std::cin.rdbuf()->in_avail()<<std::endl;
@@ -25,10 +25,10 @@ int main(int, char**) {
     std::cout<<"in_avail()="<<std::cin.rdbuf()->in_avail()<<std::endl;
     std::cin.ignore(1);
 
+*/
+//std::cin.ignore(1);
 
-
-
-//ValidInput();
+ValidInput();
 //int ich=std::cin.peek();
 //std::cout<<"ich="<<ich<<std::endl;
 //std::cin.ignore(1);

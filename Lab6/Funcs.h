@@ -140,8 +140,11 @@ int ValidInput(char * name=(char*)"")
     {
         //Вводим используя стандартный поток ввода. (мерзкая штука)
         std::cin.clear(); //Очищаем флаги
-        std::cin.ignore(std::cin.rdbuf()->in_avail()-1); //Пропускаем все символы в буфере. in_avail() возвращает число символов+1 . В EOF мы здесь упереться не можем, между прочим (только если Ctrl+D нажмем).
-
+    //    std::cout<<"up1 in_avail()="<<std::cin.rdbuf()->in_avail()<<std::endl;
+        //std::cin.ignore(std::cin.rdbuf()->in_avail()); //Пропускаем все символы в буфере. in_avail() возвращает число символов +1?. В EOF мы здесь упереться не можем, между прочим (только если Ctrl+D нажмем).
+        while(std::cin.rdbuf()->in_avail()>0) std::cin.ignore(1); //В общем, в цикле работает нормально, а std::cin.ignore(std::cin.rdbuf()->in_avail()) блокирует ввод. Это все очень странно, потоки неинтуитивны совсем, тут только документацию читать. 
+    //    std::cout<<"up2 in_avail()="<<std::cin.rdbuf()->in_avail()<<std::endl;
+        //std::cin.ignore(1);
         std::cout<<"Введите "<<name<<":";
         std::cin>>str;
     //    std::cout<<"str="<<str<<std::endl;
@@ -160,7 +163,7 @@ int ValidInput(char * name=(char*)"")
             if(std::isspace(std::cin.peek())) std::cin.ignore(1); //peek блокирует ввод, когда нет символов, поэтому его делаем уже внутри цикла
             else break;
         }
-        std::cout<<"in_avail()="<<std::cin.rdbuf()->in_avail()<<std::endl;
+    //    std::cout<<"in_avail()="<<std::cin.rdbuf()->in_avail()<<std::endl;
     //    std::cout<<"after isspace"<<std::endl;
         if(std::cin.rdbuf()->in_avail()!=0)
         {
