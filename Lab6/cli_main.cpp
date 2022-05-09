@@ -124,20 +124,29 @@ while(!IsQuited)
         break;
 
     case 5: //Уилсон
-    //    std::cout<<"seed="<<seed<<std::endl;
+        std::cout<<"CurrentSeed="<<CurrentSeed<<std::endl;
     //    std::cout<<"PrHandler.Mode="<<PrHandler.Mode<<std::endl;
         Wilson(MazeWeighted, generator, PrHandler);
         break;
     case 6: //Уилсон (модификация с последовательным выбором ячеек)
-        
+        std::cout<<"CurrentSeed="<<CurrentSeed<<std::endl;
+    //    std::cout<<"PrHandler.Mode="<<PrHandler.Mode<<std::endl;
+        WilsonSerial(MazeWeighted, generator, PrHandler);
         break;
     case 7: //Олдос-Бродер
-        
+        std::cout<<"CurrentSeed="<<CurrentSeed<<std::endl;
+    //    std::cout<<"PrHandler.Mode="<<PrHandler.Mode<<std::endl;
+        AldousBroder(MazeWeighted, generator, PrHandler);
         break;
     case 8: //Бинарное дерево
-        
+        std::cout<<"CurrentSeed="<<CurrentSeed<<std::endl;
+    //  std::cout<<"PrHandler.Mode="<<PrHandler.Mode<<std::endl;
+        int alpha;
+        cg.GetVal(std::string("alpha"), alpha);
+        BinaryTree(MazeWeighted, generator, PrHandler, alpha);
         break;
     case 9: //Ли
+        
         
         break;
     case 10: //Ли (модификация с двумя волнами)
