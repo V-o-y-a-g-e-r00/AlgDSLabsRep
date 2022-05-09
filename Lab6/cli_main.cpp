@@ -40,10 +40,12 @@ mazeWeighted MazeWeighted(initn, initm);
 
 //Инициализируем генератор случайных чисел
 int seed;
+int CurrentSeed; //Со временем или по конфигурации
 cg.GetVal(std::string("seed"), seed);
-std::default_random_engine generator;
-if(seed!=-1) generator=std::default_random_engine(seed);
-else generator=std::default_random_engine(time(0));
+
+if(seed!=-1) CurrentSeed=seed;
+else CurrentSeed=time(0);
+std::default_random_engine generator(CurrentSeed);
 
 presenthandler PrHandler;
 
@@ -69,8 +71,9 @@ while(!IsQuited)
     cg.GetVal(std::string("seed"), tempseed);
     if(tempseed!=seed)
     {
-        if(tempseed!=-1) generator=std::default_random_engine(tempseed);
-        else generator=std::default_random_engine(time(0));
+        if(tempseed!=-1) CurrentSeed=tempseed;
+        else CurrentSeed=time(0);
+        generator=std::default_random_engine(CurrentSeed);
         seed=tempseed;
     }
     //Обновляем режим PrHandler
@@ -121,8 +124,8 @@ while(!IsQuited)
         break;
 
     case 5: //Уилсон
-        std::cout<<"seed="<<seed<<std::endl;
-        std::cout<<"PrHandler.Mode="<<PrHandler.Mode<<std::endl;
+    //    std::cout<<"seed="<<seed<<std::endl;
+    //    std::cout<<"PrHandler.Mode="<<PrHandler.Mode<<std::endl;
         Wilson(MazeWeighted, generator, PrHandler);
         break;
     case 6: //Уилсон (модификация с последовательным выбором ячеек)
