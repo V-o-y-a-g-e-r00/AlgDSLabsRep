@@ -9,26 +9,32 @@
 #include "MazeSearchAlg.h"
 
 int main(int, char**) {
+    std::cin.sync_with_stdio(false);
+    char buffer[3]={'\0'};
 
-Config cg;
-try
-{
-    cg.Read((char*)"Config.txt");
-}
-catch(std::string e)
-{
-    std::cout<<"exeption: " <<e<<std::endl;
-}
-cg.Print();
-std::cout<<"-------------"<<std::endl;
+    int i;
+    std::cin>>i;
+    std::cout<<"in_avail()="<<std::cin.rdbuf()->in_avail()<<std::endl;
+    while(std::cin.rdbuf()->in_avail()>0) //отбрасываем whitespace -ы
+    {
+        int ich=std::cin.peek();
+        std::cout<<"ich="<<ich<<std::endl;
 
-int intVal;
-std::string strVal;
-//bool IsFound=cg.GetVal(std::string("seed"), intVal);
-if(cg.GetVal(std::string("filenameFin"), intVal)) std::cout<<"intVal="<<intVal<<std::endl;
-else std::cout<<"intVal does not exist! "<<std::endl;
-if(cg.GetVal(std::string("filenameFin"), strVal)) std::cout<<"strVal="<<strVal<<std::endl;
-else std::cout<<"strVal does not exist! "<<std::endl;
+        std::cin.ignore(1); //peek блокирует ввод, поэтому его делаем уже внутри цикла
+    }
+    std::cout<<"in_avail()="<<std::cin.rdbuf()->in_avail()<<std::endl;
+    std::cin.ignore(1);
+
+
+
+
+//ValidInput();
+//int ich=std::cin.peek();
+//std::cout<<"ich="<<ich<<std::endl;
+//std::cin.ignore(1);
+//std::cout<<"after ignore"<<std::endl;
+//ich=std::cin.peek();
+//std::cout<<"ich="<<ich<<std::endl;
 
 return 0;
 }

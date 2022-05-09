@@ -155,9 +155,14 @@ int ValidInput(char * name=(char*)"")
         //Проверяем на лишние символы в потоке
             
     //    std::cout<<"before isspace"<<std::endl;
-        while(std::isspace(std::cin.peek()) && std::cin.rdbuf()->in_avail()-1!=0) std::cin.ignore(1); //отбрасываем whitespace -ы
+        while(std::cin.rdbuf()->in_avail()>0) //отбрасываем whitespace -ы
+        {
+            if(std::isspace(std::cin.peek())) std::cin.ignore(1); //peek блокирует ввод, когда нет символов, поэтому его делаем уже внутри цикла
+            else break;
+        }
+        std::cout<<"in_avail()="<<std::cin.rdbuf()->in_avail()<<std::endl;
     //    std::cout<<"after isspace"<<std::endl;
-        if(std::cin.rdbuf()->in_avail()-1!=0)
+        if(std::cin.rdbuf()->in_avail()!=0)
         {
             IsGood=false;
         }
