@@ -38,6 +38,15 @@ cg.GetVal(std::string("n"), initn);
 cg.GetVal(std::string("m"), initm);
 mazeWeighted MazeWeighted(initn, initm);
 
+//Инициализируем генератор случайных чисел
+int seed;
+cg.GetVal(std::string("seed"), seed);
+std::default_random_engine generator;
+if(seed!=-1) generator=std::default_random_engine(seed);
+else generator=std::default_random_engine(time(0));
+
+presenthandler PrHandler;
+
 while(!IsQuited)
 {
     int Choice=ValidInput((char*)"пункт меню");
@@ -55,7 +64,20 @@ while(!IsQuited)
         std::cin.ignore();
         return -1;
     }
-    
+    //Измеряем некоторые величины
+    int tempseed; //Сбрасываем генератор, если поменяли зерно
+    cg.GetVal(std::string("seed"), tempseed);
+    if(tempseed!=seed)
+    {
+        if(tempseed!=-1) generator=std::default_random_engine(tempseed);
+        else generator=std::default_random_engine(time(0));
+        seed=tempseed;
+    }
+    //Обновляем режим PrHandler
+    int PrHandlerMode;
+    cg.GetVal(std::string("PrHandlerMode"), PrHandlerMode);
+    PrHandler.Mode=PrHandlerMode;
+
     //Выбранный пункт меню
     std::string strVal;
     bool IsFound=false;
@@ -99,7 +121,8 @@ while(!IsQuited)
         break;
 
     case 5: //Уилсон
-        
+        std::cout<<"seed="<<seed<<std::endl;
+        Wilson(MazeWeighted, generator, PrHandler);
         break;
     case 6: //Уилсон (модификация с последовательным выбором ячеек)
         
