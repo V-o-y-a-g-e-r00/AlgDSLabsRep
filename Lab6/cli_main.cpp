@@ -146,7 +146,15 @@ while(!IsQuited)
         cg.GetVal(std::string("alpha"), alpha);
         BinaryTree(MazeWeighted, generator, PrHandler, alpha);
         break;
-    case 9: //Ли
+    case 9: //Проредить стены
+        double ReduceProb;
+        cg.GetVal("ReduceProb", ReduceProb);
+        WallsReduce(MazeWeighted, ReduceProb, generator);
+        break;
+    case 10: //Генерация весов с помощью кругов
+
+        break;
+    case 11: //Ли
         int Leestarti, Leestartj, Leefinishi, Leefinishj;
         cg.GetVal(std::string("Leestarti"), Leestarti);
         cg.GetVal(std::string("Leestartj"), Leestartj);
@@ -157,7 +165,7 @@ while(!IsQuited)
         Lee(MazeWeighted, Leestarti, Leestartj, Leefinishi, Leefinishj, Way, PrHandler);
         PrintVector1(Way, "Way");
         break;
-    case 10: //Ли (модификация с двумя волнами)
+    case 12: //Ли (модификация с двумя волнами)
         int Lee2starti, Lee2startj, Lee2finishi, Lee2finishj;
         cg.GetVal(std::string("Lee2starti"), Lee2starti);
         cg.GetVal(std::string("Lee2startj"), Lee2startj);
@@ -168,10 +176,10 @@ while(!IsQuited)
         Lee2Waves(MazeWeighted, Lee2starti, Lee2startj, Lee2finishi, Lee2finishj, Way, PrHandler);
         PrintVector1(Way, "Way");        
         break;
-    case 11: //Дейкстра
+    case 13: //Дейкстра
         
 
-        
+
         int Dijstarti, Dijstartj, Dijfinishi, Dijfinishj;
         cg.GetVal(std::string("Dijstarti"), Dijstarti);
         cg.GetVal(std::string("Dijstartj"), Dijstartj);
@@ -180,19 +188,19 @@ while(!IsQuited)
 
         Dijkstra(MazeWeighted, Dijstarti, Dijstartj, Dijfinishi, Dijfinishj, Way, PrHandler);
         break;
-    case 12: //AStar
+    case 14: //AStar
         
         break;
-    case 13: //Выход
+    case 15: //Выход
         IsQuited=true;
         break;
-    case 14: //Справка
+    case 16: //Справка
         PrintFile((char*)"Help.txt");
         break;
-    case 15: //Показать меню ещё раз
+    case 17: //Показать меню ещё раз
         PrintFile((char*)"Menu.txt");
         break;
-    case 16: //отладка
+    case 18: //Показать текущую конфигурацию
         cg.Print();
         break;
     default:

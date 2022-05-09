@@ -78,7 +78,7 @@ public:
                 std::cout<<"Maze search ended"<<std::endl;
                 if(PresentHandler.Mode==11)
                 {
-                    PrintVector(Path, "Path");
+                    PrintVector1(Path, "Path");
                 }
 
                 timeSeconds+=double(timeEnd-timeStart)/CLOCKS_PER_SEC; //время работы алгоритма в секундах

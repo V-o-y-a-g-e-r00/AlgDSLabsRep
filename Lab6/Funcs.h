@@ -81,6 +81,7 @@ void Print(std::pair<int,int> Pair);
 void Print(std::pair<int, std::pair<int, int>> Item);
 void Print(std::pair<std::string, int> Item);
 void Print(std::pair<std::string, std::string> Item);
+void Print(std::pair<std::string, double> Item);
 template<typename T>
 void PrintVector1(std::vector<T>& Vector, const char* VectorName)
 {
@@ -124,6 +125,10 @@ void Print(std::pair<std::string, int> Item)
     std::cout<<Item.first<<"="<<Item.second<<std::endl;
 }
 void Print(std::pair<std::string, std::string> Item)
+{
+    std::cout<<Item.first<<"="<<Item.second<<std::endl;
+}
+void Print(std::pair<std::string, double> Item)
 {
     std::cout<<Item.first<<"="<<Item.second<<std::endl;
 }
@@ -192,6 +197,7 @@ class Config
 {
 public:
     std::vector<std::pair<std::string, int>> intBase;
+    std::vector<std::pair<std::string, double>> doubBase;
     std::vector<std::pair<std::string, std::string>> strBase;
 
     Config()=default;
@@ -272,16 +278,20 @@ public:
                 {
                     strBase.push_back(std::make_pair(Var,Val.substr(1, Val.length()-2))); //Строка без кавычек
                 }
-                else if(Val.find_first_not_of("0123456789-.")==std::string::npos) //Если нет недопустимых символов
+                else if(Val.find_first_not_of("0123456789-")==std::string::npos) //Если значение может быть целым
                     {
                         intBase.push_back(std::make_pair(Var,std::stoi(Val)));
                     }
-                    else
-                    {
-                        std::stringstream ss;
-                        ss<<"Config.Read: Val="<<Val<<" is invalid!"<<std::endl; //Допустима или строка в кавычках или число
-                        throw(ss.str());
-                    }
+                    else if(Val.find_first_not_of("0123456789-.")==std::string::npos) //Если значение может быть дробным
+                        {
+                            doubBase.push_back(std::make_pair(Var,std::stod(Val)));
+                        }
+                        else
+                        {
+                            std::stringstream ss;
+                            ss<<"Config.Read: Val="<<Val<<" is invalid!"<<std::endl; //Допустима или строка в кавычках, или число
+                            throw(ss.str());
+                        }
             }
             else
             {
@@ -294,6 +304,7 @@ public:
     {
         PrintVector2(intBase, (char*) "intBase");
         PrintVector2(strBase, (char*) "strBase");
+        PrintVector2(doubBase, (char*) "doubBase");
     }
     bool GetVal(std::string strVar, int& intVar) //Ищет str в intBase. Если находит, то помещает значение в n и возвращает true, если нет, то возвращает false
     {
@@ -314,6 +325,19 @@ public:
         if(Iter!=strBase.end())
         {
             strVal=Iter->second;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    bool GetVal(std::string strVar, double& doubVal) //Ищет str в strBase. Если находит, то помещает значение в doubVal и возвращает true, если нет, то возвращает false
+    {
+        std::vector<std::pair<std::string, double>>::iterator Iter=std::find_if(doubBase.begin(), doubBase.end(), [&strVar](std::pair<std::string, double> Item){if(strVar==Item.first) return true; else return false;});
+        if(Iter!=doubBase.end())
+        {
+            doubVal=Iter->second;
             return true;
         }
         else

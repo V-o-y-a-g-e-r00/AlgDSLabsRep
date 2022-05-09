@@ -22,31 +22,37 @@ m=5
 #7	Олдос-Бродер
 #8	Бинарное дерево
 alpha=0
-#9 Генерация весов
-
+#9 Проредить стены
+ReduceProb=0.3
+#10 Геренация весов
+CircminWeight=1
+CircmaxWeight=9
+CircProb=0.05
+CircmeanRadius=1
+Circstddev=0.5
 #===Поиск===
-#9	Ли
+#11	Ли
 Leestarti=0
 Leestartj=0
 Leefinishi=4
 Leefinishj=4
-#10	Ли (модификация с двумя волнами)
+#12	Ли (модификация с двумя волнами)
 Lee2starti=0
 Lee2startj=0
 Lee2finishi=4
 Lee2finishj=4
-#11	Дейкстра
+#13	Дейкстра
 Dijstarti=0
 Dijstartj=0
 Dijfinishi=4
 Dijfinishj=4
-#12	AStar
+#14	AStar
 AStarstarti=0
 AStarstartj=0
 AStarfinishi=4
 AStarfinishj=4
 #===Выход===
-#13
+#15
 #===Справка===
-#14	Справка
+#16	Справка
 #===================
