@@ -15,6 +15,7 @@
 
 void MazeFromFile(maze& Maze, char* filename)
 {
+   // std::cout<<"MazeFromFile"<<std::endl;
     std::ifstream fin(filename);
     if(!fin.is_open()) //проверка на успешность открытия файла
     {
@@ -25,7 +26,10 @@ void MazeFromFile(maze& Maze, char* filename)
     std::string str;
     std::stringstream ss;
     int n=0, m=0; //определяем размеры лабиринта
-    while(std::getline(fin, str)) n++;
+    while(std::getline(fin, str))
+    {
+        if(str!="") n++;
+    }
     if (n%2==0)
     {
         std::cout<<"MazeFromFile: bad n: n%2==0"<<std::endl;
@@ -109,7 +113,7 @@ void Print(std::pair<std::string, std::string> Item)
     std::cout<<Item.first<<"="<<Item.second<<std::endl;
 }
 
-//
+//Пошли функции для cli
 void PrintFile(char* filename)
 {
     std::ifstream fin(filename);
@@ -124,6 +128,7 @@ void PrintFile(char* filename)
     {
         std::cout<<str<<std::endl;
     }
+    fin.close();
 }
 
 //Функция ввода целых чисел из потока, основанная на cin. Целые числа могут быть окружены whitespace -ами, но строка из череды чисел будет отклонена.
@@ -260,6 +265,7 @@ public:
                 throw(std::string("Config.Read: Val is empty!\n"));
             }
         }
+        fin.close();
     }
     void Print()
     {

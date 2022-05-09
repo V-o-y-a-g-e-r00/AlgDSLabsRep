@@ -10,65 +10,125 @@
 
 int main(int, char**) {
 
-std::cin.sync_with_stdio(false); //Синхронизируем с вводом stdio. Без этого не работает in_avail() Важно вызвать эту функцию до первого чтения или ввода. Иначе последсвия будут непредсказуемыми.
+std::cin.sync_with_stdio(false); //Синхронизируем с вводом stdio. Без этого не работает in_avail() Важно вызвать эту функцию до первого чтения или ввода. Иначе последсвия будут непредсказуемыми. Нужно для работы ValidInput()
 
 PrintFile((char *)"Welcome.txt");
 PrintFile((char *)"Menu.txt");
 
 
-
 bool IsQuited=false;
 int Choice=0;
+
+//Читаем конфигурацию
+Config cg;
+try 
+{
+    cg.Read((char*)"Config.txt");
+}
+catch(const std::string e)
+{
+    std::cout << e << std::endl;
+    std::cin.ignore();
+    return -1;
+}
+
+//Инициализируем лабиринт
+int initn, initm;
+cg.GetVal(std::string("n"), initn);
+cg.GetVal(std::string("m"), initm);
+mazeWeighted MazeWeighted(initn, initm);
+
 while(!IsQuited)
 {
     int Choice=ValidInput((char*)"пункт меню");
-    std::cout<<"Выбран пункт меню="<<Choice<<std::endl;
+ //   std::cout<<"Выбран пункт меню="<<Choice<<std::endl;
+
+    //Читаем конфигурацию после выбора пункта меню
+    Config cg;
+    try 
+    {
+        cg.Read((char*)"Config.txt");
+    }
+    catch(const std::string e)
+    {
+        std::cout << e << std::endl;
+        std::cin.ignore();
+        return -1;
+    }
+    
+    //Выбранный пункт меню
+    std::string strVal;
+    bool IsFound=false;
     switch (Choice)
     {
-    case 1:
+    case 1: //Ввод лабиринта из файла
+        IsFound=cg.GetVal(std::string("filenameFin"), strVal);
+        if(!IsFound) std::cout<<"intVal does not exist! "<<std::endl; 
+        try
+        {
+            MazeFromFile(MazeWeighted, (char *)strVal.c_str());
+        }
+        catch(const std::string e)
+        {
+            std::cout << e << '\n';
+        }
         
+       
         break;
-    case 2:
-        
+    case 2: //Вывод лабиринта в файл
+        int ModeF, ScaleF, IsWithValuesF;
+        cg.GetVal(std::string("filenameFout"), strVal);
+        cg.GetVal(std::string("ModeF"), ModeF);
+        cg.GetVal(std::string("ScaleF"), ScaleF);
+        cg.GetVal(std::string("IsWithValuesF"), IsWithValuesF);
+        MazeWeighted.ShowDecorate((char*)strVal.c_str(), ModeF, ScaleF, (bool)IsWithValuesF);
         break;
-    case 3:
-        
+    case 3: //Вывод лабиринта в терминал
+        int ModeT, ScaleT, IsWithValuesT;
+        cg.GetVal(std::string("ModeT"), ModeT);
+        cg.GetVal(std::string("ScaleT"), ScaleT);
+        cg.GetVal(std::string("IsWithValuesT"), IsWithValuesT);
+        MazeWeighted.ShowDecorate((char*)"cout", ModeT, ScaleT, (bool)IsWithValuesT);
+        std::cout<<"n="<<MazeWeighted.n<<" m="<<MazeWeighted.m<<std::endl;
         break;
-    case 4:
-        
+    case 4: //Сброс/Создание нового лабиринта
+        int n, m;
+        cg.GetVal(std::string("n"), n);
+        cg.GetVal(std::string("m"), m);
+        MazeWeighted=mazeWeighted(n, m);
         break;
 
-    case 5:
+    case 5: //Уилсон
         
         break;
-    case 6:
+    case 6: //Уилсон (модификация с последовательным выбором ячеек)
         
         break;
-    case 7:
+    case 7: //Олдос-Бродер
         
         break;
-    case 8:
+    case 8: //Бинарное дерево
         
         break;
-    case 9:
+    case 9: //Ли
         
         break;
-    case 10:
+    case 10: //Ли (модификация с двумя волнами)
         
         break;
-    case 11:
+    case 11: //Дейкстра
         
         break;
-    case 12:
+    case 12: //AStar
         
         break;
-    case 13:
+    case 13: //Выход
         IsQuited=true;
         break;
-    case 14:
+    case 14: //Справка
         PrintFile((char*)"Help.txt");
         break;
-    case 15:
+    case 15: //Показать меню ещё раз
         PrintFile((char*)"Menu.txt");
         break;
     default:
