@@ -125,7 +125,7 @@ while(!IsQuited)
         int n, m;
         cg.GetVal(std::string("n"), n);
         cg.GetVal(std::string("m"), m);
-        MazeWeighted=mazeWeighted(n, m);
+        MazeWeighted=mazeWeighted(n, m, 1);
         break;
 
     case 5: //Уилсон

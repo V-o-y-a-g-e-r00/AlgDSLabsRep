@@ -599,6 +599,7 @@ void Dijkstra(mazeWeighted& MazeWeighted, int starti, int startj, int finishi, i
     {
         std::cout<<"The finish cell is reached!"<<std::endl;
     }
+    Path.clear();
     DijkstraReconstructWay(MazeWeighted, PathCoordWeights, finishi, finishj, starti, startj, Path);
 }
 //Эвристическая функция для алг A*
@@ -764,6 +765,7 @@ void AStar(mazeWeighted& MazeWeighted, int starti, int startj, int finishi, int 
     {
         std::cout<<"The finish cell is reached!"<<std::endl;
     }
+    Path.clear();
     DijkstraReconstructWay(MazeWeighted, PathCoordWeights, finishi, finishj, starti, startj, Path);
 }
 
