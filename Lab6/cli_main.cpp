@@ -190,9 +190,6 @@ while(!IsQuited)
         PrintVector1(Way, "Way");        
         break;
     case 13: //Дейкстра
-        
-
-
         int Dijstarti, Dijstartj, Dijfinishi, Dijfinishj;
         cg.GetVal(std::string("Dijstarti"), Dijstarti);
         cg.GetVal(std::string("Dijstartj"), Dijstartj);
@@ -200,9 +197,17 @@ while(!IsQuited)
         cg.GetVal(std::string("Dijfinishj"), Dijfinishj);
 
         Dijkstra(MazeWeighted, Dijstarti, Dijstartj, Dijfinishi, Dijfinishj, Way, PrHandler);
+        PrintVector1(Way, "Way");
         break;
     case 14: //AStar
-        
+        int AStarstarti, AStarstartj, AStarfinishi, AStarfinishj;
+        cg.GetVal(std::string("AStarstarti"), AStarstarti);
+        cg.GetVal(std::string("AStarstartj"), AStarstartj);
+        cg.GetVal(std::string("AStarfinishi"), AStarfinishi);
+        cg.GetVal(std::string("AStarfinishj"), AStarfinishj);
+
+        Dijkstra(MazeWeighted, AStarstarti, AStarstartj, AStarfinishi, AStarfinishj, Way, PrHandler);
+        PrintVector1(Way, "Way");
         break;
     case 15: //Выход
         IsQuited=true;
