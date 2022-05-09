@@ -29,7 +29,7 @@ int main(int, char**) {
     //Запуск алгоритма
     std::vector<std::pair<int,int>> Path;
     AStar(MazeWeighted, 0, 0, 2, 2, Path, PrHandler);
-    PrintVector(Path, "Path");
+    PrintVector1(Path, "Path");
 
 }
 

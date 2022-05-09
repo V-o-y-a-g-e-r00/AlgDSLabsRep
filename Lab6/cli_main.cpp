@@ -84,6 +84,7 @@ while(!IsQuited)
     //Выбранный пункт меню
     std::string strVal;
     bool IsFound=false;
+    std::vector<std::pair<int,int>> Way;
     switch (Choice)
     {
     case 1: //Ввод лабиринта из файла
@@ -146,14 +147,38 @@ while(!IsQuited)
         BinaryTree(MazeWeighted, generator, PrHandler, alpha);
         break;
     case 9: //Ли
+        int Leestarti, Leestartj, Leefinishi, Leefinishj;
+        cg.GetVal(std::string("Leestarti"), Leestarti);
+        cg.GetVal(std::string("Leestartj"), Leestartj);
+        cg.GetVal(std::string("Leefinishi"), Leefinishi);
+        cg.GetVal(std::string("Leefinishj"), Leefinishj);
+
         
-        
+        Lee(MazeWeighted, Leestarti, Leestartj, Leefinishi, Leefinishj, Way, PrHandler);
+        PrintVector1(Way, "Way");
         break;
     case 10: //Ли (модификация с двумя волнами)
+        int Lee2starti, Lee2startj, Lee2finishi, Lee2finishj;
+        cg.GetVal(std::string("Lee2starti"), Lee2starti);
+        cg.GetVal(std::string("Lee2startj"), Lee2startj);
+        cg.GetVal(std::string("Lee2finishi"), Lee2finishi);
+        cg.GetVal(std::string("Lee2finishj"), Lee2finishj);
+
         
+        Lee2Waves(MazeWeighted, Lee2starti, Lee2startj, Lee2finishi, Lee2finishj, Way, PrHandler);
+        PrintVector1(Way, "Way");        
         break;
     case 11: //Дейкстра
         
+
+        
+        int Dijstarti, Dijstartj, Dijfinishi, Dijfinishj;
+        cg.GetVal(std::string("Dijstarti"), Dijstarti);
+        cg.GetVal(std::string("Dijstartj"), Dijstartj);
+        cg.GetVal(std::string("Dijfinishi"), Dijfinishi);
+        cg.GetVal(std::string("Dijfinishj"), Dijfinishj);
+
+        Dijkstra(MazeWeighted, Dijstarti, Dijstartj, Dijfinishi, Dijfinishj, Way, PrHandler);
         break;
     case 12: //AStar
         
@@ -166,6 +191,9 @@ while(!IsQuited)
         break;
     case 15: //Показать меню ещё раз
         PrintFile((char*)"Menu.txt");
+        break;
+    case 16: //отладка
+        cg.Print();
         break;
     default:
         std::cout<<"Нет такого пункта меню"<<std::endl;

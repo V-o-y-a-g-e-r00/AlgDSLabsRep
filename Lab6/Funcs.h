@@ -82,7 +82,22 @@ void Print(std::pair<int, std::pair<int, int>> Item);
 void Print(std::pair<std::string, int> Item);
 void Print(std::pair<std::string, std::string> Item);
 template<typename T>
-void PrintVector(std::vector<T>& Vector, const char* VectorName)
+void PrintVector1(std::vector<T>& Vector, const char* VectorName)
+{
+    typename std::vector<T>::iterator iteri=Vector.begin();
+        std::cout<< VectorName<<":";
+        for(iteri=Vector.begin(); iteri!=Vector.end(); iteri++)
+        {
+            std::cout<<std::setw(3);
+        //    std::cout<< (*iteri)<<"\t";
+        //    std::cout<< (*iteri);
+            Print(*iteri);
+        }
+        std::cout<<std::endl;
+//    std::cout<<"----------"<<std::endl;
+}
+template<typename T>
+void PrintVector2(std::vector<T>& Vector, const char* VectorName)
 {
     typename std::vector<T>::iterator iteri=Vector.begin();
         std::cout<< VectorName<<":"<<std::endl;
@@ -277,8 +292,8 @@ public:
     }
     void Print()
     {
-        PrintVector(intBase, (char*) "intBase");
-        PrintVector(strBase, (char*) "strBase");
+        PrintVector2(intBase, (char*) "intBase");
+        PrintVector2(strBase, (char*) "strBase");
     }
     bool GetVal(std::string strVar, int& intVar) //Ищет str в intBase. Если находит, то помещает значение в n и возвращает true, если нет, то возвращает false
     {

@@ -69,7 +69,7 @@ void Lee(maze& Maze, int starti, int startj, int finishi, int finishj, std::vect
                 }
             }
         }
-        if(PrHandler.Mode==1) //Небольшие манипуляции, чтобы помочь отладить это.
+        if(PrHandler.Mode==2) //Небольшие манипуляции, чтобы помочь отладить это.
         {
             for(int i=0; i<Maze.n; i++)
             {
@@ -292,14 +292,14 @@ void Lee2Waves(maze& Maze, int starti, int startj, int finishi, int finishj, std
     {
         CurrentDist++;
         WaveFrontIteration(Maze, CellDist, CurrentDist, mini1, maxi1, minj1, maxj1, IsReachedfinish, IsChanged, 1, Interseci, Intersecj);
-        if(PrHandler.Mode==1) std::cout<<"Wave1 CurrDist="<<CurrentDist<<std::endl;
+        if(PrHandler.Mode==2) std::cout<<"Wave1 CurrDist="<<CurrentDist<<std::endl;
         if((IsReachedfinish)||(!IsChanged)) 
         {
             DebugHandler(Maze, CellDist, PrHandler);
             break; //если достигли пересечения или если волна застряла
         }
         WaveFrontIteration(Maze, CellDist, CurrentDist, mini2, maxi2, minj2, maxj2, IsReachedfinish, IsChanged, 2, Interseci, Intersecj);
-        if(PrHandler.Mode==1) std::cout<<"Wave2 CurrDist="<<CurrentDist<<std::endl;
+        if(PrHandler.Mode==2) std::cout<<"Wave2 CurrDist="<<CurrentDist<<std::endl;
         DebugHandler(Maze, CellDist, PrHandler);
     }
 
@@ -311,7 +311,7 @@ void Lee2Waves(maze& Maze, int starti, int startj, int finishi, int finishj, std
     }
     else
     {
-        if(PrHandler.Mode==1) std::cout<<"Intersection cell between waves: Interseci="<<Interseci<<" Intersecj="<<Intersecj<<std::endl;
+        if(PrHandler.Mode==2) std::cout<<"Intersection cell between waves: Interseci="<<Interseci<<" Intersecj="<<Intersecj<<std::endl;
     }
     //Будем идти от точки пересечения в обе стороны. Вначале дойдем до точки старта, потом до точки финиша.
     int Currenti=Interseci, Currentj=Intersecj;
@@ -326,7 +326,7 @@ void Lee2Waves(maze& Maze, int starti, int startj, int finishi, int finishj, std
 
 void DebugHandler(maze& Maze, std::vector<std::vector<std::pair<char, int>>>& CellDist, presenthandler& PrHandler) //Небольшие манипуляции, чтобы помочь отладить это.
 {
-    if(PrHandler.Mode==1) //Небольшие манипуляции, чтобы помочь отладить это.
+    if(PrHandler.Mode==2) //Небольшие манипуляции, чтобы помочь отладить это.
     {
         for(int i=0; i<Maze.n; i++)
         {
