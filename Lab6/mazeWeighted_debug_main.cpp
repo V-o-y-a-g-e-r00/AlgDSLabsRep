@@ -15,6 +15,11 @@ int main(int, char**) {
     PrHandler.Mode=0;
 
     mazeWeighted MazeWeighted(3,3);
+    maze Maze(3,3);
+
+	MazeFromFile(MazeWeighted, (char*)"MazeIn.txt");
+	MazeFromFile(Maze, (char*)"MazeIn.txt");
+
 //    WeightCircule(MazeWeighted, 5, 5, 5, 2);
  //   for(int k=0; k<10; k++)
 //    WilsonReduced(MazeWeighted, generator1, PrHandler, 0.3);
@@ -22,5 +27,7 @@ int main(int, char**) {
 
 //    MazeWeighted.WeightsToValues();
     MazeWeighted.ShowDecorate((char*)"cout",1, 2, true);
+    Maze.ShowDecorate((char*)"cout",1, 2, true);
+	std::cout<<"MazeWeighted.Weights.size()="<<MazeWeighted.Weights.size()<<std::endl;
  //   std::cout << ch<<std::endl;
 }

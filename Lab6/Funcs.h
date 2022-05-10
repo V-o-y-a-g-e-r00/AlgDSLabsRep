@@ -12,8 +12,8 @@
 #include "MazeGenerationAlgs.h"
 #include <iomanip>
 
-
-void MazeFromFile(maze& Maze, char* filename)
+template<typename T>
+void MazeFromFile(T& Maze, char* filename)
 {
    // std::cout<<"MazeFromFile"<<std::endl;
     std::ifstream fin(filename);
@@ -46,7 +46,7 @@ void MazeFromFile(maze& Maze, char* filename)
         getchar();
     }
     m=(m-1)/2;
-    Maze=maze(n,m);
+    Maze=mazeWeighted(n,m, 1);
     fin.clear();
     fin.seekg(0, std::ios_base::beg);
     for(int i=0; i<n*2+1; i++)

@@ -507,7 +507,7 @@ class mazeWeighted : public maze
 public:
     std::vector<std::vector<int>> Weights;
     mazeWeighted()=default;
-    mazeWeighted(int Nn, int Nm, int FillWeight=0): maze(Nn, Nm) //FillWeight заливка всего поля этим весом
+    mazeWeighted(int Nn, int Nm, int FillWeight=1): maze(Nn, Nm) //FillWeight заливка всего поля этим весом
     {
         Weights.resize(Nn); 
         for(auto& i : Weights)
