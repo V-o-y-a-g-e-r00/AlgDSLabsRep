@@ -106,6 +106,7 @@ void AldousBroder(maze& Maze, std::default_random_engine& generator, presenthand
         }
         t2=time(0);
     }
+    Maze.ResetValues();
 }
 //Реализацию нашел только на питоне. На си++ нету. Поэтому придется изобретать все велосипеды самостаятельно.
 //Итак, доп память нам нужно только для возможности случайного выбора ячейки из ещё невыбранных, поскольку мы должны выбрать диапазон, в котором генерируется случайное число
@@ -292,7 +293,7 @@ void Wilson(maze& Maze, std::default_random_engine& generator, presenthandler& P
         Maze.ShowDecorate();
         std::cin.ignore();
     }
-
+    Maze.ResetValues();
 }
 
 void WilsonSerial(maze& Maze, std::default_random_engine& generator, presenthandler& PrHandler) //более простая модификация, где выбирается первая неотмеченная ячейка вместо случайной.
@@ -453,7 +454,7 @@ void WilsonSerial(maze& Maze, std::default_random_engine& generator, presenthand
             }
         }
     }
-
+    Maze.ResetValues();
 }
 
 void BinaryTree(maze& Maze, std::default_random_engine& generator, presenthandler& PrHandler, int& alpha) //Хорошо бы сделать универсальность без использования условий. Только за счет использования %. Это, скорее всего, можно сделать(нечто подобное получилось сделать в классе maze), но из соображений читабельности и ограниченности времени оставим как есть.

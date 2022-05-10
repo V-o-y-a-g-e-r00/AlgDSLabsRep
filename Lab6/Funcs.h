@@ -12,7 +12,7 @@
 #include "MazeGenerationAlgs.h"
 #include <iomanip>
 
-template<typename T>
+template<typename T> //Возможно, тут можно обойтись средствами классов с++, но на мой взгялд это самое простое, что тут можно сделать. Другой путь: передавать указатель на класс, и потом делать каст на конкретный тип. Но тогда в классе должен присутствовать некий его идентификатор в виде значения перечислимого типа.
 void MazeFromFile(T& Maze, char* filename)
 {
    // std::cout<<"MazeFromFile"<<std::endl;

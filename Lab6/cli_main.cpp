@@ -206,7 +206,7 @@ while(!IsQuited)
         cg.GetVal(std::string("AStarfinishi"), AStarfinishi);
         cg.GetVal(std::string("AStarfinishj"), AStarfinishj);
 
-        Dijkstra(MazeWeighted, AStarstarti, AStarstartj, AStarfinishi, AStarfinishj, Way, PrHandler);
+        AStar(MazeWeighted, AStarstarti, AStarstartj, AStarfinishi, AStarfinishj, Way, PrHandler);
         PrintVector1(Way, "Way");
         break;
     case 15: //Выход
