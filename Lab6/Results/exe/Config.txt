@@ -9,15 +9,15 @@ ModeF=0
 ScaleF=1
 IsWithValuesF=0
 #3	Вывод лабиринта в терминал
-ModeT=0
+ModeT=1
 ScaleT=2
 IsWithValuesT=1
 IsWeightsOverlapped=1
 #===Генерация===
 PrHandlerMode=1
 #4	Сброс/Создание нового лабиринта
-n=5
-m=5
+n=6
+m=6
 #5	Уилсон
 #6	Уилсон (модификация с последовательным выбором ячеек)
 #7	Олдос-Бродер
