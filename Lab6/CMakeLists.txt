@@ -29,7 +29,20 @@ add_executable(StatisticsMazeSearch_main StatisticsMazeSearch_main.cpp)
 add_executable(cli cli_main.cpp)
 add_executable(cli_debug cli_debug_main.cpp)
 
-install(PROGRAMS PlotScript.bash Welcome.txt Menu.txt Help.txt Config.txt MazeIn.txt MazeOut.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+#Собирает проект перед каждым копированием. файлов. Не удобно
+#install(PROGRAMS PlotScript.bash Welcome.txt Menu.txt Help.txt Config.txt MazeIn.txt MazeOut.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+#Тут задаем копируемые в директорию с бинарниками файлы
+set(rwxList PlotScript.bash)
+set(rwList Welcome.txt Menu.txt Help.txt Config.txt MazeIn.txt MazeOut.txt)
+
+#Это все не трогаем. Это нужно, чтобы передать лист в скрипт.
+string(REPLACE ";" "\\;" rwxList "${rwxList}")
+string(REPLACE ";" "\\;" rwList "${rwList}")
+
+#file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/copyfiles.cmake DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+add_custom_target(copyfile)
+add_custom_command(TARGET copyfile COMMAND ${CMAKE_COMMAND} -DSRCDIR=${CMAKE_CURRENT_SOURCE_DIR} -DDSTDIR=${CMAKE_CURRENT_BINARY_DIR} '-DrwxList=${rwxList}' '-DrwList=${rwList}' -P ${CMAKE_CURRENT_SOURCE_DIR}/copyfiles.cmake)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
