@@ -6,6 +6,9 @@
 #include "MazeGenerationAlgs.h"
 
 int main(int, char**) {
+ //   system("$PSDefaultParameterValues = @{'*:Encoding' = 'utf8'}");
+ //   system("chcp 65001");
+    system("chcp 1251");
     int seed=time(0);
 //    int seed=2;
     std::default_random_engine generator1(seed);

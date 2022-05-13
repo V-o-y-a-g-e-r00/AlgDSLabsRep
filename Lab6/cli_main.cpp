@@ -8,9 +8,24 @@
 #include "presenthandler.h"
 #include "MazeSearchAlg.h"
 
+#include <Windows.h>
+
+#include <fmt/core.h>
+
 int main(int, char**) {
 
 std::cin.sync_with_stdio(false); //Синхронизируем с вводом stdio. Без этого не работает in_avail() Важно вызвать эту функцию до первого чтения или ввода. Иначе последсвия будут непредсказуемыми. Нужно для работы ValidInput()
+//system("chcp 1251"); 
+//SetConsoleCP(866);
+//	SetConsoleOutputCP(866);
+fmt::print("Greek: αβγδ; German: Übergrößenträger\n");
+
+
+
+//SetConsoleOutputCP(CP_UTF8);
+//setvbuf(stdout, nullptr, _IOFBF, 1000);
+
+   // setlocale( LC_ALL, ".OCP" );
 
 PrintFile((char *)"Welcome.txt");
 PrintFile((char *)"Menu.txt");

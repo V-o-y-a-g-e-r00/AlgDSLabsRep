@@ -4,6 +4,26 @@ project(Lab6 VERSION 0.1.0)
 #include(CTest)
 #enable_testing()
 
+
+
+
+
+#include(FetchContent)
+#FetchContent_Declare(
+ # fmtlib
+  # Specify the commit you depend on and update it regularly.
+ # URL https://github.com/google/googletest/archive/609281088cfefc76f9d0ce82e1ff6c30cc3591e5.zip
+ # URL https://github.com/fmtlib/fmt/archive/refs/tags/8.1.1.zip
+#)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+#set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+#FetchContent_MakeAvailable(fmtlib)
+
+add_subdirectory(fmt-8.1.1) 
+find_package(fmt)
+
+  
+ 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
 #Разработка класса лабиринта
@@ -28,6 +48,31 @@ add_executable(StatisticsMazeSearch_main StatisticsMazeSearch_main.cpp)
 #cli программа с меню
 add_executable(cli cli_main.cpp)
 add_executable(cli_debug cli_debug_main.cpp)
+#find_package(fmt COMPONENTS core REQUIRED)
+#target_link_libraries(cli fmtlib)
+target_link_libraries(cli fmt::fmt)
+target_include_directories(cli PRIVATE "j:/SPbGUTBonch/AlgDS/AlgDSLabsRep/Lab6/fmt-8.1.1/include")
+
+project(TestDxProject)
+
+ 
+set (DX_HEADERS "j:/SPbGUTBonch/AlgDS/AlgDSLabsRep/Lab6")
+set (DX_LIBS "j:/SPbGUTBonch/AlgDS/AlgDSLabsRep/Lab6")
+include_directories(${DX_HEADERS})
+include_directories(${DX_LIBS})
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #Собирает проект перед каждым копированием. файлов. Не удобно
 #install(PROGRAMS PlotScript.bash Welcome.txt Menu.txt Help.txt Config.txt MazeIn.txt MazeOut.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
