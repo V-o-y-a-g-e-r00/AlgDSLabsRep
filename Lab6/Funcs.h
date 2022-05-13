@@ -146,7 +146,8 @@ void PrintFile(char* filename)
     std::string str;
     while(std::getline(fin, str))
     {
-        std::cout<<str<<std::endl;
+        fmt::print(str);
+        std::cout<<std::endl;
     }
     fin.close();
 }
@@ -165,7 +166,7 @@ int ValidInput(char * name=(char*)"")
         while(std::cin.rdbuf()->in_avail()>0) std::cin.ignore(1); //В общем, в цикле работает нормально, а std::cin.ignore(std::cin.rdbuf()->in_avail()) блокирует ввод. Это все очень странно, потоки неинтуитивны совсем, тут только документацию читать. 
     //    std::cout<<"up2 in_avail()="<<std::cin.rdbuf()->in_avail()<<std::endl;
         //std::cin.ignore(1);
-        std::cout<<"Введите "<<name<<":";
+        fmt::print("Введите ");  fmt::print(name); fmt::print(":");
         std::cin>>str;
     //    std::cout<<"str="<<str<<std::endl;
 
@@ -189,7 +190,7 @@ int ValidInput(char * name=(char*)"")
         {
             IsGood=false;
         }
-        if(!IsGood) std::cout<<"Ввод неверный! ";
+        if(!IsGood) fmt::print("Ввод неверный! ");
     }
     return std::stoi(str);
 }

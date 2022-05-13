@@ -454,13 +454,13 @@ public:
                         }
                         ss1<<std::endl;
                     }
-                    std::cout<<ss1.str();
+                    fmt::print(ss1.str());
                     std::cout<<"------------"<<std::endl;
-                    std::cout<<ss.str();
+                    fmt::print(ss.str());
                 }break;
                 case 1:
                 {
-                    std::cout<<ss.str();
+                    fmt::print(ss.str());
                 }break;
             }
         }
