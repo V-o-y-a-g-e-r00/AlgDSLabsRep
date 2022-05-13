@@ -21,7 +21,7 @@ std::cin.sync_with_stdio(false); //Синхронизируем с вводом 
 //system("cls");
 //SetConsoleCP(866);
 //	SetConsoleOutputCP(866);
-fmt::print("Greek: αβγδ; German: Übergrößenträger\n");
+//fmt::print("Greek: αβγδ; German: Übergrößenträger\n");
 
 
 
