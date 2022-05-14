@@ -51,7 +51,7 @@ add_executable(cli cli_main.cpp)
 add_executable(cli_debug cli_debug_main.cpp)
 #find_package(fmt COMPONENTS core REQUIRED)
 #target_link_libraries(cli fmtlib)
-target_link_libraries(cli fmt::fmt "-static")
+target_link_libraries(cli fmt::fmt "-static") #"-static"
 target_include_directories(cli PRIVATE "j:/SPbGUTBonch/AlgDS/AlgDSLabsRep/Lab6/fmt-8.1.1/include")
 
 #target_link_libraries(cli PUBLIC "-static")
@@ -62,17 +62,6 @@ set (DX_HEADERS "j:/SPbGUTBonch/AlgDS/AlgDSLabsRep/Lab6")
 set (DX_LIBS "j:/SPbGUTBonch/AlgDS/AlgDSLabsRep/Lab6")
 include_directories(${DX_HEADERS})
 include_directories(${DX_LIBS})
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -89,7 +78,9 @@ string(REPLACE ";" "\\;" rwList "${rwList}")
 
 #file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/copyfiles.cmake DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 add_custom_target(copyfile)
-add_custom_command(TARGET copyfile COMMAND ${CMAKE_COMMAND} -DSRCDIR=${CMAKE_CURRENT_SOURCE_DIR} -DDSTDIR=${CMAKE_CURRENT_BINARY_DIR} '-DrwxList=${rwxList}' '-DrwList=${rwList}' -P ${CMAKE_CURRENT_SOURCE_DIR}/copyfiles.cmake)
+#add_custom_command(TARGET copyfile COMMAND ${CMAKE_COMMAND} -DSRCDIR=${CMAKE_CURRENT_SOURCE_DIR} -DDSTDIR=${CMAKE_CURRENT_BINARY_DIR} '-DrwxList=${rwxList}' '-DrwList=${rwList}' -P ${CMAKE_CURRENT_SOURCE_DIR}/copyfiles.cmake)
+
+add_custom_command(TARGET copyfile COMMAND ${CMAKE_COMMAND} -DSRCDIR=${CMAKE_CURRENT_SOURCE_DIR} -DDSTDIR=${CMAKE_CURRENT_BINARY_DIR} -DrwxList="${rwxList}" -DrwList="${rwList}" -P ${CMAKE_CURRENT_SOURCE_DIR}/copyfiles.cmake)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

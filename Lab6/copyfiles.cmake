@@ -3,6 +3,7 @@
 #set(rwxfileslist test.txt testscript.bash)
 
 #Копируем исполнимые файлы
+#set(rwxList Help.txt)
 foreach(pattern_file IN LISTS rwxList)
     file(COPY ${SRCDIR}/${pattern_file} DESTINATION ${DSTDIR} FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_WRITE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_WRITE WORLD_EXECUTE)
 endforeach(pattern_file)
