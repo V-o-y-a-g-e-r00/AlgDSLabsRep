@@ -5,6 +5,7 @@ project(Lab6 VERSION 0.1.0)
 #enable_testing()
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+#set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
 
 #Разработка класса лабиринта
 add_executable(maze_debug_main maze_debug_main.cpp)
