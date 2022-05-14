@@ -22,9 +22,10 @@ project(Lab6 VERSION 0.1.0)
 add_subdirectory(fmt-8.1.1) 
 find_package(fmt)
 
-  
+
  
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
 
 #Разработка класса лабиринта
 add_executable(maze_debug_main maze_debug_main.cpp)
@@ -50,10 +51,11 @@ add_executable(cli cli_main.cpp)
 add_executable(cli_debug cli_debug_main.cpp)
 #find_package(fmt COMPONENTS core REQUIRED)
 #target_link_libraries(cli fmtlib)
-target_link_libraries(cli fmt::fmt)
+target_link_libraries(cli fmt::fmt "-static")
 target_include_directories(cli PRIVATE "j:/SPbGUTBonch/AlgDS/AlgDSLabsRep/Lab6/fmt-8.1.1/include")
 
-project(TestDxProject)
+#target_link_libraries(cli PUBLIC "-static")
+#link_libraries("-static")  
 
  
 set (DX_HEADERS "j:/SPbGUTBonch/AlgDS/AlgDSLabsRep/Lab6")
